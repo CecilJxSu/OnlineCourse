@@ -25,11 +25,16 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web")
+    compile(
+            'org.springframework.boot:spring-boot-starter-web',
+            'com.auth0:java-jwt:2.2.0'
+    )
     testCompile(
-            'org.springframework.boot:spring-boot-starter-test'
+            'org.springframework.boot:spring-boot-starter-test',
+            'junit:junit:4.12'
     )
 }
+
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.14'
