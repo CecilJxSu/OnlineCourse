@@ -1,5 +1,6 @@
 buildscript {
     repositories {
+        mavenLocal()
         jcenter { url "http://jcenter.bintray.com/" }
     }
     dependencies {
@@ -18,6 +19,7 @@ jar {
 }
 
 repositories {
+    mavenLocal()
     jcenter { url "http://jcenter.bintray.com/" }
 }
 
@@ -35,6 +37,9 @@ dependencies {
     )
 }
 
+springBoot {
+    mainClass = "App"
+}
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.14'
