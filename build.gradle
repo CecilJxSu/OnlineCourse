@@ -14,7 +14,7 @@ apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
 jar {
-    baseName = 'gs-rest-service'
+    baseName = 'service'
     version =  '0.1.0'
 }
 
@@ -35,10 +35,6 @@ dependencies {
             'org.springframework.boot:spring-boot-starter-test',
             'junit:junit:4.12'
     )
-}
-
-springBoot {
-    mainClass = "App"
 }
 
 task wrapper(type: Wrapper) {
