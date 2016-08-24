@@ -1,4 +1,4 @@
-package util;
+package utils;
 
 import com.auth0.jwt.JWTSigner;
 import com.auth0.jwt.JWTVerifier;
@@ -16,10 +16,6 @@ import java.util.Map;
  */
 public class JWT {
     final String secret = "Bla Bla Bla, secret for jwt";
-    final String issuer = "http://localhost";
-    final long createAt = System.currentTimeMillis() / 1000l;
-    final long expired = createAt + 60L;
-
 
     /**
      * 对claims签名
@@ -28,9 +24,9 @@ public class JWT {
      */
     public String sign(HashMap<String, Object> claims){
         JWTSigner signer = new JWTSigner(secret);
-        claims.put("issuer", issuer);
+        long created = System.currentTimeMillis() / 1000l;
+        long expired = created + 7 * 24 * 60 * 60L;
         claims.put("expired", expired);
-        claims.put("createAt", createAt);
 
         return signer.sign(claims);
     }
@@ -44,6 +40,10 @@ public class JWT {
         try {
             JWTVerifier verifier = new JWTVerifier(secret);
             Map<String,Object> claims = verifier.verify(jwt);
+            long current = System.currentTimeMillis() / 1000l;
+            if (claims.get("expired") <= current){
+
+            }
             return claims;
         } catch (JWTVerifyException e) {
             e.printStackTrace();

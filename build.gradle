@@ -29,7 +29,9 @@ targetCompatibility = 1.8
 dependencies {
     compile(
             'org.springframework.boot:spring-boot-starter-web',
-            'com.auth0:java-jwt:2.2.0'
+            'com.auth0:java-jwt:2.2.0',
+            'org.mybatis:mybatis:3.4.1',
+
     )
     testCompile(
             'org.springframework.boot:spring-boot-starter-test',

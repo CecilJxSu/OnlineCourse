@@ -1,9 +1,9 @@
-package controller;
+package controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
-import entity.Example;
+import entities.Example;
 
 import java.util.Arrays;
 import java.util.Comparator;

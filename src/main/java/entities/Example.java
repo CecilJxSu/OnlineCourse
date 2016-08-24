@@ -1,4 +1,4 @@
-package entity;
+package entities;
 
 public class Example {
     private int id;
