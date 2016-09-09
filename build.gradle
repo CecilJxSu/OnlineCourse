@@ -1,5 +1,6 @@
 buildscript {
     repositories {
+        mavenLocal()
         jcenter { url "http://jcenter.bintray.com/" }
     }
     dependencies {
@@ -13,11 +14,12 @@ apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
 jar {
-    baseName = 'gs-rest-service'
+    baseName = 'service'
     version =  '0.1.0'
 }
 
 repositories {
+    mavenLocal()
     jcenter { url "http://jcenter.bintray.com/" }
 }
 
@@ -27,14 +29,15 @@ targetCompatibility = 1.8
 dependencies {
     compile(
             'org.springframework.boot:spring-boot-starter-web',
-            'com.auth0:java-jwt:2.2.0'
+            'com.auth0:java-jwt:2.2.0',
+            'org.mybatis:mybatis:3.4.1',
+
     )
     testCompile(
             'org.springframework.boot:spring-boot-starter-test',
             'junit:junit:4.12'
     )
 }
-
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.14'
