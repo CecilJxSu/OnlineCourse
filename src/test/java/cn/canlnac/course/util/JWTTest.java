@@ -1,4 +1,4 @@
-package utils;
+package cn.canlnac.course.util;
 
 import org.junit.Before;
 import org.junit.Test;

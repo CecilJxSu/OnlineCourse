@@ -1,9 +1,9 @@
-package controllers;
+package cn.canlnac.course.controller;
 
+import cn.canlnac.course.entity.Example;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
-import entities.Example;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.Comparator;

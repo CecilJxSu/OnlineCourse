@@ -1,4 +1,4 @@
-package utils;
+package cn.canlnac.course.util;
 
 import com.auth0.jwt.JWTSigner;
 import com.auth0.jwt.JWTVerifier;
@@ -41,9 +41,6 @@ public class JWT {
             JWTVerifier verifier = new JWTVerifier(secret);
             Map<String,Object> claims = verifier.verify(jwt);
             long current = System.currentTimeMillis() / 1000l;
-            if (claims.get("expired") <= current){
-
-            }
             return claims;
         } catch (JWTVerifyException e) {
             e.printStackTrace();

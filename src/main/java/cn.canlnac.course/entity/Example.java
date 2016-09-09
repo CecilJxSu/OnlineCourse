@@ -1,4 +1,4 @@
-package entities;
+package cn.canlnac.course.entity;
 
 public class Example {
     private int id;
