@@ -6,7 +6,9 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class JWTTest {
     private JWT jwt = new JWT();
@@ -22,15 +24,15 @@ public class JWTTest {
 
     @Test
     public void shouldSignEmpty(){
-        String jwtString = jwt.sign(new HashMap<String,Object>());
+        String jwtString = jwt.sign(new HashMap());
         assertNotNull(jwtString);
     }
 
     @Test
     public void shouldDecodeEmpty(){
-        String jwtString = jwt.sign(new HashMap<String,Object>());
+        String jwtString = jwt.sign(new HashMap());
         Map<String,Object> decode = jwt.decode(jwtString);
-        assertNotNull(decode.toString());
+        assertNotNull(decode);
     }
 
     @Test
@@ -43,6 +45,18 @@ public class JWTTest {
     public void shouldDecodeUserData(){
         String jwtString = jwt.sign(userData);
         Map<String,Object> decode = jwt.decode(jwtString);
-        assertNotNull(decode.toString());
+        assertEquals(decode.toString(),userData.toString());
+    }
+
+    @Test
+    public void shouldReturnNullWhenIssuerIllegal(){
+        Map<String,Object> decode = jwt.decode("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHBpcmVkIjoxNDc0MDE2MzA4LCJnZW5kZXIiOiJtYWxlIiwibmFtZSI6ImNlY2lsIiwiaWNvbiI6Imh0dHA6Ly91cmwuY29tIiwiaWQiOiIxIiwiaXNzdWVyIjoiaHR0cDovL2Vycm9yIn0.LpVKZaaZzMQdICPUnDyNTOW7YXgOjHLBnoiz8W8O4PI");
+        assertNull(decode);
+    }
+
+    @Test
+    public void shouldReturnNullWhenExpired(){
+        Map<String,Object> decode = jwt.decode("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHBpcmVkIjoxNDczMDE2NTIzLCJnZW5kZXIiOiJtYWxlIiwibmFtZSI6ImNlY2lsIiwiaWNvbiI6Imh0dHA6Ly91cmwuY29tIiwiaWQiOiIxIiwiaXNzdWVyIjoiaHR0cDovL2xvY2FsaG9zdCJ9.PAiinR7fff1JvtAdcyQMCxh7KC-IRAP0f78vxM-9QZ8");
+        assertNull(decode);
     }
 }
