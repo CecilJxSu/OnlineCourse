@@ -1,6 +1,8 @@
 package cn.canlnac.course.controller;
 
 import cn.canlnac.course.entity.Example;
+import cn.canlnac.course.service.ExampleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +13,8 @@ import java.util.List;
 
 @RestController
 public class ExampleController {
+    @Autowired
+    private ExampleService exampleService;
     /**
      * 基本的例子，通过在query中传递参数，没指定method；
      * 如果发起请求的方法没写，则会执行该方法下的。
@@ -65,28 +69,7 @@ public class ExampleController {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
-        //模拟数据
-        Example[] data = { new Example(), new Example()};
-        data[0].setId(1);
-        data[1].setId(2);
-
-        // 根据id，逆序排序
-        if(sort.equals("id")) {
-            Arrays.sort(data, new Comparator<Example>() {
-                @Override
-                public int compare(Example o1, Example o2) {
-                    return o2.getId() - o1.getId();
-                }
-            });
-        }
-
-        List<Example> examples = Arrays.asList(data);
-
-        //检查下标数组越界，返回400，参数错误
-        if(start + count > examples.size()){
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        }
-        examples = examples.subList(start, start + count);
+        List<Example> examples = exampleService.getAll();
 
         //返回200状态码
         return new ResponseEntity<List<Example>>(examples, HttpStatus.OK);
