@@ -5,6 +5,6 @@
 
 <mapper namespace="cn.canlnac.course.dao.ExampleDao">
 	<select id="selectAll" resultType="cn.canlnac.course.entity.Example">
-		select * from user
+		select * from example
 	</select>
 </mapper>
