@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:spring/spring-context.xml"})
-public class ExampleTest {
+public class ExampleDaoTest {
     @Autowired
     private ExampleDao exampleDao;
 
@@ -28,6 +28,6 @@ public class ExampleTest {
     public void testSelectAll() throws Exception {
         System.out.println(exampleDao);
         List<Example> example = exampleDao.selectAll();
-        assertEquals(4,example.size());
+        assertEquals(0,example.size());
     }
 }

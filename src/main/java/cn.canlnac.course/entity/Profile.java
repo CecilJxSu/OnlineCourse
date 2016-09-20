@@ -1,5 +1,8 @@
 package cn.canlnac.course.entity;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 /**
  * Created by cecil on 2016/9/18.
  */
@@ -111,5 +114,10 @@ public class Profile {
 
     public void setDormitoryAddress(String dormitoryAddress) {
         this.dormitoryAddress = dormitoryAddress;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 }

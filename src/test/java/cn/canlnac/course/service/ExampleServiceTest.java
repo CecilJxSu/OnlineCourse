@@ -1,6 +1,7 @@
 package cn.canlnac.course.service;
 
 import cn.canlnac.course.entity.Example;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,8 @@ public class ExampleServiceTest {
 
     @Test
     public void getAll(){
-
         List<Example> list = exampleService.getAll();
-        assertEquals(4,list.size());
+        assertEquals(0,list.size());
         System.out.println(list.toString());
     }
 
