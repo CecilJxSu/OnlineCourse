@@ -5,7 +5,21 @@
 <configuration>
     <!-- 加载 映射文件 -->
     <mappers>
+        <mapper resource="mybatis/mappings/AnswerDao.xml"/>
+        <mapper resource="mybatis/mappings/CatalogDao.xml"/>
+        <mapper resource="mybatis/mappings/CommentDao.xml"/>
+        <mapper resource="mybatis/mappings/DocumentDao.xml"/>
         <mapper resource="mybatis/mappings/ExampleDao.xml"/>
+        <mapper resource="mybatis/mappings/FavoriteDao.xml"/>
+        <mapper resource="mybatis/mappings/FollowingDao.xml"/>
+        <mapper resource="mybatis/mappings/LearnRecordDao.xml"/>
+        <mapper resource="mybatis/mappings/LikeDao.xml"/>
+        <mapper resource="mybatis/mappings/MessageDao.xml"/>
+        <mapper resource="mybatis/mappings/ProfileDao.xml"/>
+        <mapper resource="mybatis/mappings/QuestionDao.xml"/>
+        <mapper resource="mybatis/mappings/ReplyDao.xml"/>
+        <mapper resource="mybatis/mappings/UserDao.xml"/>
+        <mapper resource="mybatis/mappings/WatchDao.xml"/>
 
         <!-- 批量加载mapper
         指定mapper接口的包名，mybatis自动扫描包下边所有mapper接口进行加载

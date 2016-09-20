@@ -3,6 +3,7 @@ package cn.canlnac.course.util;
 import com.auth0.jwt.JWTSigner;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.JWTVerifyException;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.security.InvalidKeyException;
@@ -14,6 +15,7 @@ import java.util.Map;
 /**
  * Json web token
  */
+@Component
 public class JWT {
     final String secret = "Bla Bla Bla, secret for jwt";
     final String issuer = "http://localhost";

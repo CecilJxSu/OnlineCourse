@@ -1,7 +1,8 @@
-package cn.canlnac.course.service;
+package cn.canlnac.course.service.impl;
 
 import cn.canlnac.course.dao.ExampleDao;
 import cn.canlnac.course.entity.Example;
+import cn.canlnac.course.service.ExampleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

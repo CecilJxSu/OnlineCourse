@@ -1,5 +1,8 @@
 package cn.canlnac.course.entity;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class Example {
     private int id;
     private String name;
@@ -22,9 +25,6 @@ public class Example {
 
     @Override
     public String toString() {
-        return "Example{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 }
