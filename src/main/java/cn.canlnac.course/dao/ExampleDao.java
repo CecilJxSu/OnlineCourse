@@ -8,6 +8,6 @@ import java.util.List;
 
 @Component
 public interface ExampleDao {
-    public Example getByID(int id);
-    public List<Example> selectAll();
+    Example getByID(int id);
+    List<Example> selectAll();
 }

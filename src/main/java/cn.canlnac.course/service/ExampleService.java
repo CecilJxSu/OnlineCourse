@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface ExampleService {
 
-    public List<Example> getAll();
+    List<Example> getAll();
 }
