@@ -1,5 +1,6 @@
 package cn.canlnac.course.dao;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 /**
@@ -7,4 +8,5 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public interface UserDao {
+    int create(@Param("username") String username, @Param("password") String password, @Param("userStatus") String userStatus);
 }

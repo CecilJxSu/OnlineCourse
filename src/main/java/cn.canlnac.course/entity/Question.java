@@ -16,14 +16,11 @@ public class Question {
     private String type;
     private String question;
     private String answer;
-    private String itemA;
-    private String itemB;
-    private String itemC;
-    private String itemD;
-    private String itemE;
-    private String itemF;
+    private String item;
     private String explains;
     private String url;
+    private int score;
+
 
     public int getId() {
         return id;
@@ -81,52 +78,12 @@ public class Question {
         this.answer = answer;
     }
 
-    public String getItemA() {
-        return itemA;
+    public String getItem() {
+        return item;
     }
 
-    public void setItemA(String itemA) {
-        this.itemA = itemA;
-    }
-
-    public String getItemB() {
-        return itemB;
-    }
-
-    public void setItemB(String itemB) {
-        this.itemB = itemB;
-    }
-
-    public String getItemC() {
-        return itemC;
-    }
-
-    public void setItemC(String itemC) {
-        this.itemC = itemC;
-    }
-
-    public String getItemD() {
-        return itemD;
-    }
-
-    public void setItemD(String itemD) {
-        this.itemD = itemD;
-    }
-
-    public String getItemE() {
-        return itemE;
-    }
-
-    public void setItemE(String itemE) {
-        this.itemE = itemE;
-    }
-
-    public String getItemF() {
-        return itemF;
-    }
-
-    public void setItemF(String itemF) {
-        this.itemF = itemF;
+    public void setItem(String item) {
+        this.item = item;
     }
 
     public String getExplains() {
@@ -143,6 +100,14 @@ public class Question {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     @Override

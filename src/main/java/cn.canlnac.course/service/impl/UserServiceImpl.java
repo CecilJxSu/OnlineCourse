@@ -14,4 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
+
+    @Override
+    public int create(String username, String password, String userStatus) {
+        return userDao.create(username, password, userStatus);
+    }
 }

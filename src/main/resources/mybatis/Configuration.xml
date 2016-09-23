@@ -8,6 +8,7 @@
         <mapper resource="mybatis/mappings/AnswerDao.xml"/>
         <mapper resource="mybatis/mappings/CatalogDao.xml"/>
         <mapper resource="mybatis/mappings/CommentDao.xml"/>
+        <mapper resource="mybatis/mappings/CourseDao.xml"/>
         <mapper resource="mybatis/mappings/DocumentDao.xml"/>
         <mapper resource="mybatis/mappings/ExampleDao.xml"/>
         <mapper resource="mybatis/mappings/FavoriteDao.xml"/>

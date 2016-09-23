@@ -49,7 +49,6 @@ dependencies {
             'mysql:mysql-connector-java:5.1.6',
             'commons-dbcp:commons-dbcp:1.4',
             'org.kie.modules:org-apache-commons-lang3:6.5.0.CR2'
-
     )
     testCompile(
             'org.springframework.boot:spring-boot-starter-test',

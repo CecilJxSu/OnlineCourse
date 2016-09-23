@@ -4,4 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.canlnac.course.dao.UserDao">
+    <insert id="create">
+        insert into user (date,status,user_status,username,password)
+        values (now(),'active',#{userStatus,jdbcType=VARCHAR},#{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR})
+    </insert>
 </mapper>

@@ -15,6 +15,8 @@ public class Comment {
     private int targetId;
     private int userId;
     private String content;
+    private int likeCount;  // +1
+    private int replyCount; // +2
 
     public int getId() {
         return id;
@@ -62,6 +64,22 @@ public class Comment {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
+
+    public int getReplyCount() {
+        return replyCount;
+    }
+
+    public void setReplyCount(int replyCount) {
+        this.replyCount = replyCount;
     }
 
     @Override
