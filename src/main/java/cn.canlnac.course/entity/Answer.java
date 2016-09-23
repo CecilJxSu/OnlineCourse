@@ -14,6 +14,7 @@ public class Answer {
     private int questionId;
     private int userId;
     private String answer;
+    private int total;
 
     public int getId() {
         return id;
@@ -53,6 +54,14 @@ public class Answer {
 
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
     }
 
     @Override

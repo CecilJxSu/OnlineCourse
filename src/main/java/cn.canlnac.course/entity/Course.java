@@ -4,22 +4,20 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.Date;
-import java.util.List;
 
 /**
- * Created by cecil on 2016/9/18.
+ * Created by cecil on 2016/9/23.
  */
-public class Chat {
+public class Course {
     private int id;
     private Date date;
-    private String title;
-    private String content;
-    private int userId;
-    private List<String> pictureUrls;
-    private int watchCount;             // + 1;
-    private int likeCount;              // + 2;
-    private int commentCount;           // + 3;
-    private int favoriteCount;          // + 4;
+    private String name;
+    private String introduction;
+    private int user_id;
+    private int watchCount;         // + 1
+    private int likeCount;          // + 2
+    private int commentCount;       // + 3
+    private int favoriteCount;      // + 4
 
     public int getId() {
         return id;
@@ -37,36 +35,28 @@ public class Chat {
         this.date = date;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getContent() {
-        return content;
+    public String getIntroduction() {
+        return introduction;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public List<String> getPictureUrls() {
-        return pictureUrls;
-    }
-
-    public void setPictureUrls(List<String> pictureUrls) {
-        this.pictureUrls = pictureUrls;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     public int getWatchCount() {
