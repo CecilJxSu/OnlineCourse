@@ -19,7 +19,7 @@ public class Question {
     private String item;
     private String explains;
     private String url;
-    private int score;
+    private float score;
 
 
     public int getId() {
@@ -102,7 +102,7 @@ public class Question {
         this.url = url;
     }
 
-    public int getScore() {
+    public float getScore() {
         return score;
     }
 

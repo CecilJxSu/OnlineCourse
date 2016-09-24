@@ -15,7 +15,7 @@ public class Chat {
     private String title;
     private String content;
     private int userId;
-    private List<String> pictureUrls;
+    private String pictureUrls;
     private int watchCount;             // + 1;
     private int likeCount;              // + 2;
     private int commentCount;           // + 3;
@@ -61,11 +61,11 @@ public class Chat {
         this.userId = userId;
     }
 
-    public List<String> getPictureUrls() {
+    public String getPictureUrls() {
         return pictureUrls;
     }
 
-    public void setPictureUrls(List<String> pictureUrls) {
+    public void setPictureUrls(String pictureUrls) {
         this.pictureUrls = pictureUrls;
     }
 

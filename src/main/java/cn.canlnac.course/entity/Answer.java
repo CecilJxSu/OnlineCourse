@@ -14,7 +14,7 @@ public class Answer {
     private int questionId;
     private int userId;
     private String answer;
-    private int total;
+    private float total;
 
     public int getId() {
         return id;
@@ -56,7 +56,7 @@ public class Answer {
         this.answer = answer;
     }
 
-    public int getTotal() {
+    public float getTotal() {
         return total;
     }
 

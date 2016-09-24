@@ -4,4 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.canlnac.course.dao.LearnRecordDao">
+    <resultMap id="learnRecord" type="cn.canlnac.course.entity.LearnRecord">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="date" property="date" jdbcType="DATE"/>
+        <result column="catalog_id" property="catalogId" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="progress" property="progress" jdbcType="DOUBLE"/>
+        <result column="last_date" property="lastDate" jdbcType="DATE"/>
+        <result column="last_position" property="lastPosition" jdbcType="INTEGER"/>
+    </resultMap>
 </mapper>
