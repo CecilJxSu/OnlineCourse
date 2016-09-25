@@ -40,6 +40,32 @@ public class ExampleController {
     }
 
     /**
+     * 以RESTful的方式，在地址中传递参数id和name。
+     * @param id
+     * @param name
+     * @return
+     */
+    @RequestMapping(path = "/example/{id}/{name}", method = RequestMethod.GET)
+    public Example getExample2_1(@PathVariable int id, @PathVariable String name) {
+        Example example = new Example();
+        example.setId(id);
+        example.setName(name);
+        return example;
+    }
+
+    /**
+     * 以RESTful的方式，在地址中传递参数id，并且与上面的冲突，精确匹配优先。
+     * @param id
+     * @return
+     */
+    @RequestMapping(path = "/example/path/{id}", method = RequestMethod.GET)
+    public Example getExample2_2(@PathVariable int id) {
+        Example example = new Example();
+        example.setId(id);
+        return example;
+    }
+
+    /**
      * 换一种注解方式，直接以请求方式的注解，可以省了method
      * @param id
      * @return

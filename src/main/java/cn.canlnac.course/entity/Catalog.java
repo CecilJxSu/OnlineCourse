@@ -15,7 +15,6 @@ public class Catalog {
     private int index;
     private String name;
     private String introduction;
-    private String keyPoint;
     private String url;
     private int duration;
     private String previewImage;
@@ -66,14 +65,6 @@ public class Catalog {
 
     public void setIntroduction(String introduction) {
         this.introduction = introduction;
-    }
-
-    public String getKeyPoint() {
-        return keyPoint;
-    }
-
-    public void setKeyPoint(String keyPoint) {
-        this.keyPoint = keyPoint;
     }
 
     public String getUrl() {

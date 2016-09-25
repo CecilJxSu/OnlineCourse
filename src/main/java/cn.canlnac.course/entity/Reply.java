@@ -11,7 +11,6 @@ import java.util.Date;
 public class Reply {
     private int id;
     private Date date;
-    private String type;
     private int commentId;
     private int toUserId;
     private int userId;
@@ -31,14 +30,6 @@ public class Reply {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public int getCommentId() {

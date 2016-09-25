@@ -10,10 +10,12 @@ import java.util.Date;
  */
 public class Course {
     private int id;
+    private String status;
     private Date date;
     private String name;
     private String introduction;
     private int userId;
+    private String department;
     private int watchCount;         // + 1
     private int likeCount;          // + 2
     private int commentCount;       // + 3
@@ -25,6 +27,14 @@ public class Course {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Date getDate() {
@@ -57,6 +67,14 @@ public class Course {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
     }
 
     public int getWatchCount() {

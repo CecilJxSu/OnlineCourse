@@ -15,6 +15,7 @@ public class Comment {
     private int targetId;
     private int userId;
     private String content;
+    private String pictureUrls;
     private int likeCount;  // +1
     private int replyCount; // +2
 
@@ -64,6 +65,14 @@ public class Comment {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getPictureUrls() {
+        return pictureUrls;
+    }
+
+    public void setPictureUrls(String pictureUrls) {
+        this.pictureUrls = pictureUrls;
     }
 
     public int getLikeCount() {

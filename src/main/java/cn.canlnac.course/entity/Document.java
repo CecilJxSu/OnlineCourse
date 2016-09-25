@@ -11,7 +11,8 @@ import java.util.Date;
 public class Document {
     private int id;
     private Date date;
-    private int catalogId;
+    private String targetType;
+    private int targetId;
     private String url;
     private String type;
     private int size;
@@ -32,12 +33,20 @@ public class Document {
         this.date = date;
     }
 
-    public int getCatalogId() {
-        return catalogId;
+    public String getTargetType() {
+        return targetType;
     }
 
-    public void setCatalogId(int catalogId) {
-        this.catalogId = catalogId;
+    public void setTargetType(String targetType) {
+        this.targetType = targetType;
+    }
+
+    public int getTargetId() {
+        return targetId;
+    }
+
+    public void setTargetId(int targetId) {
+        this.targetId = targetId;
     }
 
     public String getUrl() {
