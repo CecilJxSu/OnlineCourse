@@ -4,4 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.canlnac.course.dao.ReplyDao">
+    <resultMap id="" type="">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="date" property="date" jdbcType="DATE"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="comment_id" property="commentId" jdbcType="INTEGER"/>
+        <result column="to_user_id" property="toUserId" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+    </resultMap>
 </mapper>

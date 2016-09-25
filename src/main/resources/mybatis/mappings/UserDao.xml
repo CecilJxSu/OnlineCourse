@@ -4,6 +4,18 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.canlnac.course.dao.UserDao">
+    <resultMap id="" type="">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="date" property="date" jdbcType="DATE"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="user_status" property="userStatus" jdbcType="VARCHAR"/>
+        <result column="lock_date" property="lockDate" jdbcType="DATE"/>
+        <result column="lock_end_date" property="lockEndDate" jdbcType="DATE"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
     <insert id="create">
         insert into user (date,status,user_status,username,password)
         values (now(),'active',#{userStatus,jdbcType=VARCHAR},#{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR})

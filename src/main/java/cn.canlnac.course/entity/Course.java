@@ -13,7 +13,7 @@ public class Course {
     private Date date;
     private String name;
     private String introduction;
-    private int user_id;
+    private int userId;
     private int watchCount;         // + 1
     private int likeCount;          // + 2
     private int commentCount;       // + 3
@@ -51,12 +51,12 @@ public class Course {
         this.introduction = introduction;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public int getWatchCount() {

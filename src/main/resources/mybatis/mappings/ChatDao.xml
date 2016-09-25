@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.canlnac.course.dao.ChatDao">
+    <resultMap id="chat" type="cn.canlnac.course.entity.Chat">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="date" property="date" jdbcType="DATE" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="content" property="content" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="picture_urls" property="pictureUrls" jdbcType="VARCHAR" />
+        <result column="watch_count" property="watchCount" jdbcType="INTEGER" />
+        <result column="like_count" property="likeCount" jdbcType="INTEGER" />
+        <result column="comment_count" property="commentCount" jdbcType="INTEGER" />
+        <result column="favorite_count" property="favoriteCount" jdbcType="INTEGER" />
+    </resultMap>
+
+    <select id="getById" resultMap="chat">
+        SELECT *
+        FROM chat
+        WHERE id = #{id}
+    </select>
+
+
+</mapper>

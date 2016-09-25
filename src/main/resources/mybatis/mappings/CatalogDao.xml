@@ -4,4 +4,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.canlnac.course.dao.CatalogDao">
+    <resultMap id="catalog" type="cn.canlnac.course.entity.Catalog">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="date" property="date" jdbcType="DATE"/>
+        <result column="course_id" property="courseId" jdbcType="INTEGER"/>
+        <result column="index" property="index" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="introduction" property="introduction" jdbcType="VARCHAR"/>
+        <result column="key_point" property="keyPoint" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="duration" property="duration" jdbcType="INTEGER"/>
+        <result column="previewImage" property="previewImage" jdbcType="VARCHAR"/>
+    </resultMap>
 </mapper>
