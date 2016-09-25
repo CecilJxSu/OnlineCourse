@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.canlnac.course.dao.QuestionDao">
-    <resultMap id="" type="">
+    <resultMap id="question" type="cn.canlnac.course.entity.Question">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="date" property="date" jdbcType="DATE"/>
         <result column="catalog_id" property="catalogId" jdbcType="INTEGER"/>

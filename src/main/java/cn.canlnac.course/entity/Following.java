@@ -11,7 +11,6 @@ import java.util.Date;
 public class Following {
     private int id;
     private Date date;
-    private String targetType;
     private int targetId;
     private int userId;
 
@@ -29,14 +28,6 @@ public class Following {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public String getTargetType() {
-        return targetType;
-    }
-
-    public void setTargetType(String targetType) {
-        this.targetType = targetType;
     }
 
     public int getTargetId() {

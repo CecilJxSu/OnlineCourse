@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.canlnac.course.dao.ReplyDao">
-    <resultMap id="" type="">
+    <resultMap id="reply" type="cn.canlnac.course.entity.Reply">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="date" property="date" jdbcType="DATE"/>
         <result column="type" property="type" jdbcType="VARCHAR"/>
