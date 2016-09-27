@@ -13,7 +13,7 @@ public class Question {
     private Date date;
     private int catalogId;
     private int index;
-    private String type;
+    private int type;
     private String question;
     private String answer;
     private String item;
@@ -54,11 +54,11 @@ public class Question {
         this.index = index;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 
