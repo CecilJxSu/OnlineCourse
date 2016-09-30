@@ -11,7 +11,7 @@ import java.util.Date;
 public class Answer {
     private int id;
     private Date date;
-    private int questionId;
+    private int catalogId;
     private int userId;
     private String answer;
     private float total;
@@ -32,12 +32,12 @@ public class Answer {
         this.date = date;
     }
 
-    public int getQuestionId() {
-        return questionId;
+    public int getCatalogId() {
+        return catalogId;
     }
 
-    public void setQuestionId(int questionId) {
-        this.questionId = questionId;
+    public void setCatalogId(int catalogId) {
+        this.catalogId = catalogId;
     }
 
     public int getUserId() {
@@ -60,7 +60,7 @@ public class Answer {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(float total) {
         this.total = total;
     }
 
