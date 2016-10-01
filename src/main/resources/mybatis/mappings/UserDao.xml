@@ -107,19 +107,19 @@
         UPDATE user
         <trim prefix="SET" suffixOverrides=",">
             <if test="status != null">
-                status = #{status}
+                status = #{status},
             </if>
             <if test="userStatus != null">
-                user_status = #{userStatus}
+                user_status = #{userStatus},
             </if>
             <if test="lockDate != null">
-                lock_date = #{lockDate}
+                lock_date = #{lockDate},
             </if>
             <if test="lockEndDate != null">
-                lock_end_date = #{lockEndDate}
+                lock_end_date = #{lockEndDate},
             </if>
             <if test="password != null">
-                password = #{password}
+                password = #{password},
             </if>
         </trim>
         WHERE id = #{id}
