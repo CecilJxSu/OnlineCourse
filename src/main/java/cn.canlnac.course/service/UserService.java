@@ -15,7 +15,7 @@ public interface UserService {
      * @param username      用户名
      * @param password      密码
      * @param userStatus    用户类型：老师，学生，管理员
-     * @return              返回创建的用户ID
+     * @return              用户ID
      */
     int create(String username, String password, String userStatus);
 
@@ -27,10 +27,19 @@ public interface UserService {
     User findByID(int id);
 
     /**
+     * 根据用户名查找登录用户
+     * @param username  用户名
+     * @return          登录用户信息
+     */
+    User findByUsername(String username);
+
+    /**
      * 根据条件获取登录用户列表
      * @param start         分页开始位置
      * @param count         分页返回数目
      * @param conditions    过滤条件，status数组，userStatus数组，username数组
+     *                       status: active | lock | dead
+     *                       userStatus: teacher | student | admin
      * @return              登录用户数据列表
      */
     List<User> getList(int start, int count, Map<String, Object> conditions);
@@ -38,6 +47,8 @@ public interface UserService {
     /**
      * 根据条件，统计登录用户数目
      * @param conditions    过滤条件，status数组，userStatus数组，username数组
+     *                       status: active | lock | dead
+     *                       userStatus: teacher | student | admin
      * @return              登录用户列表的数目
      */
     int count(Map<String, Object> conditions);
@@ -61,7 +72,7 @@ public interface UserService {
     int lock(int id, String status, Date lockDate, Date endDate);
 
     /**
-     * 对用户继续解封
+     * 对用户进行解封
      * @param id    用户ID
      * @return      更新的数目
      */
