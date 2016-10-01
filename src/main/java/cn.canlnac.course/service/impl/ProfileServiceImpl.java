@@ -42,7 +42,7 @@ public class ProfileServiceImpl implements ProfileService {
      * @return          用户资料
      */
     @Override
-    public Profile findByUserID(String userID) {
+    public Profile findByUserID(int userID) {
         return profileDao.findByUserID(userID);
     }
 }

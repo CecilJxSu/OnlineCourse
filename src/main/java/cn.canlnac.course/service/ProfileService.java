@@ -25,5 +25,5 @@ public interface ProfileService {
      * @param userID    用户ID
      * @return          用户资料
      */
-    Profile findByUserID(String userID);
+    Profile findByUserID(int userID);
 }

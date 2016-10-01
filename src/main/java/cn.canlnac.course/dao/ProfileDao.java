@@ -28,5 +28,5 @@ public interface ProfileDao {
      * @param userID    用户ID
      * @return          用户资料
      */
-    Profile findByUserID(@Param("userID") String userID);
+    Profile findByUserID(@Param("userID") int userID);
 }
