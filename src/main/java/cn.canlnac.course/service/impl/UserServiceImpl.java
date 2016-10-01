@@ -78,13 +78,12 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 更新登录用户的字段
-     * @param id        用户ID
-     * @param fields    字段和值
+     * @param user      用户数据
      * @return          更新的数目
      */
     @Override
-    public int update(int id, Map<String, Object> fields) {
-        return userDao.update(id, fields);
+    public int update(User user) {
+        return userDao.update(user);
     }
 
     /**

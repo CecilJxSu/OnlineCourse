@@ -56,11 +56,10 @@ public interface UserDao {
 
     /**
      * 更新登录用户的字段
-     * @param id        用户ID
-     * @param fields    字段和值
+     * @param user      用户数据
      * @return          更新的数目
      */
-    int update(@Param("id") int id, @Param("fields") Map<String, Object> fields);
+    int update(User user);
 
     /**
      * 临时封号，永久封号
