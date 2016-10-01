@@ -62,28 +62,33 @@
 
     <!--**************************以下为事务声明管理*************************************************-->
     <!-- 事务管理器  对mybatis操作数据库事务控制，spring使用jdbc的事务控制类 -->
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"/>
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
     </bean>
+
+    <!-- 配置 Annotation 驱动，扫描@Transactional注解的类定义事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
     <!-- 通知 -->
-    <tx:advice id="txAdvice" transaction-manager="transactionManager">
-        <tx:attributes>
-            <!-- 传播行为 -->
-            <!--<tx:method name="save*" propagation="REQUIRED"/>-->
-            <!--<tx:method name="delete*" propagation="REQUIRED"/>-->
-            <!--<tx:method name="insert*" propagation="REQUIRED"/>-->
-            <!--<tx:method name="update*" propagation="REQUIRED"/>-->
-            <!--<tx:method name="find*" propagation="SUPPORTS" read-only="true"/>-->
-            <!--<tx:method name="get*" propagation="SUPPORTS" read-only="true"/>-->
-            <!--<tx:method name="select*" propagation="SUPPORTS" read-only="true"/>-->
-            <tx:method name="find*" read-only="false"/>
-            <tx:method name="add*" rollback-for="Exception"/>
-        </tx:attributes>
-    </tx:advice>
-    <!-- aop -->
-    <aop:config>
-        <aop:advisor advice-ref="txAdvice" pointcut="execution(* cn.canlnac.course.service.*.*(..))"/>
-        <!--<aop:pointcut id="serviceMethod" expression="execution(* cn.canlnac.course.service.*.*(..))"/>-->
-        <!--<aop:advisor pointcut-ref="serviceMethod" advice-ref="txAdvice"/>-->
-    </aop:config>
+    <!--<tx:advice id="txAdvice" transaction-manager="transactionManager">-->
+        <!--<tx:attributes>-->
+            <!--&lt;!&ndash; 传播行为 &ndash;&gt;-->
+            <!--&lt;!&ndash;<tx:method name="save*" propagation="REQUIRED"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<tx:method name="delete*" propagation="REQUIRED"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<tx:method name="insert*" propagation="REQUIRED"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<tx:method name="update*" propagation="REQUIRED"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<tx:method name="find*" propagation="SUPPORTS" read-only="true"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<tx:method name="get*" propagation="SUPPORTS" read-only="true"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<tx:method name="select*" propagation="SUPPORTS" read-only="true"/>&ndash;&gt;-->
+            <!--<tx:method name="find*" read-only="false"/>-->
+            <!--<tx:method name="add*" rollback-for="Exception"/>-->
+        <!--</tx:attributes>-->
+    <!--</tx:advice>-->
+    <!--&lt;!&ndash; aop &ndash;&gt;-->
+    <!--<aop:config>-->
+        <!--<aop:advisor advice-ref="txAdvice" pointcut="execution(* cn.canlnac.course.service.*.*(..))"/>-->
+        <!--&lt;!&ndash;<aop:pointcut id="serviceMethod" expression="execution(* cn.canlnac.course.service.*.*(..))"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<aop:advisor pointcut-ref="serviceMethod" advice-ref="txAdvice"/>&ndash;&gt;-->
+    <!--</aop:config>-->
 </beans>

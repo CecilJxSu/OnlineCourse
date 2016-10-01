@@ -16,8 +16,63 @@
     </resultMap>
 
 
-    <insert id="create">
-        insert into user (date,status,user_status,username,password)
-        values (now(),'active',#{userStatus,jdbcType=VARCHAR},#{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR})
+    <!--返回创建的用户ID-->
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="cn.canlnac.course.entity.User">
+        INSERT INTO user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            date,status,user_status,username,password,
+            <if test="lockDate != null">
+                lock_date,
+            </if>
+            <if test="lockEndDate != null">
+                lock_end_date,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            now(),'active',#{userStatus,jdbcType=VARCHAR},#{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},
+            <if test="lockDate != null">
+                #{lockDate,jdbcType=DATE},
+            </if>
+            <if test="lockEndDate != null">
+                #{lockEndDate,jdbcType=DATE},
+            </if>
+        </trim>
     </insert>
+
+    <!--根据用户ID，获取该用户登录信息-->
+    <select id="findByID" resultMap="user">
+        SELECT * FROM user WHERE id = #{id}
+    </select>
+
+    <!--根据用户名查找登录用户-->
+    <select id="findByUsername" resultMap="user">
+        SELECT * FROM user WHERE username = #{username}
+    </select>
+
+    <select id="getList" resultMap="user">
+        SELECT *
+        FROM user
+        <where>
+            <if test="conditions.status != null">
+              AND status IN
+              <foreach collection="conditions.status" index="index" item="statusOne" open="(" close=")" separator=",">
+                  #{statusOne}
+              </foreach>
+            </if>
+            <if test="conditions.userStatus != null">
+                AND user_status IN
+                <foreach collection="conditions.userStatus" index="index" item="userStatusOne" open="(" close=")" separator=",">
+                    #{userStatusOne}
+                </foreach>
+            </if>
+            <if test="conditions.username != null">
+                AND username IN
+                <foreach collection="conditions.username" index="index" item="usernameOne" open="(" close=")" separator=",">
+                    #{usernameOne}
+                </foreach>
+            </if>
+        </where>
+        LIMIT #{start},#{count}
+    </select>
 </mapper>
