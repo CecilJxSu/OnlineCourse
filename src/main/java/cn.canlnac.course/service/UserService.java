@@ -2,7 +2,6 @@ package cn.canlnac.course.service;
 
 import cn.canlnac.course.entity.User;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -57,21 +56,4 @@ public interface UserService {
      * @return          更新的数目
      */
     int update(User user);
-
-    /**
-     * 临时封号，永久封号
-     * @param id        用户ID
-     * @param status    修改的状态，lock，dead
-     * @param lockDate  封号开始时间
-     * @param endDate   封号结束时间，dead状态，可以省略
-     * @return          更新的数目
-     */
-    int lock(int id, String status, Date lockDate, Date endDate);
-
-    /**
-     * 对用户进行解封
-     * @param id    用户ID
-     * @return      更新的数目
-     */
-    int unlock(int id);
 }
