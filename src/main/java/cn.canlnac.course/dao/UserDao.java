@@ -15,12 +15,10 @@ import java.util.Map;
 public interface UserDao {
     /**
      * 创建用户
-     * @param username      用户名
-     * @param password      密码
-     * @param userStatus    用户类型：学生：student；老师：teacher；管理员：admin
-     * @return              用户ID
+     * @param user          用户对象，必须的字段username,password,userStatus
+     * @return              插入数目
      */
-    int create(@Param("username") String username, @Param("password") String password, @Param("userStatus") String userStatus);
+    int create(User user);
 
     /**
      * 根据用户ID，获取该用户登录信息

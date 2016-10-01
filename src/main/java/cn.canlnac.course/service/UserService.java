@@ -12,12 +12,10 @@ import java.util.Map;
 public interface UserService {
     /**
      * 创建用户
-     * @param username      用户名
-     * @param password      密码
-     * @param userStatus    用户类型：老师，学生，管理员
-     * @return              用户ID
+     * @param user          用户对象，必须的字段username,password,userStatus
+     * @return              插入数目
      */
-    int create(String username, String password, String userStatus);
+    int create(User user);
 
     /**
      * 根据用户ID，获取该用户登录信息
