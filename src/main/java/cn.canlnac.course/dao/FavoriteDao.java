@@ -16,7 +16,7 @@ public interface FavoriteDao {
      * @param targetType    收藏类型，课程：course；话题：chat
      * @param targetId      收藏ID
      * @param userId        用户ID
-     * @return              创建ID
+     * @return              创建数目
      */
     int create(
             @Param("targetType") String targetType,

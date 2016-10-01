@@ -16,7 +16,7 @@ public interface LikeDao {
      * @param targetType    点赞类型，课程：course；话题：chat；评论：comment
      * @param targetId      点赞ID
      * @param userId        用户ID
-     * @return              创建ID
+     * @return              创建数目
      */
     int create(
             @Param("targetType") String targetType,

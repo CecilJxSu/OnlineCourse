@@ -16,7 +16,7 @@ public interface WatchDao {
      * @param targetType    浏览类型，课程：course；话题：chat；文档：document
      * @param targetId      浏览ID
      * @param userId        用户ID
-     * @return              创建ID
+     * @return              创建数目
      */
     int create(
             @Param("targetType") String targetType,

@@ -15,7 +15,7 @@ public interface FollowingDao {
      * 创建关注记录
      * @param targetId      关注用户ID
      * @param userId        用户ID
-     * @return              创建ID
+     * @return              创建数目
      */
     int create(
             @Param("targetId") int targetId,
