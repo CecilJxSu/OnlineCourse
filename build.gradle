@@ -37,23 +37,29 @@ repositories {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+configurations {
+    /**
+     * 所有的starter依赖库都会加载下面的模块，该模块是spring-boot的日志管理模块
+     * 需要去除该模块，才能使用starter-log4j2
+     */
+    compile.exclude module: 'spring-boot-starter-logging'
+}
+
 dependencies {
-    compile(
-            'org.springframework.boot:spring-boot-starter-web',
-            'org.springframework:spring-tx:4.1.7.RELEASE',
-            'com.auth0:java-jwt:2.2.0',
-            'org.mybatis:mybatis:3.4.1',
-            'org.springframework:spring-aspects',
-            'org.springframework.boot:spring-boot-starter-jdbc:1.2.2.RELEASE',
-            'org.mybatis:mybatis-spring:1.3.0',
-            'mysql:mysql-connector-java:5.1.6',
-            'commons-dbcp:commons-dbcp:1.4',
-            'org.kie.modules:org-apache-commons-lang3:6.5.0.CR2'
-    )
-    testCompile(
-            'org.springframework.boot:spring-boot-starter-test',
-            'junit:junit:4.12'
-    )
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile 'org.springframework.boot:spring-boot-starter-log4j2:1.4.1.RELEASE'
+    compile('org.springframework:spring-tx:4.1.7.RELEASE')
+    compile('com.auth0:java-jwt:2.2.0')
+    compile('org.mybatis:mybatis:3.4.1')
+    compile('org.springframework:spring-aspects')
+    compile('org.springframework.boot:spring-boot-starter-jdbc:1.2.2.RELEASE')
+    compile('org.mybatis:mybatis-spring:1.3.0')
+    compile('mysql:mysql-connector-java:5.1.6')
+    compile('commons-dbcp:commons-dbcp:1.4')
+    compile('org.kie.modules:org-apache-commons-lang3:6.5.0.CR2')
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('junit:junit:4.12')
 }
 
 task wrapper(type: Wrapper) {
