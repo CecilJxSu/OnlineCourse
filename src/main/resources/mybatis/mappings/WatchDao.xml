@@ -11,4 +11,49 @@
         <result column="target_id" property="targetId" jdbcType="INTEGER"/>
         <result column="user_id" property="userId" jdbcType="INTEGER"/>
     </resultMap>
+    <resultMap id="profile" type="cn.canlnac.course.entity.Profile">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="university_id" property="universityId" jdbcType="VARCHAR"/>
+        <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
+        <result column="realname" property="realname" jdbcType="VARCHAR"/>
+        <result column="gender" property="gender" jdbcType="VARCHAR"/>
+        <result column="icon_url" property="iconUrl" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="CHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="department" property="department" jdbcType="VARCHAR"/>
+        <result column="major" property="major" jdbcType="VARCHAR"/>
+        <result column="dormitory_address" property="dormitoryAddress" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--创建浏览记录-->
+    <insert id="create" >
+        INSERT INTO watch(date,target_type,target_id,user_id)
+        VALUES (now(),#{targetType},#{targetId},#{userId})
+    </insert>
+
+    <!--取消浏览记录-->
+    <delete id="delete" >
+        DELETE FROM watch
+        WHERE target_type = #{targetType}
+              AND target_id = #{targetId}
+              AND user_id = #{userId}
+    </delete>
+
+    <!--统计该（课程/话题/文档）下的用户浏览数-->
+    <select id="count" resultType="Integer">
+        SELECT COUNT(*)
+        FROM watch
+        WHERE target_type = #{targetType}
+              AND target_id = #{targetId}
+    </select>
+
+    <select id="getUsers" resultMap="profile">
+        SELECT p.user_id,p.nickname,p.gender,p.icon_url
+        FROM watch w,profile p
+        WHERE w.user_id = p.user_id
+          AND w.target_type = #{targetType}
+          AND w.target_id = #{targetId}
+        Limit #{start},#{count}
+    </select>
 </mapper>
