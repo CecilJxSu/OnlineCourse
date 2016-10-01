@@ -1,6 +1,5 @@
 package cn.canlnac.course.dao;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import cn.canlnac.course.entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -88,7 +87,7 @@ public class UserDaoTest {
 //        userStatus.add("admin");
 
         List<String> username = new ArrayList<>();//登录用户名zhangsan
-        
+
         map.put("status",status);
         map.put("userStatus",userStatus);
 //        map.put("username",username);
@@ -96,5 +95,37 @@ public class UserDaoTest {
         List<User> users = userDao.getList(0,15,map);
         System.out.println(users.toString());
         assertEquals(13,users.size());
+    }
+
+    @Test
+    public void testCount(){
+        Map<String,Object> map = new HashMap<>();
+        //status数组，userStatus数组，username数组
+        List<String> status = new ArrayList<>();//正常：active；封号：lock；永久封号：dead
+        status.add("active");
+
+        List<String> userStatus = new ArrayList<>();//学生：student；老师：teacher；管理员：admin
+        userStatus.add("student");
+        userStatus.add("teacher");
+//        userStatus.add("admin");
+
+        List<String> username = new ArrayList<>();//登录用户名zhangsan
+
+        map.put("status",status);
+        map.put("userStatus",userStatus);
+//        map.put("username",username);
+
+        int count = userDao.count(map);
+        assertEquals(13,count);
+    }
+
+    @Test
+    public void testUpdate(){
+        User user = userDao.findByUsername("lisi1");
+        User userUP = new User();
+        userUP.setId(user.getId());
+        userUP.setPassword("654321");
+        int i = userDao.update(userUP);
+        assertEquals(1,i);
     }
 }
