@@ -7,10 +7,36 @@
     <resultMap id="reply" type="cn.canlnac.course.entity.Reply">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="date" property="date" jdbcType="DATE"/>
-        <result column="type" property="type" jdbcType="VARCHAR"/>
         <result column="comment_id" property="commentId" jdbcType="INTEGER"/>
         <result column="to_user_id" property="toUserId" jdbcType="INTEGER"/>
         <result column="user_id" property="userId" jdbcType="INTEGER"/>
         <result column="content" property="content" jdbcType="VARCHAR"/>
     </resultMap>
+
+    <!--创建回复内容-->
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="cn.canlnac.course.entity.Reply">
+        INSERT INTO reply(date,comment_id,to_user_id,user_id,content)
+        VALUES (now(),#{commentId},#{toUserId},#{userId},#{content})
+    </insert>
+
+    <!--获取评论下的所有回复内容-->
+    <select id="getReplies" resultMap="reply">
+        SELECT *
+        FROM reply
+        WHERE comment_id = #{commentId}
+        ORDER BY date DESC
+    </select>
+
+    <!--获取自己发表的回复-->
+    <select id="getOwnReplies" resultMap="reply">
+        SELECT *
+        FROM reply
+        WHERE user_id = #{userId}
+        ORDER BY date DESC
+    </select>
+
+    <!--删除回复-->
+    <delete id="delete">
+        DELETE FROM reply WHERE id = #{id}
+    </delete>
 </mapper>

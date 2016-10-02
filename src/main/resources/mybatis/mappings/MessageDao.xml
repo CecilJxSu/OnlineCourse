@@ -15,4 +15,50 @@
         <result column="position_id" property="positionId" jdbcType="INTEGER"/>
         <result column="content" property="content" jdbcType="VARCHAR"/>
     </resultMap>
+
+    <!--创建消息-->
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="cn.canlnac.course.entity.Message">
+        INSERT INTO message(date,is_read,type,to_user_id,from_user_id,action_type,position_id,content)
+        VALUES (now(),#{isRead},#{type},#{toUserId},#{fromUserId},#{actionType},#{positionId},#{content})
+    </insert>
+
+    <!--将未读消息设置成已读-->
+    <update id="setRead" parameterType="java.util.List">
+        UPDATE message SET is_read = 'Y'
+        WHERE id IN
+          <foreach collection="ids" item="id" open="(" close=")" separator=",">
+              #{id}
+          </foreach>
+    </update>
+
+    <!--根据type分组，统计对应未读消息的数目-->
+    <select id="countUnread" resultType="java.util.HashMap">
+        SELECT `type`,COUNT(type)
+        FROM message
+        WHERE to_user_id = #{toUserId}
+        GROUP BY `type`
+    </select>
+
+    <!--统计自己的、指定类型下的消息数目-->
+    <select id="count" resultType="Integer">
+        SELECT COUNT(*)
+        FROM message
+        WHERE `type` = #{type}
+            AND to_user_id = #{toUserId}
+    </select>
+
+    <!--获取指定类型下的消息-->
+    <select id="getMessages" resultMap="message">
+        SELECT *
+        FROM message
+        WHERE `type` = #{type}
+            AND to_user_id = #{toUserId}
+        LIMIT #{start},#{count}
+    </select>
+
+    <!--删除消息-->
+    <delete id="delete">
+        DELETE FROM message
+        WHERE id = #{id}
+    </delete>
 </mapper>
