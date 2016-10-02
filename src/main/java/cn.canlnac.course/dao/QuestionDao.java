@@ -1,6 +1,7 @@
 package cn.canlnac.course.dao;
 
 import cn.canlnac.course.entity.Question;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public interface QuestionDao {
      * @param questions 问题列表
      * @return          创建成功数目
      */
-    int create(List<Question> questions);
+    int create(@Param("questions") List<Question> questions);
 
     /**
      * 更新问题

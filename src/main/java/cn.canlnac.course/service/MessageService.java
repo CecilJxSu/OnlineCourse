@@ -1,6 +1,8 @@
 package cn.canlnac.course.service;
 
-import org.apache.logging.log4j.message.Message;
+
+
+import cn.canlnac.course.entity.Message;
 
 import java.util.List;
 import java.util.Map;
@@ -29,7 +31,7 @@ public interface MessageService {
      * @param toUserId  接收消息的用户ID，即获取自己的消息
      * @return          { course: 12, chat: 1, comment: 4, system: 1, user: 5 }
      */
-    Map<String, Integer> countUnread(int toUserId);
+    List<Map<String, Integer>> countUnread(int toUserId);
 
     /**
      * 统计自己的、指定类型下的消息数目

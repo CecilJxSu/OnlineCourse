@@ -1,7 +1,7 @@
 package cn.canlnac.course.dao;
 
 import org.apache.ibatis.annotations.Param;
-import org.apache.logging.log4j.message.Message;
+import cn.canlnac.course.entity.Message;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public interface MessageDao {
      * @param ids   消息ID列表
      * @return      修改成功数目
      */
-    int setRead(List<Integer> ids);
+    int setRead(@Param("ids") List<Integer> ids);
 
     /**
      * 根据type分组，统计对应未读消息的数目
@@ -32,7 +32,7 @@ public interface MessageDao {
      * @param toUserId  接收消息的用户ID，即获取自己的消息
      * @return          { course: 12, chat: 1, comment: 4, system: 1, user: 5 }
      */
-    Map<String, Integer> countUnread(int toUserId);
+    List<Map<String, Integer>> countUnread(int toUserId);
 
     /**
      * 统计自己的、指定类型下的消息数目

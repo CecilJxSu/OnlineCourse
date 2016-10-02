@@ -1,8 +1,8 @@
 package cn.canlnac.course.service.impl;
 
 import cn.canlnac.course.dao.MessageDao;
+import cn.canlnac.course.entity.Message;
 import cn.canlnac.course.service.MessageService;
-import org.apache.logging.log4j.message.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,7 +46,7 @@ public class MessageServiceImpl implements MessageService {
      * @return          { course: 12, chat: 1, comment: 4, system: 1, user: 5 }
      */
     @Override
-    public Map<String, Integer> countUnread(int toUserId) {
+    public List<Map<String, Integer>> countUnread(int toUserId) {
         return messageDao.countUnread(toUserId);
     }
 
