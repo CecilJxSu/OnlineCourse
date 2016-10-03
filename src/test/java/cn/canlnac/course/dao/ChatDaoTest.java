@@ -19,7 +19,7 @@ public class ChatDaoTest {
 
     @Test
     public void testGetById(){
-        /*Chat chat = chatDao.getById(1);
-        System.out.println("==================================================="+chat.toString());*/
+        Chat chat = chatDao.findByID(1);
+        System.out.println("==================================================="+chat.toString());
     }
 }

@@ -45,7 +45,7 @@ public class LearnRecordServiceImpl implements LearnRecordService{
      * @return          学习记录列表
      */
     @Override
-    public List<LearnRecord> getLearnRecord(int catalogId, int userId) {
+    public LearnRecord getLearnRecord(int catalogId, int userId) {
         return learnRecordDao.getLearnRecord(catalogId, userId);
     }
 
