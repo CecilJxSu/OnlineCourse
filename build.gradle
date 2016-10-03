@@ -58,8 +58,18 @@ dependencies {
     compile('commons-dbcp:commons-dbcp:1.4')
     compile('org.kie.modules:org-apache-commons-lang3:6.5.0.CR2')
 
+    compile("org.springframework.boot:spring-boot-devtools")
+
     testCompile('org.springframework.boot:spring-boot-starter-test')
-    testCompile('junit:junit:4.12')
+}
+
+configurations {
+    dev
+}
+
+bootRun {
+    // Use Spring Boot DevTool only when we run Gradle bootRun task
+    classpath = sourceSets.main.runtimeClasspath + configurations.dev
 }
 
 task wrapper(type: Wrapper) {

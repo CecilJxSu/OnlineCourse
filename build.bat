@@ -1,3 +1,3 @@
 @echo off
-gradle build -x test
+gradle build --continuous -x test
 pause
