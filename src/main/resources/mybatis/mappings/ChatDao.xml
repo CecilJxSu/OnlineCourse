@@ -30,6 +30,20 @@
         WHERE id = #{id}
     </select>
 
+    <select id="count" resultType="Integer">
+        SELECT count(*)
+        FROM chat
+        <where>
+            <if test="conditions != null">
+                <foreach collection="conditions" index="key" item="condition" open="" close="" separator="">
+                    AND #{key} IN
+                              <foreach collection="condition" item="value" index="index" open="(" separator="," close=")">
+                                  #{value}
+                              </foreach>
+                </foreach>
+            </if>
+        </where>
+    </select>
 
 
     <!--删除话题-->

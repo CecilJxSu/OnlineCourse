@@ -28,10 +28,10 @@ public interface ChatDao {
 
     /**
      * 统计话题
-     * @param conditions    条件：userId?：作者ID，可为空
+     * @param conditions    条件：userId?：作者ID，可为空。[Object需为]
      * @return              话题数目
      */
-    int count(Map<String, Object> conditions);
+    int count(@Param("conditions") Map<String, Object> conditions);
 
     /**
      * 获取话题列表

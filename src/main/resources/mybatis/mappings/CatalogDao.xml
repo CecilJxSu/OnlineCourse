@@ -17,7 +17,7 @@
     </resultMap>
 
     <!--创建章节-->
-    <insert id="create" useGeneratedKeys="true" keyProperty="id">
+    <insert id="create" useGeneratedKeys="true">
         INSERT INTO `catalog`(date,course_id,`index`,`name`,introduction,url,duration,previewImage)
         VALUES
               <foreach collection="catalogs" item="catalog" index="index" open="" close="" separator=",">

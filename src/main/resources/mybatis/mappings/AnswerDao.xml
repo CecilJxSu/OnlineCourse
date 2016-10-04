@@ -34,7 +34,7 @@
                     answer = #{answer},
                 </if>
                 <if test="total != 0">
-                    total = #{total},
+                    total = #{total}
                 </if>
             </trim>
         WHERE id = #{id}
@@ -43,10 +43,9 @@
     <!--获取回答-->
     <select id="getAnswer" resultMap="answer">
         SELECT a.id,a.date,a.question_id,a.user_id,a.answer,a.total
-        FROM answer a,`catalog` c,question q
-        WHERE c.id = q.catalog_id
-              AND q.id = a.question_id
-              AND c.id = #{catalogId}
+        FROM answer a,question q
+        WHERE q.id = a.question_id
+              AND q.catalog_id = #{catalogId}
               AND a.user_id = #{userId}
     </select>
 

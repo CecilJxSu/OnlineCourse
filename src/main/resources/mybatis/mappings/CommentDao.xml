@@ -24,7 +24,7 @@
 
     <!--获取指定评论-->
     <select id="findByID" resultMap="comment">
-        SELECT * FROM WHERE id = #{id}
+        SELECT * FROM comment WHERE id = #{id}
     </select>
 
     <!--统计评论-->
@@ -41,7 +41,12 @@
         FROM comment
         WHERE target_type = #{targetType}
               AND target_id = #{targetId}
-        ORDER BY ${sort} DESC
+        <if test="sort == 'date' or sort == null">
+            ORDER BY `date` DESC
+        </if>
+        <if test="sort == 'rank'">
+            ORDER BY like_count+reply_count DESC
+        </if>
         Limit #{start},#{count}
     </select>
 
