@@ -24,27 +24,54 @@
     </insert>
 
     <!--获取指定话题-->
-    <select id="getById" resultMap="chat">
+    <select id="findByID" resultMap="chat">
         SELECT *
         FROM chat
         WHERE id = #{id}
     </select>
 
+    <!--统计话题-->
     <select id="count" resultType="Integer">
         SELECT count(*)
         FROM chat
         <where>
+            <if test="conditions == null">
+                user_id = 0
+            </if>
             <if test="conditions != null">
                 <foreach collection="conditions" index="key" item="condition" open="" close="" separator="">
-                    AND #{key} IN
-                              <foreach collection="condition" item="value" index="index" open="(" separator="," close=")">
-                                  #{value}
-                              </foreach>
+                    <if test="key == 'userId'">
+                        AND user_id = #{condition}
+                    </if>
                 </foreach>
             </if>
         </where>
     </select>
 
+    <!--获取话题列表-->
+    <select id="getList" resultMap="chat">
+        SELECT *
+        FROM chat
+        <where>
+            <if test="conditions == null">
+                user_id = 0
+            </if>
+            <if test="conditions != null">
+                <foreach collection="conditions" index="key" item="condition" open="" close="" separator="">
+                    <if test="key == 'userId'">
+                        AND user_id = #{condition}
+                    </if>
+                </foreach>
+            </if>
+        </where>
+        <if test="sort == 'date' or sort == null">
+            ORDER BY `date` DESC
+        </if>
+        <if test="sort == 'rank'">
+            ORDER BY watch_count+like_count+comment_count+favorite_count DESC
+        </if>
+        LIMIT #{start},#{count}
+    </select>
 
     <!--删除话题-->
     <delete id="delete">
