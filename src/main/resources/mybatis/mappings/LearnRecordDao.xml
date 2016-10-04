@@ -26,17 +26,17 @@
         SET
             <trim prefix="" suffixOverrides=",">
                 <if test="catalogId != 0">
-                  catalog_id = #{catalogId}
+                  catalog_id = #{catalogId},
                 </if>
                 <if test="userId != 0">
-                  user_id = #{userId}
+                  user_id = #{userId},
                 </if>
                 <if test="progress != 0">
-                  progress = #{progress}
+                  progress = #{progress},
                 </if>
-                last_date = now()
+                last_date = now(),
                 <if test="lastPosition != 0">
-                  last_position = #{lastPosition}
+                  last_position = #{lastPosition},
                 </if>
             </trim>
         WHERE id = #{id}

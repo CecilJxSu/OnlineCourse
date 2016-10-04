@@ -17,6 +17,13 @@
         <result column="favorite_count" property="favoriteCount" jdbcType="INTEGER" />
     </resultMap>
 
+    <!--创建话题-->
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="cn.canlnac.course.entity.Chat">
+        INSERT INTO chat(date,title,content,user_id,picture_urls,watch_count,like_count,comment_count,favorite_count)
+        VALUES(now(),#{title},#{content},#{userId},#{pictureUrls},#{watchCount},#{likeCount},#{commentCount},#{favoriteCount})
+    </insert>
+
+    <!--获取指定话题-->
     <select id="getById" resultMap="chat">
         SELECT *
         FROM chat
@@ -24,4 +31,9 @@
     </select>
 
 
+
+    <!--删除话题-->
+    <delete id="delete">
+        DELETE FROM chat WHERE id = #{id}
+    </delete>
 </mapper>

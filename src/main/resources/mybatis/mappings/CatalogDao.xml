@@ -11,9 +11,57 @@
         <result column="index" property="index" jdbcType="INTEGER"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="introduction" property="introduction" jdbcType="VARCHAR"/>
-        <result column="key_point" property="keyPoint" jdbcType="VARCHAR"/>
         <result column="url" property="url" jdbcType="VARCHAR"/>
         <result column="duration" property="duration" jdbcType="INTEGER"/>
         <result column="previewImage" property="previewImage" jdbcType="VARCHAR"/>
     </resultMap>
+
+    <!--创建章节-->
+    <insert id="create" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `catalog`(date,course_id,`index`,`name`,introduction,url,duration,previewImage)
+        VALUES
+              <foreach collection="catalogs" item="catalog" index="index" open="" close="" separator=",">
+                  (now(),#{catalog.courseId},#{catalog.index},#{catalog.name},#{catalog.introduction},#{catalog.url},#{catalog.duration},#{catalog.previewImage})
+              </foreach>
+    </insert>
+
+    <!--更新章节-->
+    <update id="update" parameterType="cn.canlnac.course.entity.Catalog">
+        UPDATE `catalog`
+        SET
+            <trim prefix="" suffixOverrides=",">
+                <if test="courseId != 0">
+                    course_id = #{courseId},
+                </if>
+                <if test="index != 0">
+                    `index` = #{index},
+                </if>
+                <if test="name != null">
+                    `name` = #{name},
+                </if>
+                <if test="introduction != null">
+                    introduction = #{introduction},
+                </if>
+                <if test="url != null">
+                    url = #{url},
+                </if>
+                <if test="duration != 0">
+                    duration = #{duration},
+                </if>
+                <if test="previewImage != null">
+                    previewImage = #{previewImage},
+                </if>
+            </trim>
+        WHERE id = #{id}
+    </update>
+
+    <!--获取课程下的所有章节-->
+    <select id="getList" resultMap="catalog">
+        SELECT * FROM `catalog` WHERE course_id = #{courseId}
+    </select>
+
+    <!--删除章节-->
+    <delete id="delete">
+        DELETE FROM `catalog` WHERE id = #{id}
+    </delete>
 </mapper>
