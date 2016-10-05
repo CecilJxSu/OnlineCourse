@@ -12,4 +12,55 @@
         <result column="answer" property="answer" jdbcType="VARCHAR"/>
         <result column="total" property="total" jdbcType="REAL"/>
     </resultMap>
+
+    <!--创建回答-->
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="cn.canlnac.course.entity.Answer">
+        INSERT INTO answer(date,question_id,user_id,answer,total)
+        VALUES (now(),#{questionId},#{userId},#{answer},#{total})
+    </insert>
+
+    <!--更新回答-->
+    <update id="update" parameterType="cn.canlnac.course.entity.Answer">
+        UPDATE answer
+        SET
+            <trim prefix="" suffixOverrides=",">
+                <if test="questionId != 0">
+                    question_id = #{questionId},
+                </if>
+                <if test="userId != 0">
+                    user_id = #{userId},
+                </if>
+                <if test="answer != null">
+                    answer = #{answer},
+                </if>
+                <if test="total != 0">
+                    total = #{total}
+                </if>
+            </trim>
+        WHERE id = #{id}
+    </update>
+
+    <!--获取回答-->
+    <select id="getAnswer" resultMap="answer">
+        SELECT a.id,a.date,a.question_id,a.user_id,a.answer,a.total
+        FROM answer a,question q
+        WHERE q.id = a.question_id
+              AND q.catalog_id = #{catalogId}
+              AND a.user_id = #{userId}
+    </select>
+
+    <!--统计用户的回答数-->
+    <select id="count" resultType="Integer">
+        SELECT count(*)
+        FROM answer
+        WHERE user_id = #{userId}
+    </select>
+
+    <!--获取用户回答-->
+    <select id="getAnswers" resultMap="answer">
+        SELECT *
+        FROM answer
+        WHERE user_id = #{userId}
+        Limit #{start},#{count}
+    </select>
 </mapper>

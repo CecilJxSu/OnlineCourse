@@ -28,7 +28,7 @@ public interface LearnRecordService {
      * @param userId    用户ID
      * @return          学习记录列表
      */
-    List<LearnRecord> getLearnRecord(int catalogId, int userId);
+    LearnRecord getLearnRecord(int catalogId, int userId);
 
     /**
      * 统计自己的学习记录数目

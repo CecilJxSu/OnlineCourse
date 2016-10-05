@@ -31,7 +31,7 @@ public interface LearnRecordDao {
      * @param userId    用户ID
      * @return          学习记录列表
      */
-    List<LearnRecord> getLearnRecord(
+    LearnRecord getLearnRecord(
             @Param("catalogId") int catalogId,
             @Param("userId") int userId
     );

@@ -13,4 +13,56 @@
         <result column="last_date" property="lastDate" jdbcType="DATE"/>
         <result column="last_position" property="lastPosition" jdbcType="INTEGER"/>
     </resultMap>
+
+    <!--创建学习记录-->
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="cn.canlnac.course.entity.LearnRecord">
+        INSERT INTO learn_record(date,catalog_id,user_id,progress,last_date,last_position)
+        VALUES (now(),#{catalogId},#{userId},#{progress},now(),#{lastPosition})
+    </insert>
+
+    <!--更新学习记录-->
+    <update id="update" parameterType="cn.canlnac.course.entity.LearnRecord">
+        UPDATE learn_record
+        SET
+            <trim prefix="" suffixOverrides=",">
+                <if test="catalogId != 0">
+                  catalog_id = #{catalogId},
+                </if>
+                <if test="userId != 0">
+                  user_id = #{userId},
+                </if>
+                <if test="progress != 0">
+                  progress = #{progress},
+                </if>
+                last_date = now(),
+                <if test="lastPosition != 0">
+                  last_position = #{lastPosition},
+                </if>
+            </trim>
+        WHERE id = #{id}
+    </update>
+
+    <!--根据章节获取学习记录-->
+    <select id="getLearnRecord" resultMap="learnRecord">
+        SELECT *
+        FROM learn_record
+        WHERE catalog_id = #{catalogId}
+              AND user_id = #{userId}
+    </select>
+
+    <!--统计自己的学习记录数目-->
+    <select id="count" resultType="Integer">
+        SELECT COUNT(*)
+        FROM learn_record
+        WHERE user_id = #{userId}
+    </select>
+
+    <!--获取自己的学习记录-->
+    <select id="getLearnRecords" resultMap="learnRecord">
+        SELECT *
+        FROM learn_record
+        WHERE user_id = #{userId}
+        ORDER BY last_date DESC
+        LIMIT #{start},#{count}
+    </select>
 </mapper>

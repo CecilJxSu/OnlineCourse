@@ -33,31 +33,31 @@
         SET
         <trim prefix="" suffixOverrides=",">
             <if test="catalogId != 0">
-                catalog_id = #{catalogId}
+                catalog_id = #{catalogId},
             </if>
             <if test="index != 0">
-                `index` = #{index}
+                `index` = #{index},
             </if>
             <if test="type != 0">
-                `type` = #{type}
+                `type` = #{type},
             </if>
             <if test="question != null">
-                question = #{question}
+                question = #{question},
             </if>
             <if test="answer != null">
-                answer = #{answer}
+                answer = #{answer},
             </if>
             <if test="item != null">
-                item = #{item}
+                item = #{item},
             </if>
             <if test="explains != null">
-                explains = #{explains}
+                explains = #{explains},
             </if>
             <if test="url != null">
-                url = #{url}
+                url = #{url},
             </if>
             <if test="score != 0">
-                score = #{score}
+                score = #{score},
             </if>
         </trim>
         WHERE id = #{id}

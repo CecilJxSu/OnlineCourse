@@ -1,6 +1,7 @@
 package cn.canlnac.course.dao;
 
 import cn.canlnac.course.entity.Catalog;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public interface CatalogDao {
      * @param catalogs  章节数组
      * @return          成功创建数目
      */
-    int create(Catalog[] catalogs);
+    int create(@Param("catalogs") Catalog[] catalogs);
 
     /**
      * 更新章节

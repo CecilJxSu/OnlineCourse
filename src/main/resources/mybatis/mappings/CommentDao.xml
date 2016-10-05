@@ -11,7 +11,46 @@
         <result column="target_id" property="targetId" jdbcType="INTEGER"/>
         <result column="user_id" property="userId" jdbcType="INTEGER"/>
         <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="picture_urls" property="pictureUrls" jdbcType="VARCHAR"/>
         <result column="like_count" property="likeCount" jdbcType="INTEGER"/>
         <result column="reply_count" property="replyCount" jdbcType="INTEGER"/>
     </resultMap>
+
+    <!--创建评论-->
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="cn.canlnac.course.entity.Comment">
+        INSERT INTO comment(date,target_type,target_id,user_id,content,picture_urls,like_count,reply_count)
+        VALUES(now(),#{targetType},#{targetId},#{userId},#{content},#{pictureUrls},#{likeCount},#{replyCount})
+    </insert>
+
+    <!--获取指定评论-->
+    <select id="findByID" resultMap="comment">
+        SELECT * FROM comment WHERE id = #{id}
+    </select>
+
+    <!--统计评论-->
+    <select id="count" resultType="Integer">
+        SELECT count(*)
+        FROM comment
+        WHERE target_type = #{targetType}
+              AND target_id = #{targetId}
+    </select>
+
+    <!--获取评论列表-->
+    <select id="getList" resultMap="comment">
+        SELECT *
+        FROM comment
+        WHERE target_type = #{targetType}
+              AND target_id = #{targetId}
+        <if test="sort == 'date' or sort == null">
+            ORDER BY `date` DESC
+        </if>
+        <if test="sort == 'rank'">
+            ORDER BY like_count+reply_count DESC
+        </if>
+        Limit #{start},#{count}
+    </select>
+
+    <delete id="delete">
+        DELETE FROM comment WHERE id = #{id}
+    </delete>
 </mapper>

@@ -13,8 +13,8 @@ import java.util.List;
 public interface FollowingDao {
     /**
      * 创建关注记录
-     * @param targetId      关注用户ID
-     * @param userId        用户ID
+     * @param targetId      被关注用户ID
+     * @param userId        关注用户ID
      * @return              创建数目
      */
     int create(

@@ -41,7 +41,7 @@ public interface CourseDao {
      *                          department：String[]
      * @return              课程数目
      */
-    int count(Map<String, Object> conditions);
+    int count(@Param("conditions") Map<String, Object> conditions);
 
     /**
      * 获取课程列表
