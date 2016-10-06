@@ -57,6 +57,7 @@ dependencies {
     compile('mysql:mysql-connector-java:5.1.6')
     compile('commons-dbcp:commons-dbcp:1.4')
     compile('org.kie.modules:org-apache-commons-lang3:6.5.0.CR2')
+    compile('commons-validator:commons-validator:1.4.1')
 
     compile("org.springframework.boot:spring-boot-devtools")
 
