@@ -50,6 +50,10 @@ public class LoginController {
         if(user == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
+        //检查用户状态是否正常
+        if (user.getUserStatus()!="active"){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
         //用户密码验证错误
         if(!user.getPassword().equals(body.get("password"))){
             return new ResponseEntity(HttpStatus.FORBIDDEN);
