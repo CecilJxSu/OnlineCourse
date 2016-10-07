@@ -190,7 +190,6 @@ public class ProfileController {
                     keys.remove();
             }
         }
-        System.out.println(profile.toString());
 
         //更新或创建用户资料
         int count;
