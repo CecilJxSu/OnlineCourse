@@ -76,4 +76,15 @@ public interface FollowingDao {
             @Param("count") int count,
             @Param("userId") int userId
     );
+
+    /**
+     * 用户是否关注了目标用户
+     * @param userId    用户ID
+     * @param targetId  目标用户ID
+     * @return          0：未关注，1：已关注
+     */
+    int isFollowing(
+            @Param("userId") int userId,
+            @Param("targetId") int targetId
+    );
 }

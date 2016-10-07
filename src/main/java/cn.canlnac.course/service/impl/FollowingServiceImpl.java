@@ -83,4 +83,15 @@ public class FollowingServiceImpl implements FollowingService {
     public List<Profile> getFollowingUsers(int start, int count, int userId) {
         return followingDao.getFollowingUsers(start, count, userId);
     }
+
+    /**
+     * 用户是否关注了目标用户
+     * @param userId    用户ID
+     * @param targetId  目标用户ID
+     * @return          0：未关注，1：已关注
+     */
+    @Override
+    public int isFollowing(int userId, int targetId) {
+        return followingDao.isFollowing(userId,targetId);
+    }
 }

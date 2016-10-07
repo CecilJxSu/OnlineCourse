@@ -30,35 +30,34 @@ public class MessageServiceImpl implements MessageService {
     }
 
     /**
-     * 将未读消息设置成已读
-     * @param ids   消息ID列表
-     * @return      修改成功数目
+     * 获取指定的消息
+     * @param id    消息ID
+     * @return      消息
      */
     @Override
-    public int setRead(List<Integer> ids) {
-        return messageDao.setRead(ids);
+    public Message findByID(int id) {
+        return messageDao.findByID(id);
     }
 
     /**
-     * 根据type分组，统计对应未读消息的数目
-     * type，课程：course；话题：chat；评论：comment；系统：system；用户：user
-     * @param toUserId  接收消息的用户ID，即获取自己的消息
-     * @return          { course: 12, chat: 1, comment: 4, system: 1, user: 5 }
+     * 将未读消息设置成已读
+     * @param id    消息ID
+     * @return      修改成功数目
      */
     @Override
-    public List<Map<String, Integer>> countUnread(int toUserId) {
-        return messageDao.countUnread(toUserId);
+    public int setRead(int id) {
+        return messageDao.setRead(id);
     }
 
     /**
      * 统计自己的、指定类型下的消息数目
      * @param toUserId  接收者用户ID
-     * @param type      类型，课程：course；话题：chat；评论：comment；系统：system；用户：user
+     * @param isRead    已读：Y，未读：N
      * @return          消息数目
      */
     @Override
-    public int count(int toUserId, String type) {
-        return messageDao.count(toUserId, type);
+    public int count(int toUserId, String isRead) {
+        return messageDao.count(toUserId, isRead);
     }
 
     /**
@@ -66,7 +65,7 @@ public class MessageServiceImpl implements MessageService {
      * @param start     分页开始位置
      * @param count     分页返回数目
      * @param toUserId  接收者用户ID
-     * @param type      类型，课程：course；话题：chat；评论：comment；系统：system；用户：user
+     * @param isRead    已读：Y，未读：N
      * @return          消息列表
      */
     @Override
@@ -74,9 +73,9 @@ public class MessageServiceImpl implements MessageService {
             int start,
             int count,
             int toUserId,
-            String type
+            String isRead
     ) {
-        return messageDao.getMessages(start, count, toUserId, type);
+        return messageDao.getMessages(start, count, toUserId, isRead);
     }
 
     /**
