@@ -9,4 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Component("CourseRootController")
 @RestController
 public class RootController {
+
+
 }

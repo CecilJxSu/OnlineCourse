@@ -76,7 +76,6 @@ public class RootController {
     * */
     @PutMapping("/user")
     public ResponseEntity<Map<String, Object>> modify(@RequestBody Map<String, Object> body){
-        HashMap sendData = new HashMap();
 
         if (body.get("old")==""||body.get("old")==null||body.get("new")==""||body.get("new")==null){
             //参数错误，返回400
@@ -93,13 +92,8 @@ public class RootController {
             userService.update(user);
         }
 
-        sendData.put("sucess","{}");
-
-        //生成JWT
-        String auth = jwt.sign(sendData);
-
         //修改返回成功
-        return new ResponseEntity(sendData,HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 
@@ -110,7 +104,6 @@ public class RootController {
    * */
     @GetMapping("/user/{userId}")
     public ResponseEntity<Map<String, Object>> detele(@RequestBody Map<String,Object> body){
-        HashMap sendData = new HashMap();
 
         if (body.get("userId")==""||body.get("userId")==null){
             //参数错误，返回400
@@ -143,12 +136,7 @@ public class RootController {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        sendData.put("sucess","{}");
-
-        //生成JWT
-        String auth = jwt.sign(sendData);
-
         //永久封号返回成功
-        return new ResponseEntity(sendData,HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

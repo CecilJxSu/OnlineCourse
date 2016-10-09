@@ -42,7 +42,6 @@ public class ProfileController {
     public ResponseEntity<Map<String, Object>> otherProfile(@RequestBody Map<String, Object> body){
         HashMap sendData = new HashMap();
 
-
         if (body.get("id")==null||body.get("id")==""){
             //返回401，用户未登录
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
@@ -177,12 +176,7 @@ public class ProfileController {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        sendData.put("sucess","{}");
-
-        //生成JWT
-        String auth = jwt.sign(sendData);
-
         //返回修改成功
-        return new ResponseEntity(sendData,HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

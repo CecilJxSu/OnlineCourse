@@ -28,10 +28,7 @@ public interface AnswerService {
      * @param userId    用户ID
      * @return          回答
      */
-    Answer getAnswer(
-            int catalogId,
-            int userId
-    );
+    Answer getAnswer(int catalogId,int userId);
 
     /**
      * 统计用户的回答数

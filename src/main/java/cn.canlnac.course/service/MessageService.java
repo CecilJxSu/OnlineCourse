@@ -49,7 +49,7 @@ public interface MessageService {
      * @param type      类型，课程：course；话题：chat；评论：comment；系统：system；用户：user
      * @return          消息列表
      */
-    List<Message> getMessages(int start, int count, int toUserId, String type);
+    List<Message> getMessages(int start, int count, int toUserId, String typae);
 
     /**
      * 删除消息
