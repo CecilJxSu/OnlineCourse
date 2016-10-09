@@ -29,6 +29,16 @@ public class CommentServiceImpl implements CommentService {
     }
 
     /**
+     * 更新评论
+     * @param comment   评论
+     * @return          更新数目
+     */
+    @Override
+    public int update(Comment comment) {
+        return commentDao.update(comment);
+    }
+
+    /**
      * 获取指定评论
      * @param id    评论ID
      * @return      评论

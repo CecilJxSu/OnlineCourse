@@ -65,4 +65,16 @@ public class LikeServiceImpl implements LikeService {
     public List<Profile> getUsers(int start, int count, String targetType, int targetId) {
         return likeDao.getUsers(start, count, targetType, targetId);
     }
+
+    /**
+     * 用户是否点赞了该对象
+     * @param userId        用户ID
+     * @param targetType    点赞类型，课程：course；话题：chat；评论：comment
+     * @param targetId      目标ID
+     * @return              0：未关注，1：已关注
+     */
+    @Override
+    public int isLike(int userId, String targetType, int targetId){
+         return likeDao.isLike(userId, targetType, targetId);
+    }
 }

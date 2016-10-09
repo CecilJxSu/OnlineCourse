@@ -5,7 +5,6 @@ import cn.canlnac.course.entity.User;
 import cn.canlnac.course.service.FollowingService;
 import cn.canlnac.course.service.UserService;
 import cn.canlnac.course.util.JWT;
-import org.apache.commons.collections.map.HashedMap;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -129,7 +128,7 @@ public class FollowingControllerTest {
         //设置http请求数据
         HttpEntity<?> httpEntity = new HttpEntity<Object>(body, requestHeaders);
 
-        Map<String,Object> auth = new HashedMap();
+        Map<String,Object> auth = new HashMap();
         //Mock jwt，解码json web token
         when(jwt.decode(any())).thenReturn(auth);
 
@@ -160,7 +159,7 @@ public class FollowingControllerTest {
         //设置http请求数据
         HttpEntity<?> httpEntity = new HttpEntity<Object>(body, requestHeaders);
 
-        Map<String,Object> auth = new HashedMap();
+        Map<String,Object> auth = new HashMap();
         auth.put("id",1);
         //Mock jwt，解码json web token
         when(jwt.decode(any())).thenReturn(auth);
@@ -195,7 +194,7 @@ public class FollowingControllerTest {
         //设置http请求数据
         HttpEntity<?> httpEntity = new HttpEntity<Object>(body, requestHeaders);
 
-        Map<String,Object> auth = new HashedMap();
+        Map<String,Object> auth = new HashMap();
         auth.put("id",1);
         //Mock jwt，解码json web token
         when(jwt.decode(any())).thenReturn(auth);
@@ -345,7 +344,7 @@ public class FollowingControllerTest {
         //设置http请求数据
         HttpEntity<?> httpEntity = new HttpEntity<Object>(body, requestHeaders);
 
-        Map<String,Object> auth = new HashedMap();
+        Map<String,Object> auth = new HashMap();
         //Mock jwt，解码json web token
         when(jwt.decode(any())).thenReturn(auth);
 
@@ -431,7 +430,7 @@ public class FollowingControllerTest {
         //设置http请求数据
         HttpEntity<?> httpEntity = new HttpEntity<Object>(body, requestHeaders);
 
-        Map<String,Object> auth = new HashedMap();
+        Map<String,Object> auth = new HashMap();
         auth.put("id",1);
         //Mock jwt，解码json web token
         when(jwt.decode(any())).thenReturn(auth);
@@ -463,7 +462,7 @@ public class FollowingControllerTest {
         //设置http请求数据
         HttpEntity<?> httpEntity = new HttpEntity<Object>(body, requestHeaders);
 
-        Map<String,Object> auth = new HashedMap();
+        Map<String,Object> auth = new HashMap();
         auth.put("id",1);
         //Mock jwt，解码json web token
         when(jwt.decode(any())).thenReturn(auth);
@@ -498,7 +497,7 @@ public class FollowingControllerTest {
         //设置http请求数据
         HttpEntity<?> httpEntity = new HttpEntity<Object>(body, requestHeaders);
 
-        Map<String,Object> auth = new HashedMap();
+        Map<String,Object> auth = new HashMap();
         auth.put("id",1);
         //Mock jwt，解码json web token
         when(jwt.decode(any())).thenReturn(auth);
@@ -537,7 +536,7 @@ public class FollowingControllerTest {
         //设置http请求数据
         HttpEntity<?> httpEntity = new HttpEntity<Object>(body, requestHeaders);
 
-        Map<String,Object> auth = new HashedMap();
+        Map<String,Object> auth = new HashMap();
         auth.put("id",1);
         //Mock jwt，解码json web token
         when(jwt.decode(any())).thenReturn(auth);
@@ -579,7 +578,7 @@ public class FollowingControllerTest {
         //设置http请求数据
         HttpEntity<?> httpEntity = new HttpEntity<Object>(body, requestHeaders);
 
-        Map<String,Object> auth = new HashedMap();
+        Map<String,Object> auth = new HashMap();
         auth.put("id",1);
         //Mock jwt，解码json web token
         when(jwt.decode(any())).thenReturn(auth);
@@ -621,7 +620,7 @@ public class FollowingControllerTest {
         //设置http请求数据
         HttpEntity<?> httpEntity = new HttpEntity<Object>(body, requestHeaders);
 
-        Map<String,Object> auth = new HashedMap();
+        Map<String,Object> auth = new HashMap();
         //Mock jwt，解码json web token
         when(jwt.decode(any())).thenReturn(auth);
 
@@ -707,7 +706,7 @@ public class FollowingControllerTest {
         //设置http请求数据
         HttpEntity<?> httpEntity = new HttpEntity<Object>(body, requestHeaders);
 
-        Map<String,Object> auth = new HashedMap();
+        Map<String,Object> auth = new HashMap();
         auth.put("id",1);
         //Mock jwt，解码json web token
         when(jwt.decode(any())).thenReturn(auth);
@@ -742,7 +741,7 @@ public class FollowingControllerTest {
         //设置http请求数据
         HttpEntity<?> httpEntity = new HttpEntity<Object>(body, requestHeaders);
 
-        Map<String,Object> auth = new HashedMap();
+        Map<String,Object> auth = new HashMap();
         auth.put("id",1);
         //Mock jwt，解码json web token
         when(jwt.decode(any())).thenReturn(auth);
@@ -780,7 +779,7 @@ public class FollowingControllerTest {
         //设置http请求数据
         HttpEntity<?> httpEntity = new HttpEntity<Object>(body, requestHeaders);
 
-        Map<String,Object> auth = new HashedMap();
+        Map<String,Object> auth = new HashMap();
         auth.put("id",1);
         //Mock jwt，解码json web token
         when(jwt.decode(any())).thenReturn(auth);

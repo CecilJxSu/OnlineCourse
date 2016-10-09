@@ -16,6 +16,13 @@ public interface CommentService {
     int create(Comment comment);
 
     /**
+     * 更新评论
+     * @param comment   评论
+     * @return          更新数目
+     */
+    int update(Comment comment);
+
+    /**
      * 获取指定评论
      * @param id    评论ID
      * @return      评论

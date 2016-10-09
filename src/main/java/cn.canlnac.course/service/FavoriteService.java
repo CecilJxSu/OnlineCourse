@@ -43,4 +43,13 @@ public interface FavoriteService {
      * @return              用户资料
      */
     List<Profile> getUsers(int start, int count, String targetType, int targetId);
+
+    /**
+     * 用户是否收藏了该对象
+     * @param userId        用户ID
+     * @param targetType    收藏类型，课程：course；话题：chat
+     * @param targetId      目标ID
+     * @return              0：未关注，1：已关注
+     */
+    int isFavorite(int userId, String targetType, int targetId);
 }

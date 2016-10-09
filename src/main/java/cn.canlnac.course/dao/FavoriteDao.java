@@ -62,4 +62,17 @@ public interface FavoriteDao {
             @Param("targetType") String targetType,
             @Param("targetId") int targetId
     );
+
+    /**
+     * 用户是否收藏了该对象
+     * @param userId        用户ID
+     * @param targetType    收藏类型，课程：course；话题：chat
+     * @param targetId      目标ID
+     * @return              0：未关注，1：已关注
+     */
+    int isFavorite(
+            @Param("userId") int userId,
+            @Param("targetType") String targetType,
+            @Param("targetId") int targetId
+    );
 }
