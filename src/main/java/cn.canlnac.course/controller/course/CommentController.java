@@ -4,8 +4,6 @@ import cn.canlnac.course.entity.*;
 import cn.canlnac.course.service.*;
 import cn.canlnac.course.util.JWT;
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -107,7 +105,7 @@ public class CommentController {
             commentObj.put("pictureUrls", pictureUrls);
 
             commentObj.put("likeCount",comment.getLikeCount());
-            commentObj.put("replyCount",comment.getReplyCount());
+            commentObj.put("replyCount",comment.getReplyCount()/2); //回复时，每次+2，所以要除2
 
             //获取回复
             if (comment.getReplyCount() > 0){
@@ -229,6 +227,10 @@ public class CommentController {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+        //更新课程评论数
+        course.setCommentCount(course.getCommentCount() + 3);
+        courseService.update(course);
+
         //创建返回数据
         HashMap<String,Object> sendData = new HashMap();
         sendData.put("commentId",commentId);
@@ -298,7 +300,7 @@ public class CommentController {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        comment.setReplyCount(comment.getReplyCount() + 1); //回复数 + 1
+        comment.setReplyCount(comment.getReplyCount() + 2); //回复数 + 2
         commentService.update(comment); //更新评论的回复数
 
         //创建返回数据

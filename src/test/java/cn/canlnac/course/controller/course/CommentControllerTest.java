@@ -143,7 +143,7 @@ public class CommentControllerTest {
         comment.setDate(new Date());
         comment.setContent("Comment");
         comment.setLikeCount(10);
-        comment.setReplyCount(1);
+        comment.setReplyCount(2);
 
         comments.add(comment);
         //返回评论
@@ -237,7 +237,7 @@ public class CommentControllerTest {
         comment.setContent("Comment");
         comment.setPictureUrls("[\"http://url.com/img\"]");
         comment.setLikeCount(10);
-        comment.setReplyCount(1);
+        comment.setReplyCount(2);
 
         comments.add(comment);
         //返回评论
@@ -497,6 +497,8 @@ public class CommentControllerTest {
 
         //创建评论
         when(commentService.create(any())).thenReturn(10);
+
+        when(courseService.update(any())).thenReturn(1);    //更新课程
 
         //发起请求
         ResponseEntity response = this.restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class );
