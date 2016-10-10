@@ -73,11 +73,15 @@ public class RootController {
         course.setStatus("draft");
         course.setUserId(Integer.parseInt(auth.get("id").toString()));
 
-        int courseId = courseService.create(course);    //创建课程
+        int createdCount = courseService.create(course);    //创建课程
+
+        if (createdCount != 1) {    //创建失败
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
         //创建返回数据
         HashMap<String,Object> sendData = new HashMap();
-        sendData.put("courseId", courseId);
+        sendData.put("courseId", course.getId());
 
         //返回课程ID
         return new ResponseEntity(sendData, HttpStatus.OK);
@@ -123,10 +127,10 @@ public class RootController {
 
             switch (key){
                 case "status":
-                    course.setStatus("public");
                     if (value == null || !value.toString().equals("public")){
                         return new ResponseEntity(HttpStatus.BAD_REQUEST);
                     }
+                    course.setStatus("public");
                     break;
                 case "name":
                     if (value == null || value.toString().isEmpty()){
@@ -279,9 +283,9 @@ public class RootController {
     @GetMapping("/courses")
     public ResponseEntity<Map<String, Object>> getCourses(
             @RequestHeader(value="Authentication", required = false) String Authentication,
-            @RequestParam(value = "0") int start,
-            @RequestParam(value = "10") int count,
-            @RequestParam(value = "date") String sort,
+            @RequestParam(defaultValue = "0") int start,
+            @RequestParam(defaultValue = "10") int count,
+            @RequestParam(defaultValue = "date") String sort,
             @RequestParam(required = false) List<String> departments
     ) {
         //处理登录信息
@@ -353,7 +357,6 @@ public class RootController {
 
             courseObj.put("isLike",(isLike>0));
             courseObj.put("isFavorite",(isFavorite>0));
-
 
             courses.add(courseObj);
         }
