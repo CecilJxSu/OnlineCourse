@@ -11,7 +11,7 @@ public interface CatalogService {
     /**
      * 创建章节
      * @param catalog   章节
-     * @return          章节ID
+     * @return          创建成功数目
      */
     int create(Catalog catalog);
 

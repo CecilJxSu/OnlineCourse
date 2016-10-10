@@ -74,7 +74,7 @@ public class CatalogController {
         }
 
         //获取所有章节
-        Catalog[] catalogs = (Catalog[]) catalogService.getList(courseId).toArray();
+        Catalog[] catalogs = catalogService.getList(courseId).toArray(new Catalog[0]);
         List<Integer> indexes = new ArrayList<>();
         for (Catalog catalog:catalogs){
             indexes.add(catalog.getIndex());
@@ -106,7 +106,7 @@ public class CatalogController {
 
         //创建返回数据
         HashMap<String,Object> sendData = new HashMap();
-        sendData.put("catalogId", catalogId);
+        sendData.put("catalogId", catalog.getId());
 
         //返回章节ID
         return new ResponseEntity(sendData, HttpStatus.OK);
