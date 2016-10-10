@@ -127,64 +127,64 @@ public class ProfileController {
             value = body.get(key);
             switch (key){
                 case "universityId":
-                    profile.setUniversityId(value.toString());
                     if(value == null || value.toString().isEmpty()){
                         return new ResponseEntity(HttpStatus.BAD_REQUEST);
                     }
+                    profile.setUniversityId(value.toString());
                     break;
                 case "nickname":
-                    profile.setNickname(value.toString());
                     if(value == null || value.toString().isEmpty()){
                         return new ResponseEntity(HttpStatus.BAD_REQUEST);
                     }
+                    profile.setNickname(value.toString());
                     break;
                 case "realname":
-                    profile.setRealname(value.toString());
                     if(value == null || value.toString().isEmpty()){
                         return new ResponseEntity(HttpStatus.BAD_REQUEST);
                     }
+                    profile.setRealname(value.toString());
                     break;
                 case "iconUrl":
-                    profile.setIconUrl(value.toString());
                     if(value == null || value.toString().isEmpty()){
                         return new ResponseEntity(HttpStatus.BAD_REQUEST);
                     }
+                    profile.setIconUrl(value.toString());
                     break;
                 case "phone":
-                    profile.setPhone(value.toString());
                     if(value == null || value.toString().isEmpty()){
                         return new ResponseEntity(HttpStatus.BAD_REQUEST);
                     }
+                    profile.setPhone(value.toString());
                     break;
                 case "department":
-                    profile.setDepartment(value.toString());
                     if(value == null || value.toString().isEmpty()){
                         return new ResponseEntity(HttpStatus.BAD_REQUEST);
                     }
+                    profile.setDepartment(value.toString());
                     break;
                 case "major":
-                    profile.setMajor(value.toString());
                     if(value == null || value.toString().isEmpty()){
                         return new ResponseEntity(HttpStatus.BAD_REQUEST);
                     }
+                    profile.setMajor(value.toString());
                     break;
                 case "dormitoryAddress":
-                    profile.setDormitoryAddress(value.toString());
                     if(value == null || value.toString().isEmpty()){
                         return new ResponseEntity(HttpStatus.BAD_REQUEST);
                     }
+                    profile.setDormitoryAddress(value.toString());
                     break;
                 case "gender":
-                    profile.setGender(value.toString());
                     if (!Arrays.asList("male","female").contains(value)){
                         return new ResponseEntity(HttpStatus.BAD_REQUEST);
                     }
+                    profile.setGender(value.toString());
                     break;
                 case "email":
-                    profile.setEmail(value.toString());
                     if (!EmailValidator.getInstance().isValid(value.toString())){
                         return new ResponseEntity(HttpStatus.BAD_REQUEST);
                     }
+                    profile.setEmail(value.toString());
                     break;
                 default:
                     keys.remove();

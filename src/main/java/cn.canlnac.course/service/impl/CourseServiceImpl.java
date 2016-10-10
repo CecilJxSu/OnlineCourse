@@ -22,7 +22,7 @@ public class CourseServiceImpl implements CourseService {
     /**
      * 创建课程
      * @param course    课程
-     * @return          课程ID
+     * @return          创建数目
      */
     @Override
     public int create(Course course) {

@@ -43,4 +43,13 @@ public interface LikeService {
      * @return              用户资料
      */
     List<Profile> getUsers(int start, int count, String targetType, int targetId);
+
+    /**
+     * 用户是否点赞了该对象
+     * @param userId        用户ID
+     * @param targetType    点赞类型，课程：course；话题：chat；评论：comment
+     * @param targetId      目标ID
+     * @return              0：未关注，1：已关注
+     */
+    int isLike(int userId, String targetType, int targetId);
 }

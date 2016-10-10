@@ -65,4 +65,16 @@ public class WatchServiceImpl implements WatchService {
     public List<Profile> getUsers(int start, int count, String targetType, int targetId) {
         return watchDao.getUsers(start, count, targetType, targetId);
     }
+
+    /**
+     * 用户是否浏览了该对象
+     * @param userId        用户ID
+     * @param targetType    浏览类型，课程：course；话题：chat；文档：document
+     * @param targetId      目标ID
+     * @return              0：未关注，1：已关注
+     */
+    @Override
+    public int isWatch(int userId, String targetType, int targetId){
+        return watchDao.isWatch(userId, targetType, targetId);
+    }
 }

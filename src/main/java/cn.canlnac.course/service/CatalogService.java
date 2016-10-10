@@ -10,10 +10,10 @@ import java.util.List;
 public interface CatalogService {
     /**
      * 创建章节
-     * @param catalogs  章节数组
-     * @return          成功创建数目
+     * @param catalog   章节
+     * @return          创建成功数目
      */
-    int create(Catalog[] catalogs);
+    int create(Catalog catalog);
 
     /**
      * 更新章节

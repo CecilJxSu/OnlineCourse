@@ -62,4 +62,17 @@ public interface WatchDao {
             @Param("targetType") String targetType,
             @Param("targetId") int targetId
     );
+
+    /**
+     * 用户是否浏览了该对象
+     * @param userId        用户ID
+     * @param targetType    浏览类型，课程：course；话题：chat；文档：document
+     * @param targetId      目标ID
+     * @return              0：未关注，1：已关注
+     */
+    int isWatch(
+            @Param("userId") int userId,
+            @Param("targetType") String targetType,
+            @Param("targetId") int targetId
+    );
 }

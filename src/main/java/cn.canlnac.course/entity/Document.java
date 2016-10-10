@@ -16,6 +16,7 @@ public class Document {
     private String url;
     private String type;
     private int size;
+    private String name;
 
     public int getId() {
         return id;
@@ -71,6 +72,14 @@ public class Document {
 
     public void setSize(int size) {
         this.size = size;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
