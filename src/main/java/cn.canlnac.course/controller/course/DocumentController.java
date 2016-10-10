@@ -4,7 +4,6 @@ import cn.canlnac.course.entity.Course;
 import cn.canlnac.course.entity.Document;
 import cn.canlnac.course.service.CourseService;
 import cn.canlnac.course.service.DocumentService;
-import cn.canlnac.course.service.ProfileService;
 import cn.canlnac.course.util.JWT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,9 +27,6 @@ public class DocumentController {
 
     @Autowired
     DocumentService documentService;
-
-    @Autowired
-    ProfileService profileService;
 
     @Autowired
     JWT jwt;
@@ -80,8 +76,8 @@ public class DocumentController {
         document.setSize(Integer.parseInt(body.get("size").toString()));
         document.setUrl(body.get("url").toString());
 
-        int documentId = documentService.create(document);    //创建文档
-        if(documentId != 1){    //创建失败
+        int createdCount = documentService.create(document);    //创建文档
+        if(createdCount != 1){    //创建失败
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -106,9 +102,9 @@ public class DocumentController {
     public ResponseEntity getList(
             @RequestHeader(value="Authentication", required = false) String Authentication,
             @PathVariable int courseId,
-            @RequestParam(value = "0") int start,
-            @RequestParam(value = "10") int count,
-            @RequestParam(value = "date") String sort
+            @RequestParam(defaultValue = "0") int start,
+            @RequestParam(defaultValue = "10") int count,
+            @RequestParam(defaultValue = "date") String sort
     ) {
         //未登录
         Map<String, Object> auth;
@@ -135,6 +131,6 @@ public class DocumentController {
         sendData.put("documents",documents);
 
         //返回文档列表
-        return new ResponseEntity(documents, HttpStatus.OK);
+        return new ResponseEntity(sendData, HttpStatus.OK);
     }
 }
