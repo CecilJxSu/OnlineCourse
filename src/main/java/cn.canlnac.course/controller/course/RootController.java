@@ -1,11 +1,8 @@
 package cn.canlnac.course.controller.course;
 
-import cn.canlnac.course.entity.Catalog;
 import cn.canlnac.course.entity.Course;
-import cn.canlnac.course.entity.Document;
-import cn.canlnac.course.service.CatalogService;
-import cn.canlnac.course.service.CourseService;
-import cn.canlnac.course.service.DocumentService;
+import cn.canlnac.course.entity.Profile;
+import cn.canlnac.course.service.*;
 import cn.canlnac.course.util.JWT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,10 +22,16 @@ public class RootController {
     CourseService courseService;
 
     @Autowired
-    DocumentService documentService;
+    LikeService likeService;
 
     @Autowired
-    CatalogService catalogService;
+    FavoriteService favoriteService;
+
+    @Autowired
+    WatchService watchService;
+
+    @Autowired
+    ProfileService profileService;
 
     @Autowired
     JWT jwt;
@@ -77,6 +80,290 @@ public class RootController {
         sendData.put("courseId", courseId);
 
         //返回课程ID
+        return new ResponseEntity(sendData, HttpStatus.OK);
+    }
+
+    /**
+     * 修改课程
+     * @param Authentication    登录信息
+     * @param body              请求数据
+     * @param courseId          课程ID
+     * @return                  空对象
+     */
+    @PutMapping("/course/{courseId}")
+    public ResponseEntity<Map<String, Object>> update(
+            @RequestHeader(value="Authentication", required = false) String Authentication,
+            @RequestBody Map<String, Object> body,
+            @PathVariable int courseId
+    ) {
+        //未登录
+        Map<String, Object> auth;
+        if (Authentication == null || (auth = jwt.decode(Authentication)) == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        //获取课程
+        Course course = courseService.findByID(courseId);
+        if(course == null){ //课程不存在
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+        //不是管理员而且课程不属于自己的
+        if (!auth.get("userStatus").equals("admin") && course.getUserId() != (int)auth.get("id")){
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
+        }
+
+        //参数检查，并设置值
+        Iterator<String> keys = body.keySet().iterator();
+        String key;
+        Object value;
+        while (keys.hasNext()){
+            key = keys.next();
+            value = body.get(key);
+
+            switch (key){
+                case "status":
+                    course.setStatus("public");
+                    if (value == null || !value.toString().equals("public")){
+                        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+                    }
+                    break;
+                case "name":
+                    if (value == null || value.toString().isEmpty()){
+                        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+                    }
+                    course.setName(value.toString());
+                    break;
+                case "introduction":
+                    if (value == null || value.toString().isEmpty()){
+                        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+                    }
+                    course.setIntroduction(value.toString());
+                    break;
+                case "department":
+                    if (value == null || value.toString().isEmpty()){
+                        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+                    }
+                    course.setDepartment(value.toString());
+                    break;
+                default:
+                    keys.remove();
+            }
+        }
+
+        //更新课程
+        int updatedCount = courseService.update(course);
+        if(updatedCount != 1) { //更新失败
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        //创建返回数据
+        HashMap<String,Object> sendData = new HashMap();
+
+        //返回空对象
+        return new ResponseEntity(sendData, HttpStatus.OK);
+    }
+
+    /**
+     * 删除课程
+     * @param Authentication    登录信息
+     * @param courseId          课程ID
+     * @return                  空对象
+     */
+    @DeleteMapping("/course/{courseId}")
+    public ResponseEntity<Map<String, Object>> delete(
+            @RequestHeader(value="Authentication", required = false) String Authentication,
+            @PathVariable int courseId
+    ) {
+        //未登录
+        Map<String, Object> auth;
+        if (Authentication == null || (auth = jwt.decode(Authentication)) == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        //获取课程
+        Course course = courseService.findByID(courseId);
+        if(course == null){ //课程不存在
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+        //不是管理员而且课程不属于自己的
+        if (!auth.get("userStatus").equals("admin") && course.getUserId() != (int)auth.get("id")){
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
+        }
+
+        //删除课程
+        int deletedCount = courseService.delete(courseId);
+        if(deletedCount != 1) { //删除失败
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        //创建返回数据
+        HashMap<String,Object> sendData = new HashMap();
+
+        //返回空对象
+        return new ResponseEntity(sendData, HttpStatus.OK);
+    }
+
+    /**
+     * 获取课程
+     * @param Authentication    登录信息
+     * @param courseId          课程ID
+     * @return                  课程信息
+     */
+    @GetMapping("/course/{courseId}")
+    public ResponseEntity<Map<String, Object>> get(
+            @RequestHeader(value="Authentication", required = false) String Authentication,
+            @PathVariable int courseId
+    ) {
+        //未登录
+        Map<String, Object> auth;
+        if (Authentication == null || (auth = jwt.decode(Authentication)) == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        //获取课程
+        Course course = courseService.findByID(courseId);
+        if(course == null){ //课程不存在
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+        //获取标记
+        int isWatch = watchService.isWatch((int)auth.get("id"),"course",courseId);
+        int isLike = likeService.isLike((int)auth.get("id"),"course",courseId);
+        int isFavorite = favoriteService.isFavorite((int)auth.get("id"),"course",courseId);
+
+        //创建返回数据
+        HashMap<String,Object> sendData = new HashMap();
+
+        //设置返回信息
+        sendData.put("id",course.getId());
+        sendData.put("date",course.getDate());
+        sendData.put("name",course.getName());
+        sendData.put("introduction",course.getIntroduction());
+
+        //设置作者
+        Map<String,Object> author = new HashMap();
+        author.put("id",auth.get("id"));
+        author.put("name",auth.get("nickname"));
+        author.put("iconUrl",auth.get("iconUrl"));
+        sendData.put("author", author);
+
+        sendData.put("department",course.getDepartment());
+
+        sendData.put("likeCount",course.getLikeCount()/2);
+        sendData.put("commentCount",course.getCommentCount()/3);
+        sendData.put("favoriteCount",course.getFavoriteCount()/4);
+
+        sendData.put("isLike",(isLike>0));
+        sendData.put("isFavorite",(isFavorite>0));
+        if(isWatch<1){
+            course.setWatchCount(course.getWatchCount()+1); //增加浏览人数
+            courseService.update(course);
+        }
+        sendData.put("watchCount",course.getWatchCount());
+
+        //返回课程信息
+        return new ResponseEntity(sendData, HttpStatus.OK);
+    }
+
+    /**
+     * 获取课程列表
+     * @param Authentication    登录信息
+     * @param start             分页开始位置
+     * @param count             分页返回数目
+     * @param sort              排序方式：日期：date，热度：rank
+     * @param departments       院系
+     * @return                  课程列表
+     */
+    @GetMapping("/courses")
+    public ResponseEntity<Map<String, Object>> getCourses(
+            @RequestHeader(value="Authentication", required = false) String Authentication,
+            @RequestParam(value = "0") int start,
+            @RequestParam(value = "10") int count,
+            @RequestParam(value = "date") String sort,
+            @RequestParam(required = false) List<String> departments
+    ) {
+        //处理登录信息
+        Map<String, Object> auth = jwt.decode(Authentication);
+
+        //参数验证
+        if(start < 0 || count < 1 || !Arrays.asList("date","rank").contains(sort)){
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+
+        //查询条件
+        Map<String, Object> conditions = new HashMap();
+        conditions.put("status", Arrays.asList("public"));
+        if(departments.size() > 0){
+            conditions.put("department", departments);
+        }
+
+        //统计课程
+        int total = courseService.count(conditions);
+        if(total<1){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+        //获取课程列表
+        List<Course> courseList = courseService.getList(start, count, sort, conditions);
+        //返回的课程
+        List<Map<String,Object>> courses = new ArrayList<>();
+
+        //遍历课程
+        Iterator<Course> iterator = courseList.iterator();
+        Course course;
+        while (iterator.hasNext()){
+            course = iterator.next();
+            Map<String,Object> courseObj = new HashMap<>();
+
+            //设置返回信息
+            courseObj.put("id",course.getId());
+            courseObj.put("date",course.getDate());
+            courseObj.put("name",course.getName());
+            courseObj.put("introduction",course.getIntroduction());
+
+            //设置作者
+            Profile profile = profileService.findByUserID(course.getUserId());
+            if(profile != null){
+                Map<String,Object> author = new HashMap();
+
+                author.put("id",profile.getUserId());
+                author.put("name",profile.getNickname());
+                author.put("iconUrl",profile.getIconUrl());
+
+                courseObj.put("author", author);
+            }
+
+            courseObj.put("department",course.getDepartment());
+
+            courseObj.put("watchCount",course.getWatchCount());
+            courseObj.put("likeCount",course.getLikeCount()/2);
+            courseObj.put("commentCount",course.getCommentCount()/3);
+            courseObj.put("favoriteCount",course.getFavoriteCount()/4);
+
+            int isLike = 0;
+            int isFavorite = 0;
+            //用户登录
+            if (auth != null){
+                //获取标记
+                isLike = likeService.isLike((int)auth.get("id"),"course",course.getId());
+                isFavorite = favoriteService.isFavorite((int)auth.get("id"),"course",course.getId());
+            }
+
+            courseObj.put("isLike",(isLike>0));
+            courseObj.put("isFavorite",(isFavorite>0));
+
+
+            courses.add(courseObj);
+        }
+
+        //创建返回数据
+        HashMap<String,Object> sendData = new HashMap();
+        sendData.put("total",total);
+        sendData.put("courses",courses);
+
+        //返回课程列表
         return new ResponseEntity(sendData, HttpStatus.OK);
     }
 }

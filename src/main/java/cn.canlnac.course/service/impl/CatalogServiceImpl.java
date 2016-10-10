@@ -20,12 +20,12 @@ public class CatalogServiceImpl implements CatalogService {
 
     /**
      * 创建章节
-     * @param catalogs  章节数组
-     * @return          成功创建数目
+     * @param catalog   章节
+     * @return          章节ID
      */
     @Override
-    public int create(Catalog[] catalogs) {
-        return catalogDao.create(catalogs);
+    public int create(Catalog catalog) {
+        return catalogDao.create(catalog);
     }
 
     /**

@@ -13,10 +13,10 @@ import java.util.List;
 public interface CatalogDao {
     /**
      * 创建章节
-     * @param catalogs  章节数组
-     * @return          成功创建数目
+     * @param catalog   章节
+     * @return          章节ID
      */
-    int create(@Param("catalogs") Catalog[] catalogs);
+    int create(@Param("catalog") Catalog catalog);
 
     /**
      * 更新章节

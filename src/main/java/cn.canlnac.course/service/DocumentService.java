@@ -34,11 +34,12 @@ public interface DocumentService {
      * 获取指定类型和目标下的文档
      * @param start         分页开始位置
      * @param count         分页返回数目
+     * @param sort          排序：按日期排序：date，按名称：name，按大小：size
      * @param targetType    目标类型，课程：course；章节：catalog
      * @param targetId      目标ID
      * @return              文档列表
      */
-    List<Document> getDocuments(int start, int count, String targetType, int targetId);
+    List<Document> getDocuments(int start, int count, String sort, String targetType, int targetId);
 
     /**
      * 删除文档
