@@ -34,6 +34,13 @@ public interface CourseDao {
     Course findByID(int id);
 
     /**
+     * 获取作者的课程列表
+     * @param userId    作者ID
+     * @return          课程列表
+     */
+    List<Course> findByUserId(int userId);
+
+    /**
      * 统计课程
      * @param conditions    条件：
      *                          status: ("public" | "draft")[]

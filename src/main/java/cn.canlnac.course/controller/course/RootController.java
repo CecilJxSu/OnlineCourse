@@ -247,11 +247,16 @@ public class RootController {
         sendData.put("introduction",course.getIntroduction());
 
         //设置作者
-        Map<String,Object> author = new HashMap();
-        author.put("id",auth.get("id"));
-        author.put("name",auth.get("nickname"));
-        author.put("iconUrl",auth.get("iconUrl"));
-        sendData.put("author", author);
+        Profile profile = profileService.findByUserID(course.getUserId());
+        if(profile != null){
+            Map<String,Object> author = new HashMap();
+
+            author.put("id",profile.getUserId());
+            author.put("name",profile.getNickname());
+            author.put("iconUrl",profile.getIconUrl());
+
+            sendData.put("author", author);
+        }
 
         sendData.put("department",course.getDepartment());
 

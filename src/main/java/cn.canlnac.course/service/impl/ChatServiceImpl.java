@@ -22,11 +22,21 @@ public class ChatServiceImpl implements ChatService {
     /**
      * 创建话题
      * @param chat  话题
-     * @return      话题ID
+     * @return      创建成功数目
      */
     @Override
     public int create(Chat chat) {
         return chatDao.create(chat);
+    }
+
+    /**
+     * 更新话题
+     * @param chat  话题
+     * @return      更新成功数目
+     */
+    @Override
+    public int update(Chat chat) {
+        return chatDao.update(chat);
     }
 
     /**

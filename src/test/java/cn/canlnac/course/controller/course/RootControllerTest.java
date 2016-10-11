@@ -396,7 +396,7 @@ public class RootControllerTest {
     }
 
     /**
-     * 删除课程，未登录，应该返回400
+     * 删除课程，未登录，应该返回401
      */
     @Test
     public void shouldReturn401WhenDeleteCourse() {
@@ -639,6 +639,8 @@ public class RootControllerTest {
         course.setFavoriteCount(8);
         //查找课程
         when(courseService.findByID(1)).thenReturn(course);
+
+        when(profileService.findByUserID(1)).thenReturn(new Profile()); //返回作者资料
 
         when(watchService.isWatch(1,"course",1)).thenReturn(0); //是否浏览
         when(likeService.isLike(1,"course",1)).thenReturn(1);   //是否点赞

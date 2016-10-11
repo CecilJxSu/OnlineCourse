@@ -21,7 +21,7 @@ public class ReplyServiceImpl implements ReplyService {
     /**
      * 创建回复内容
      * @param reply 回复评论的内容
-     * @return      评论回复ID
+     * @return      成功创建数目
      */
     @Override
     public int create (Reply reply) {

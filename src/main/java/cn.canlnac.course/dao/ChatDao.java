@@ -15,9 +15,16 @@ public interface ChatDao {
     /**
      * 创建话题
      * @param chat  话题
-     * @return      话题ID
+     * @return      创建成功数目
      */
     int create(Chat chat);
+
+    /**
+     * 更新话题
+     * @param chat  话题
+     * @return      更新成功数目
+     */
+    int update(Chat chat);
 
     /**
      * 获取指定话题

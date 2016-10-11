@@ -29,6 +29,16 @@ public class CatalogServiceImpl implements CatalogService {
     }
 
     /**
+     * 获取指定的章节
+     * @param id    章节ID
+     * @return
+     */
+    @Override
+    public Catalog findByID(int id) {
+        return catalogDao.findByID(id);
+    }
+
+    /**
      * 更新章节
      * @param catalog   章节
      * @return          成功更新数目
