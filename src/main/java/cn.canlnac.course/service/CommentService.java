@@ -11,7 +11,7 @@ public interface CommentService {
     /**
      * 创建评论
      * @param comment   评论
-     * @return          评论ID
+     * @return          成功创建数目
      */
     int create(Comment comment);
 

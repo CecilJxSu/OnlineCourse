@@ -222,8 +222,8 @@ public class CommentController {
         comment.setUserId(Integer.parseInt(auth.get("id").toString()));
 
         //创建评论
-        int commentId = commentService.create(comment);
-        if (commentId < 1){ //创建失败
+        int createdId = commentService.create(comment);
+        if (createdId != 1){ //创建失败
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -233,7 +233,7 @@ public class CommentController {
 
         //创建返回数据
         HashMap<String,Object> sendData = new HashMap();
-        sendData.put("commentId",commentId);
+        sendData.put("commentId",comment.getId());
 
         //返回评论ID
         return new ResponseEntity(sendData, HttpStatus.OK);
@@ -293,10 +293,10 @@ public class CommentController {
             reply.setToUserId(Integer.parseInt(body.get("toUserId").toString()));
         }
 
-        int replyId = replyService.create(reply);   //创建回复
+        int createdId = replyService.create(reply);   //创建回复
 
         //创建回复失败
-        if(replyId<1){
+        if(createdId != 1){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -305,7 +305,7 @@ public class CommentController {
 
         //创建返回数据
         HashMap<String,Object> sendData = new HashMap();
-        sendData.put("replyId",replyId);
+        sendData.put("replyId",reply.getId());
 
         //返回回复ID
         return new ResponseEntity(sendData, HttpStatus.OK);

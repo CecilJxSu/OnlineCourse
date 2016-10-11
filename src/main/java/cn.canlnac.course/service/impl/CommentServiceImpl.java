@@ -21,7 +21,7 @@ public class CommentServiceImpl implements CommentService {
     /**
      * 创建评论
      * @param comment   评论
-     * @return          评论ID
+     * @return          成功创建数目
      */
     @Override
     public int create(Comment comment) {

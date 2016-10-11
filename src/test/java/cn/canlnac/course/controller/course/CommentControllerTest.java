@@ -496,7 +496,7 @@ public class CommentControllerTest {
         when(courseService.findByID(1)).thenReturn(new Course());
 
         //创建评论
-        when(commentService.create(any())).thenReturn(10);
+        when(commentService.create(any())).thenReturn(1);
 
         when(courseService.update(any())).thenReturn(1);    //更新课程
 
@@ -507,7 +507,7 @@ public class CommentControllerTest {
         assertEquals(200,response.getStatusCode().value());
 
         //返回评论ID
-        assertEquals("{\"commentId\":10}",response.getBody());
+        assertEquals("{\"commentId\":0}",response.getBody());
     }
 
     /**
@@ -670,7 +670,7 @@ public class CommentControllerTest {
         when(userService.findByID(2)).thenReturn(new User());
 
         //创建评论
-        when(replyService.create(any())).thenReturn(10);
+        when(replyService.create(any())).thenReturn(1);
 
         when(commentService.update(any())).thenReturn(1);
 
@@ -680,6 +680,6 @@ public class CommentControllerTest {
         //返回状态码应该等于200
         assertEquals(200,response.getStatusCode().value());
         //返回回复ID
-        assertEquals("{\"replyId\":10}",response.getBody());
+        assertEquals("{\"replyId\":0}",response.getBody());
     }
 }

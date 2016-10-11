@@ -99,8 +99,8 @@ public class CatalogController {
             catalog.setPreviewImage(body.get("previewImage").toString());
         }
 
-        int catalogId = catalogService.create(catalog);    //创建章节
-        if(catalogId<1){    //创建失败
+        int createdId = catalogService.create(catalog);    //创建章节
+        if(createdId != 1){    //创建失败
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
