@@ -19,6 +19,13 @@ public interface CatalogDao {
     int create(@Param("catalog") Catalog catalog);
 
     /**
+     * 获取指定的章节
+     * @param id    章节ID
+     * @return
+     */
+    Catalog findByID(int id);
+
+    /**
      * 更新章节
      * @param catalog   章节
      * @return          成功更新数目
