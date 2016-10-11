@@ -29,6 +29,16 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     /**
+     * 根据ID获取问题
+     * @param id    问题ID
+     * @return      问题
+     */
+    @Override
+    public Question findById(int id) {
+        return questionDao.findById(id);
+    }
+
+    /**
      * 更新问题
      * @param question  问题
      * @return          更新成功数目

@@ -19,6 +19,13 @@ public interface QuestionDao {
     int create(@Param("questions") List<Question> questions);
 
     /**
+     * 根据ID获取问题
+     * @param id    问题ID
+     * @return      问题
+     */
+    Question findById(int id);
+
+    /**
      * 更新问题
      * @param question  问题
      * @return          更新成功数目
