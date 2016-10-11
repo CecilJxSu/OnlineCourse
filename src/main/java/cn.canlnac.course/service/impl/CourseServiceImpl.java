@@ -50,6 +50,16 @@ public class CourseServiceImpl implements CourseService {
     }
 
     /**
+     * 获取作者的课程列表
+     * @param userId    作者ID
+     * @return          课程列表
+     */
+    @Override
+    public List<Course> findByUserId(int userId) {
+        return courseDao.findByUserId(userId);
+    }
+
+    /**
      * 统计课程
      * @param conditions    条件：
      *                          status: ("public" | "draft")[]
