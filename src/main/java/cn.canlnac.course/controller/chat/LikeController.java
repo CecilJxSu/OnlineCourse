@@ -68,11 +68,8 @@ public class LikeController {
         chat.setLikeCount(chat.getLikeCount() + 2);
         chatService.update(chat);   //更新话题
 
-        //创建返回数据
-        HashMap<String,Object> sendData = new HashMap();
-
         //返回空对象
-        return new ResponseEntity(sendData, HttpStatus.OK);
+        return new ResponseEntity(new HashMap(), HttpStatus.OK);
     }
 
     /**
@@ -82,7 +79,7 @@ public class LikeController {
      * @return                  空对象
      */
     @DeleteMapping("/chat/{chatId}/like")
-    public ResponseEntity<Map<String, Object>> unFollowing(
+    public ResponseEntity<Map<String, Object>> unLike(
             @RequestHeader(value="Authentication", required = false) String Authentication,
             @PathVariable int chatId
     ) {
@@ -112,10 +109,7 @@ public class LikeController {
             chatService.update(chat);
         }
 
-        //创建返回数据
-        HashMap<String,Object> sendData = new HashMap();
-
         //返回空对象
-        return new ResponseEntity(sendData, HttpStatus.OK);
+        return new ResponseEntity(new HashMap(), HttpStatus.OK);
     }
 }

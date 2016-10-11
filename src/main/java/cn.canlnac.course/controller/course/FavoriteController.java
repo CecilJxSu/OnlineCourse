@@ -68,11 +68,8 @@ public class FavoriteController {
         course.setFavoriteCount(course.getFavoriteCount() + 4);
         courseService.update(course);   //更新课程
 
-        //创建返回数据
-        HashMap<String,Object> sendData = new HashMap();
-
         //返回空对象
-        return new ResponseEntity(sendData, HttpStatus.OK);
+        return new ResponseEntity(new HashMap(), HttpStatus.OK);
     }
 
     /**
@@ -82,7 +79,7 @@ public class FavoriteController {
      * @return                  空对象
      */
     @DeleteMapping("/course/{courseId}/favorite")
-    public ResponseEntity<Map<String, Object>> unFollowing(
+    public ResponseEntity<Map<String, Object>> unFavorite(
             @RequestHeader(value="Authentication", required = false) String Authentication,
             @PathVariable int courseId
     ) {
@@ -112,10 +109,7 @@ public class FavoriteController {
             courseService.update(course);
         }
 
-        //创建返回数据
-        HashMap<String,Object> sendData = new HashMap();
-
         //返回空对象
-        return new ResponseEntity(sendData, HttpStatus.OK);
+        return new ResponseEntity(new HashMap(), HttpStatus.OK);
     }
 }
