@@ -20,6 +20,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -509,6 +511,7 @@ public class RootControllerTest {
 
         //创建body
         Map<String,Object> body = new HashMap();
+        body.put("infinity",true);
 
         //创建headers
         MultiValueMap<String,String> requestHeaders = new LinkedMultiValueMap<>();
@@ -542,7 +545,7 @@ public class RootControllerTest {
     }
 
     /**
-     * 永久封号，封号成功，应该返回200并返回空对象
+     * 临时封号，封号成功，应该返回200并返回空对象
      */
     @Test
     public void shouldReturn200WhenDeleteUser() {
@@ -550,6 +553,8 @@ public class RootControllerTest {
 
         //创建body
         Map<String,Object> body = new HashMap();
+        body.put("infinity",false);
+        body.put("lockEndDate", new Date(Calendar.getInstance().getTimeInMillis()+10000).getTime());
 
         //创建headers
         MultiValueMap<String,String> requestHeaders = new LinkedMultiValueMap<>();

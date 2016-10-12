@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,6 +51,21 @@ public class LoginController {
         if(user == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
+
+        if(user.getStatus().equals("lock")){//用户封号中
+            if (user.getLockEndDate().getTime() > new Date().getTime()){
+                Map lock = new HashMap();
+                lock.put("lockDate",user.getLockDate());
+                lock.put("lockEndDate",user.getLockEndDate());
+
+                return new ResponseEntity(lock,HttpStatus.FORBIDDEN);
+            }
+
+            //解封
+            user.setStatus("active");
+            userService.update(user);
+        }
+
         //用户密码验证错误
         if(!user.getPassword().equals(body.get("password"))){
             return new ResponseEntity(HttpStatus.FORBIDDEN);
