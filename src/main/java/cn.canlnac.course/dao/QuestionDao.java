@@ -1,10 +1,7 @@
 package cn.canlnac.course.dao;
 
 import cn.canlnac.course.entity.Question;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * 章节的小测数据接口
@@ -13,10 +10,10 @@ import java.util.List;
 public interface QuestionDao {
     /**
      * 创建问题
-     * @param questions 问题列表
+     * @param question  问题
      * @return          创建成功数目
      */
-    int create(@Param("questions") List<Question> questions);
+    int create(Question question);
 
     /**
      * 根据ID获取问题
@@ -26,18 +23,18 @@ public interface QuestionDao {
     Question findById(int id);
 
     /**
+     * 根据章节ID获取问题
+     * @param catalogId 章节ID
+     * @return          问题
+     */
+    Question findByCatalogId(int catalogId);
+
+    /**
      * 更新问题
      * @param question  问题
      * @return          更新成功数目
      */
     int update(Question question);
-
-    /**
-     * 获取某个章节下的所有小测
-     * @param catalogId 章节ID
-     * @return          问题列表
-     */
-    List<Question> getQuestions(int catalogId);
 
     /**
      * 删除小测

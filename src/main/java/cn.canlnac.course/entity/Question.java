@@ -12,14 +12,8 @@ public class Question {
     private int id;
     private Date date;
     private int catalogId;
-    private int index;
-    private int type;
-    private String question;
-    private String answer;
-    private String item;
-    private String explains;
-    private String url;
-    private float score;
+    private float total;
+    private String questions;
 
 
     public int getId() {
@@ -46,68 +40,20 @@ public class Question {
         this.catalogId = catalogId;
     }
 
-    public int getIndex() {
-        return index;
+    public float getTotal() {
+        return total;
     }
 
-    public void setIndex(int index) {
-        this.index = index;
+    public void setTotal(float total) {
+        this.total = total;
     }
 
-    public int getType() {
-        return type;
+    public String getQuestions() {
+        return questions;
     }
 
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public String getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
-    public String getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
-
-    public String getItem() {
-        return item;
-    }
-
-    public void setItem(String item) {
-        this.item = item;
-    }
-
-    public String getExplains() {
-        return explains;
-    }
-
-    public void setExplains(String explains) {
-        this.explains = explains;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public float getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
+    public void setQuestions(String questions) {
+        this.questions = questions;
     }
 
     @Override
