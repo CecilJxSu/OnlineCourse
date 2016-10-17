@@ -23,6 +23,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -101,6 +103,7 @@ public class LoginControllerTest {
 
         //Mock userService，根据用户名获取用户信息
         User user = new User();     //创建用户
+        user.setStatus("active");
         user.setPassword("124");    //设置密码
         when(this.userService.findByUsername("123")).thenReturn(user);  //返回该用户信息
 
@@ -164,6 +167,7 @@ public class LoginControllerTest {
         //Mock userService，根据用户名获取用户信息
         User user = new User();     //创建用户
         user.setId(1);
+        user.setStatus("active");
         user.setUserStatus("student");
         user.setPassword("123");    //设置密码
         when(this.userService.findByUsername("123")).thenReturn(user);  //返回该用户信息
@@ -188,5 +192,50 @@ public class LoginControllerTest {
          HttpHeaders responseHeaders = response.getHeaders();
         //应该设置头部的Authentication的JWT值
         assertEquals("asd123", responseHeaders.get("Authentication").get(0));
+    }
+
+    /**
+     * 用户被封，应该返回403
+     */
+    @Test
+    public void shouldReturn403WhenUserLock(){
+        //创建body
+        Map<String,Object> body = new HashMap();
+        //设置body参数
+        body.put("username","123");
+        body.put("password","123");
+
+        //创建headers
+        MultiValueMap<String,String> requestHeaders = new LinkedMultiValueMap<>();
+
+        //设置headers
+        requestHeaders.add("Content-Type","application/json; charset=UTF-8");
+
+        //设置http请求数据
+        HttpEntity<?> httpEntity = new HttpEntity<Object>(body, requestHeaders);
+
+        //Mock userService，根据用户名获取用户信息
+        User user = new User();     //创建用户
+        user.setId(1);
+        user.setStatus("lock");
+        user.setLockDate(new Date());
+        user.setLockEndDate(new Date(Calendar.getInstance().getTimeInMillis() + 10000));
+
+        user.setUserStatus("student");
+        user.setPassword("123");    //设置密码
+        when(this.userService.findByUsername("123")).thenReturn(user);  //返回该用户信息
+
+        //Mock，profileService，获取用户资料
+        Profile profile = new Profile();
+        profile.setNickname("cecil");
+        profile.setGender("male");
+        profile.setIconUrl("http://url.com");
+        when(profileService.findByUserID(1)).thenReturn(profile);   //返回该用户资料
+
+        //发起请求
+        ResponseEntity response = this.restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class );
+
+        //返回状态码应该等于403
+        assertEquals(403,response.getStatusCode().value());
     }
 }

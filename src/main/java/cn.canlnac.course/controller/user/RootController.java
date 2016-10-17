@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +32,7 @@ public class RootController {
      * @return      用户ID
      */
     @PostMapping("/user")
-    public ResponseEntity<Map<String, Object>> register(@RequestBody Map<String, Object> body) {
+    public ResponseEntity register(@RequestBody Map body) {
         //检查参数是否合法
         if(body.get("username") == null || body.get("password") == null ||
                 !EmailValidator.getInstance().isValid(body.get("email").toString()))
@@ -55,7 +56,7 @@ public class RootController {
         }
 
         //创建返回数据
-        HashMap<String,Object> sendData = new HashMap();
+        HashMap sendData = new HashMap();
         //设置返回数据，用户ID
         sendData.put("userID", user.getId());
 
@@ -70,16 +71,16 @@ public class RootController {
      * @return                  空对象
      */
     @PutMapping("/user")
-    public ResponseEntity<Map<String, Object>> changePwd(
+    public ResponseEntity changePwd(
             @RequestHeader(value="Authentication", required = false) String Authentication,
-            @RequestBody Map<String, Object> body
+            @RequestBody Map body
     ) {
         //检查参数是否合法
         if(body.get("old") == null || body.get("new") == null) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
-        Map<String,Object> auth;
+        Map auth;
         //未登录
         if(Authentication == null || (auth = jwt.decode(Authentication)) == null){
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
@@ -102,26 +103,25 @@ public class RootController {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        //创建返回数据
-        HashMap<String,Object> sendData = new HashMap();
-
         //返回空对象
-        return new ResponseEntity(sendData, HttpStatus.OK);
+        return new ResponseEntity(new HashMap(), HttpStatus.OK);
     }
 
     /**
-     * 永久封号
+     * 封号以及永久封号
      * @param Authentication    登录信息
+     * @param body              请求数据
      * @param userId            用户ID
      * @return                  空对象
      */
     @DeleteMapping("/user/{userId}")
-    public ResponseEntity<Map<String, Object>> deleteUser(
+    public ResponseEntity deleteUser(
             @RequestHeader(value="Authentication", required = false) String Authentication,
+            @RequestBody Map body,
             @PathVariable int userId
     ) {
         //未登录
-        Map<String,Object> auth;
+        Map auth;
         if(Authentication == null || (auth = jwt.decode(Authentication)) == null){
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
@@ -137,8 +137,22 @@ public class RootController {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
 
-        //设置永久封号
-        user.setStatus("dead");
+        //检查参数
+        if (body.get("infinity") == null || (!(boolean)body.get("infinity") && body.get("lockEndDate") == null)) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+
+        //封号
+        if ((boolean)body.get("infinity")) {
+            //设置永久封号
+            user.setStatus("dead");
+        } else {
+            //临时封号
+            user.setStatus("lock");
+            user.setLockDate(new Date());
+            user.setLockEndDate(new Date(Long.parseLong(body.get("lockEndDate").toString())));
+        }
+
         //更新用户状态
         int updatedCount = userService.update(user);
 
@@ -147,10 +161,7 @@ public class RootController {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        //创建返回数据
-        HashMap<String,Object> sendData = new HashMap();
-
         //返回空对象
-        return new ResponseEntity(sendData, HttpStatus.OK);
+        return new ResponseEntity(new HashMap(), HttpStatus.OK);
     }
 }
