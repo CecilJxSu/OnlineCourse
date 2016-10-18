@@ -34,7 +34,7 @@ public interface MessageDao {
     int setRead(@Param("id") int id);
 
     /**
-     * 统计自己的消息数目
+     * 统计自己的已读/未读消息数目
      * @param toUserId  接收者用户ID
      * @param isRead    已读：Y，未读：N
      * @return          消息数目

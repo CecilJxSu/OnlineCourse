@@ -84,4 +84,12 @@ public class FollowingDaoTest {
         List<Profile> list = followingDao.getFollowingUsers(0,20,2);
         assertEquals(15,list.size());
     }
+
+    @Test
+    public  void testIsFollowing(){
+        testCreate();
+
+        int re = followingDao.isFollowing(16,1);
+        assertEquals(1,re);
+    }
 }

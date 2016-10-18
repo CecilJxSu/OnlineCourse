@@ -71,4 +71,16 @@ public class CommentDaoTest {
         int m = commentDao.delete(id);
         assertEquals(1,m);
     }
+
+    @Test
+    public void update(){
+        create();
+
+        int id = commentDao.getList(0,20,"rank","comment",2).get(0).getId();
+        Comment comment1 = new Comment();
+        comment1.setId(id);
+        comment1.setReplyCount(1000);
+        int i = commentDao.update(comment1);
+        assertEquals(1,i);
+    }
 }

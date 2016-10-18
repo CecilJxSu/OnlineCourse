@@ -77,4 +77,37 @@
     <delete id="delete">
         DELETE FROM chat WHERE id = #{id}
     </delete>
+
+    <!--更新话题-->
+    <update id="update" parameterType="cn.canlnac.course.entity.Chat">
+        UPDATE chat
+        SET
+            <trim prefix="" suffixOverrides=",">
+                <if test="title != null">
+                    title = #{title},
+                </if>
+                <if test="content != null">
+                    content = #{content},
+                </if>
+                <if test="userId != 0">
+                    user_id = #{userId},
+                </if>
+                <if test="pictureUrls != null">
+                    picture_urls = #{pictureUrls},
+                </if>
+                <if test="watchCount != 0">
+                    watch_count = watch_count+#{watchCount},
+                </if>
+                <if test="likeCount != 0">
+                    like_count = like_count+#{likeCount},
+                </if>
+                <if test="commentCount != 0">
+                    comment_count = comment_count+#{commentCount},
+                </if>
+                <if test="favoriteCount != 0">
+                    favorite_count = favorite_count+#{favoriteCount},
+                </if>
+            </trim>
+        WHERE id = #{id}
+    </update>
 </mapper>

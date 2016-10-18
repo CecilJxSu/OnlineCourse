@@ -83,4 +83,12 @@ public class FavoriteDaoTest {
         System.out.println(list.toString());
         assertEquals(5,list.size());
     }
+
+    @Test
+    public void isFavorite(){
+        testCreate();
+
+        int i = favoriteDao.isFavorite(2,"chat",1);
+        assertEquals(1,i);
+    }
 }

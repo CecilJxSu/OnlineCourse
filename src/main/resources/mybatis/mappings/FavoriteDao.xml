@@ -57,4 +57,13 @@
         AND f.target_id = #{targetId}
         Limit #{start},#{count}
     </select>
+
+    <!--用户是否收藏了该对象-->
+    <select id="isFavorite" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM favorite
+        WHERE user_id = #{userId}
+              AND target_type = #{targetType}
+              AND target_id = #{targetId}
+    </select>
 </mapper>

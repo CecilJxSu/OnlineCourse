@@ -41,7 +41,7 @@
         FROM document
         WHERE target_type = #{targetType}
               AND target_id = #{targetId}
-        ORDER BY `date` DESC
+        ORDER BY ${sort} DESC
         LIMIT #{start},#{count}
     </select>
 
