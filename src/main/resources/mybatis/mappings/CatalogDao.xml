@@ -61,4 +61,11 @@
     <delete id="delete">
         DELETE FROM `catalog` WHERE id = #{id}
     </delete>
+
+    <!--获取指定的章节-->
+    <select id="findByID" resultMap="catalog">
+        SELECT *
+        FROM `catalog`
+        WHERE id = #{id}
+    </select>
 </mapper>

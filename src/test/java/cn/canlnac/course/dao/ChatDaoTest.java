@@ -81,4 +81,18 @@ public class ChatDaoTest {
         int i = chatDao.delete(id);
         assertEquals(1,i);
     }
+
+    @Test
+    public void update(){
+        create();
+
+        Map<String,Object> map = new HashMap();
+        map.put("userId",1);
+        int id = chatDao.getList(0,20,null,map).get(0).getId();
+        Chat chat = new Chat();
+        chat.setId(id);
+        chat.setWatchCount(3);
+        int i = chatDao.update(chat);
+        assertEquals(1,i);
+    }
 }

@@ -8,23 +8,14 @@
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="date" property="date" jdbcType="DATE"/>
         <result column="catalog_id" property="catalogId" jdbcType="INTEGER"/>
-        <result column="index" property="index" jdbcType="INTEGER"/>
-        <result column="type" property="type" jdbcType="INTEGER"/>
-        <result column="question" property="question" jdbcType="VARCHAR"/>
-        <result column="answer" property="answer" jdbcType="VARCHAR"/>
-        <result column="item" property="item" jdbcType="VARCHAR"/>
-        <result column="explains" property="explains" jdbcType="VARCHAR"/>
-        <result column="url" property="url" jdbcType="VARCHAR"/>
-        <result column="score" property="score" jdbcType="REAL"/>
+        <result column="questions" property="questions" jdbcType="VARCHAR"/>
+        <result column="total" property="total" jdbcType="REAL"/>
     </resultMap>
 
     <!--创建问题-->
     <insert id="create" useGeneratedKeys="true" parameterType="java.util.List">
-        INSERT INTO question (date,catalog_id,`index`,type,question,answer,item,explains,url,score)
-        VALUES
-        <foreach collection="questions" item="question" index="index" separator=",">
-            (now(),#{question.catalogId},#{question.index},#{question.type},#{question.question},#{question.answer},#{question.item},#{question.explains},#{question.url},#{question.score})
-        </foreach>
+        INSERT INTO question (date,catalog_id,questions,total)
+        VALUES (now(),#{catalogId},#{questions},#{total})
     </insert>
 
     <!--更新问题-->
@@ -35,41 +26,29 @@
             <if test="catalogId != 0">
                 catalog_id = #{catalogId},
             </if>
-            <if test="index != 0">
-                `index` = #{index},
+            <if test="questions != null">
+                questions = #{questions},
             </if>
-            <if test="type != 0">
-                `type` = #{type},
-            </if>
-            <if test="question != null">
-                question = #{question},
-            </if>
-            <if test="answer != null">
-                answer = #{answer},
-            </if>
-            <if test="item != null">
-                item = #{item},
-            </if>
-            <if test="explains != null">
-                explains = #{explains},
-            </if>
-            <if test="url != null">
-                url = #{url},
-            </if>
-            <if test="score != 0">
-                score = #{score},
+            <if test="total != 0">
+                total = #{total},
             </if>
         </trim>
         WHERE id = #{id}
     </update>
 
-    <!--获取某个章节下的所有小测-->
-    <select id="getQuestions" resultMap="question">
-        SELECT * FROM question WHERE catalog_id = #{catalogId}
-    </select>
-
     <!--删除小测-->
     <delete id="delete">
         DELETE FROM question WHERE id = #{id}
     </delete>
+
+    <!--根据ID获取问题-->
+    <select id="findById" resultMap="question">
+        SELECT * FROM question WHERE id = #{id}
+    </select>
+
+    <select id="findByCatalogId" resultMap="question">
+        SELECT *
+        FROM question
+        WHERE catalog_id = #{catalogId}
+    </select>
 </mapper>

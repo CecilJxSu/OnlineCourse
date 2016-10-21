@@ -63,4 +63,13 @@ public class CatalogDaoTest {
         int m = catalogDao.delete(id);
         assertEquals(1,m);
     }
+
+    @Test
+    public void findByID(){
+        create();
+
+        int id = catalogDao.getList(1).get(0).getId();
+        Catalog catalog = catalogDao.findByID(id);
+        System.out.println(catalog.toString());
+    }
 }
