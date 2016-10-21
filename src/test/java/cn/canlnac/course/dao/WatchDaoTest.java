@@ -43,13 +43,17 @@ public class WatchDaoTest {
 
     @Test
     public void testDelete(){
+        testCreate();
+
         int i = watchDao.delete("chat",1,39);
         assertEquals(1,i);
     }
 
     @Test
     public void testCount(){
-        int i = watchDao.count("chat",7);
+        testCreate();
+
+        int i = watchDao.count("chat",1);
         assertEquals(1,i);
     }
 
@@ -57,5 +61,13 @@ public class WatchDaoTest {
     public void testGetUsers(){
         List<Profile> list = watchDao.getUsers(0,20,"chat",7);
         System.out.println(list.toString());
+    }
+
+    @Test
+    public void isWatch(){
+        testCreate();
+
+        int i = watchDao.isWatch(39,"chat",1);
+        assertEquals(1,i);
     }
 }

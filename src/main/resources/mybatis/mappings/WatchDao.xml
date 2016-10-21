@@ -56,4 +56,13 @@
           AND w.target_id = #{targetId}
         Limit #{start},#{count}
     </select>
+
+    <!--用户是否浏览了该对象-->
+    <select id="isWatch" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM watch
+        WHERE user_id = #{userId}
+        AND target_type = #{targetType}
+        AND target_id = #{targetId}
+    </select>
 </mapper>

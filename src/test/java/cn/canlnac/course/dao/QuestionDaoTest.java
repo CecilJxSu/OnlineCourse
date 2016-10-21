@@ -27,48 +27,55 @@ public class QuestionDaoTest {
 
     @Test
     public void testCreate(){
-        List<Question> questions = new ArrayList<>();
+        int n = 0;
         for (int i=1;i<=15;i++){
             Question question = new Question();
-            question.setCatalogId(1);
-            question.setIndex(i);
-            int type = (i%3)+1;
-            question.setType(type);
-            question.setQuestion("jjsdfjlsjfjlfjsdf");
-            question.setAnswer("jojfosf,mjfsdjfmm,fsfjl");
-            questions.add(question);
+            question.setCatalogId(i);
+            question.setQuestions("fsfjojojo");
+            n += questionDao.create(question);
         }
-        int n = questionDao.create(questions);
         assertEquals(15, n);
     }
 
     @Test
     public void testUpdate(){
         testCreate();
-        int id = questionDao.getQuestions(1).get(1).getId();
+        int id = questionDao.findByCatalogId(1).getId();
 
         Question question = new Question();
         question.setId(id);
-        question.setType(10);
+        question.setQuestions("54fsdf");
         int i = questionDao.update(question);
         assertEquals(1,i);
     }
 
-    @Test
-    public void testGetQuestions(){
-        testCreate();
-
-        List<Question> questions = questionDao.getQuestions(1);
-        assertEquals(15,questions.size());
-    }
 
     @Test
     public void testDelete(){
         testCreate();
-        int id = questionDao.getQuestions(1).get(1).getId();
+        int id = questionDao.findByCatalogId(1).getId();
 
         int i = questionDao.delete(id);
         assertEquals(1,i);
+    }
+
+    @Test
+    public void testFindById(){
+        testCreate();
+
+        Question question1 = questionDao.findByCatalogId(1);
+        Question question2 = questionDao.findById(question1.getId());
+        System.out.println(question1.toString());
+        System.out.println(question2.toString());
+        //assertEquals(true,question2==question1);
+    }
+
+    @Test
+    public void testFindByCatalogId(){
+        testCreate();
+
+        Question question = questionDao.findByCatalogId(1);
+        System.out.println(question.toString());
     }
 }
 

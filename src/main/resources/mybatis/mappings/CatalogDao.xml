@@ -19,10 +19,7 @@
     <!--创建章节-->
     <insert id="create" useGeneratedKeys="true">
         INSERT INTO `catalog`(date,course_id,`index`,`name`,introduction,url,duration,previewImage)
-        VALUES
-              <foreach collection="catalogs" item="catalog" index="index" open="" close="" separator=",">
-                  (now(),#{catalog.courseId},#{catalog.index},#{catalog.name},#{catalog.introduction},#{catalog.url},#{catalog.duration},#{catalog.previewImage})
-              </foreach>
+        VALUES (now(),#{catalog.courseId},#{catalog.index},#{catalog.name},#{catalog.introduction},#{catalog.url},#{catalog.duration},#{catalog.previewImage})
     </insert>
 
     <!--更新章节-->
@@ -64,4 +61,11 @@
     <delete id="delete">
         DELETE FROM `catalog` WHERE id = #{id}
     </delete>
+
+    <!--获取指定的章节-->
+    <select id="findByID" resultMap="catalog">
+        SELECT *
+        FROM `catalog`
+        WHERE id = #{id}
+    </select>
 </mapper>

@@ -73,4 +73,12 @@
         ORDER BY f.date DESC
         LIMIT #{start},#{count}
     </select>
+
+    <!--用户是否关注了目标用户-->
+    <select id="isFollowing" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM following
+        WHERE user_id = #{userId}
+              AND target_id = #{targetId}
+    </select>
 </mapper>

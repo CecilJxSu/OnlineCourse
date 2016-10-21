@@ -126,4 +126,11 @@
     <delete id="delete">
         DELETE FROM course WHERE id = #{id}
     </delete>
+
+    <!--获取作者的课程列表-->
+    <select id="findByUserId" resultMap="course">
+        SELECT *
+        FROM course
+        WHERE user_id = #{userId}
+    </select>
 </mapper>

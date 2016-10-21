@@ -56,4 +56,13 @@
         AND l.target_id = #{targetId}
         Limit #{start},#{count}
     </select>
+
+    <!--用户是否点赞了该对象-->
+    <select id="isLike" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM `like`
+        WHERE user_id = #{userId}
+        AND target_type = #{targetType}
+        AND target_id = #{targetId}
+    </select>
 </mapper>

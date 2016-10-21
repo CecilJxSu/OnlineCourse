@@ -12,12 +12,13 @@
         <result column="url" property="url" jdbcType="VARCHAR"/>
         <result column="type" property="type" jdbcType="VARCHAR"/>
         <result column="size" property="size" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--创建文档-->
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="cn.canlnac.course.entity.Document">
-        INSERT INTO document(date,target_type,target_id,url,`type`,`size`)
-        VALUES (now(),#{targetType},#{targetId},#{url},#{type},#{size})
+        INSERT INTO document(date,target_type,target_id,url,`type`,`size`,name)
+        VALUES (now(),#{targetType},#{targetId},#{url},#{type},#{size},#{name})
     </insert>
 
     <!--根据ID获取文档-->
@@ -41,7 +42,7 @@
         FROM document
         WHERE target_type = #{targetType}
               AND target_id = #{targetId}
-        ORDER BY `date` DESC
+        ORDER BY ${sort} DESC
         LIMIT #{start},#{count}
     </select>
 

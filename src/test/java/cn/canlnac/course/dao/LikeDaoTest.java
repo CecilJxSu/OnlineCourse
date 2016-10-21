@@ -81,4 +81,12 @@ public class LikeDaoTest {
         System.out.println(list.toString());
         assertEquals(5,list.size());
     }
+
+    @Test
+    public void isLike(){
+        testCreate();
+
+        int i = likeDao.isLike(2,"chat",1);
+        assertEquals(1,i);
+    }
 }

@@ -126,4 +126,12 @@ public class CourseDaoTest {
         int i = courseDao.delete(pubId);
         assertEquals(1,i);
     }
+
+    @Test
+    public void findByUserId(){
+        testCreate();
+
+        List<Course> list = courseDao.findByUserId(1);
+        assertEquals(18,list.size());
+    }
 }

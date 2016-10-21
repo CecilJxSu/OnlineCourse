@@ -9,9 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
@@ -30,7 +28,7 @@ public class MessageDaoTest {
     public void testCreate(){
         for (int i=1;i<=15;i++){
             Message message = new Message();
-            message.setIsRead('N');
+            message.setIsRead(i%2==1?'Y':'N');
             message.setToUserId(1);
             message.setContent("fjosfoj467896sdtfhgudf");
             switch (i%5){
@@ -63,43 +61,34 @@ public class MessageDaoTest {
     public void testSetRead(){
         testCreate();
 
-        List<Integer> ids = new ArrayList<>();
-        for (Message m:messageDao.getMessages(0,20,1,"chat")) {
-            ids.add(m.getId());
+        int updateT = 0;
+        for (Message m:messageDao.getMessages(0,20,1,"N")) {
+            updateT += messageDao.setRead(m.getId());
         }
-        int m = messageDao.setRead(ids);
-        assertEquals(3,m);
-    }
-
-    @Test
-    public void testCountUnread(){
-        testCreate();
-
-        List<Map<String, Integer>> map = messageDao.countUnread(1);
-        System.out.println(map.toString());
+        assertEquals(7,updateT);
     }
 
     @Test
     public void testCount(){
         testCreate();
 
-        int m = messageDao.count(1,"chat");
-        assertEquals(3,m);
+        int m = messageDao.count(1,"Y");
+        assertEquals(8,m);
     }
 
     @Test
     public void tsetGetMessages(){
         testCreate();
 
-        List<Message> messages = messageDao.getMessages(0,20,1,"chat");
-        assertEquals(3,messages.size());
+        List<Message> messages = messageDao.getMessages(0,20,1,"Y");
+        assertEquals(8,messages.size());
     }
 
     @Test
     public void testDelete(){
         testCreate();
 
-        int i = messageDao.delete(messageDao.getMessages(0,20,1,"chat").get(1).getId());
+        int i = messageDao.delete(messageDao.getMessages(0,20,1,"Y").get(1).getId());
         assertEquals(1,i);
     }
 }

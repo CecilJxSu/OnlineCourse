@@ -25,14 +25,13 @@ public class CatalogDaoTest {
 
     @Test
     public void create(){
-        Catalog[] catalogs = new Catalog[15];
+        int m = 0;
         for (int i=0;i<15;i++){
             Catalog catalog = new Catalog();
             catalog.setCourseId(1);
             catalog.setIndex(i+1);
-            catalogs[i] = catalog;
+            m += catalogDao.create(catalog);
         }
-        int m = catalogDao.create(catalogs);
         assertEquals(15,m);
     }
 
@@ -63,5 +62,14 @@ public class CatalogDaoTest {
         int id = catalogDao.getList(1).get(0).getId();
         int m = catalogDao.delete(id);
         assertEquals(1,m);
+    }
+
+    @Test
+    public void findByID(){
+        create();
+
+        int id = catalogDao.getList(1).get(0).getId();
+        Catalog catalog = catalogDao.findByID(id);
+        System.out.println(catalog.toString());
     }
 }
