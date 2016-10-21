@@ -52,7 +52,6 @@ public class UserDaoTest {
             assertEquals(1, count);
             ids.add(user.getId());
         }
-        System.out.println("///////////************/////////////-------------++++++++++++++++++++++++++++++++");
         System.out.println(ids.toString());
     }
 
@@ -64,18 +63,20 @@ public class UserDaoTest {
             users.add(userDao.findByID(id));
         }
         System.out.println(users.toString());
-        System.out.println("///////////************/////////////-------------++++++++++++++++++++++++++++++++");
     }
 
     @Test
     public void testFindByUsername() throws Exception {
         testCreate();
-        User user = userDao.findByUsername("zhangsan1");
-        assertEquals("zhangsan1",user.getUsername());
+
+        User user = userDao.findByUsername("zhangsans3");
+        assertEquals("zhangsans3",user.getUsername());
     }
 
     @Test
-    public void testGetList(){
+    public void testGetList() throws Exception {
+        testCreate();
+
         Map<String,Object> map = new HashMap<>();
         //status数组，userStatus数组，username数组
         List<String> status = new ArrayList<>();//正常：active；封号：lock；永久封号：dead
@@ -94,11 +95,13 @@ public class UserDaoTest {
 
         List<User> users = userDao.getList(0,15,map);
         System.out.println(users.toString());
-        assertEquals(13,users.size());
+        assertEquals(10,users.size());
     }
 
     @Test
-    public void testCount(){
+    public void testCount() throws Exception {
+        testCreate();
+
         Map<String,Object> map = new HashMap<>();
         //status数组，userStatus数组，username数组
         List<String> status = new ArrayList<>();//正常：active；封号：lock；永久封号：dead
@@ -116,11 +119,13 @@ public class UserDaoTest {
 //        map.put("username",username);
 
         int count = userDao.count(map);
-        assertEquals(13,count);
+        assertEquals(10,count);
     }
 
     @Test
-    public void testUpdate(){
+    public void testUpdate() throws Exception {
+        testCreate();
+
         User user = userDao.findByUsername("lisi1");
         User userUP = new User();
         userUP.setId(user.getId());

@@ -34,6 +34,7 @@ public class DocumentDaoTest {
             document.setUrl("jdfisjfos");
             document.setType("sdlfs");
             document.setSize(155+i);
+            document.setName("name"+i);
             m += documentDao.create(document);
         }
         assertEquals(15,m);
