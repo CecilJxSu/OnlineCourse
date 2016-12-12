@@ -3,7 +3,6 @@ package cn.canlnac.course.controller.user;
 import cn.canlnac.course.entity.User;
 import cn.canlnac.course.service.UserService;
 import cn.canlnac.course.util.JWT;
-import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,8 +33,7 @@ public class RootController {
     @PostMapping("/user")
     public ResponseEntity register(@RequestBody Map body) {
         //检查参数是否合法
-        if(body.get("username") == null || body.get("password") == null ||
-                !EmailValidator.getInstance().isValid(body.get("email").toString()))
+        if(body.get("username") == null || body.get("password") == null || body.get("userStatus") == null)
         {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
@@ -45,14 +43,19 @@ public class RootController {
         //设置用户的信息
         user.setUsername(body.get("username").toString());
         user.setPassword(body.get("password").toString());
-        user.setPassword(body.get("email").toString());
+        user.setUserStatus(body.get("userStatus").toString());
 
         //创建用户
-        int createdCount = userService.create(user);
+        try {
+            userService.create(user);
+        } catch (Exception e) {
+            //用户名已经被注册
+            if(e.getCause().toString().contains("Duplicate")) {
+                return new ResponseEntity(HttpStatus.CONFLICT);
+            } else {//创建数目不为1，应该返回500，服务器错误
+                return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
 
-        //创建数目不为1，应该返回500，内部错误
-        if (createdCount != 1){
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         //创建返回数据
