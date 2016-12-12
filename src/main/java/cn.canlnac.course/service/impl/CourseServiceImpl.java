@@ -102,4 +102,13 @@ public class CourseServiceImpl implements CourseService {
     public int delete(int id) {
         return courseDao.delete(id);
     }
+
+    /**
+     * 获取某一门课程的学习总人数
+     * @param id    课程ID
+     * @return      某一门课程的学习总人数
+     */
+    public int getNumOfPeople(int id) {
+        return courseDao.getNumOfPeople(id);
+    }
 }

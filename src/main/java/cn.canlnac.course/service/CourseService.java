@@ -71,4 +71,11 @@ public interface CourseService {
      * @return      删除成功数目
      */
     int delete(int id);
+
+    /**
+     * 获取某一门课程的学习总人数
+     * @param id    课程ID
+     * @return      某一门课程的学习总人数
+     */
+    int getNumOfPeople(int id);
 }
