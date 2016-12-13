@@ -37,6 +37,13 @@ public interface CatalogService {
     List<Catalog> getList(int courseId);
 
     /**
+     * 获取课程下的所有章·节(二级树结构)
+     * @param courseId  课程ID
+     * @return          章节列表
+     */
+    List getChapterAndSectionList(int courseId);
+
+    /**
      * 删除章节
      * @param id    章节ID
      * @return      成功删除数目
