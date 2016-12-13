@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 课程章节事务接口实现
@@ -56,6 +59,27 @@ public class CatalogServiceImpl implements CatalogService {
     @Override
     public List<Catalog> getList(int courseId) {
         return catalogDao.getList(courseId);
+    }
+
+    /**
+     * 获取课程下的所有章·节(二级树结构)
+     * @param courseId  课程ID
+     * @return          章节列表[{"chapter":chapter,"sections":{...},...]
+     */
+    public List getChapterAndSectionList(int courseId) {
+        List returnList = new ArrayList();
+        //获取章
+        List<Catalog> chapters = catalogDao.getChapterList(courseId);
+        for (Catalog chapter:chapters) {
+            //获取节
+            List<Catalog> sections = catalogDao.getSectionList(chapter.getId());
+            //将章和其下的节放进Map单元
+            Map unit = new HashMap();
+            unit.put("chapter",chapter);
+            unit.put("sections",sections);
+            returnList.add(unit);
+        }
+        return returnList;
     }
 
     /**

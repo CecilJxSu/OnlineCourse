@@ -12,6 +12,7 @@ public class Catalog {
     private int id;
     private Date date;
     private int courseId;
+    private int parentId;
     private int index;
     private String name;
     private String introduction;
@@ -89,6 +90,14 @@ public class Catalog {
 
     public void setPreviewImage(String previewImage) {
         this.previewImage = previewImage;
+    }
+
+    public int getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
     }
 
     @Override

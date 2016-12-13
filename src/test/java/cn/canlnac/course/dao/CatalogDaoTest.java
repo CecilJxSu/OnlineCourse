@@ -29,6 +29,9 @@ public class CatalogDaoTest {
         for (int i=0;i<15;i++){
             Catalog catalog = new Catalog();
             catalog.setCourseId(1);
+            if(i>=5){
+                catalog.setParentId(i%5+1);
+            }
             catalog.setIndex(i+1);
             m += catalogDao.create(catalog);
         }
@@ -53,6 +56,22 @@ public class CatalogDaoTest {
 
         List<Catalog> catalogs = catalogDao.getList(1);
         assertEquals(15,catalogs.size());
+    }
+
+    @Test
+    public void getChapterList(){
+        create();
+
+        List<Catalog> catalogs = catalogDao.getChapterList(1);
+        assertEquals(5,catalogs.size());
+    }
+
+    @Test
+    public void getSectionList(){
+        create();
+
+        List<Catalog> catalogs = catalogDao.getSectionList(1);
+        assertEquals(2,catalogs.size());
     }
 
     @Test
