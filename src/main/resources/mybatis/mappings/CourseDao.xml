@@ -137,9 +137,10 @@
     <!--获取某一门课程的学习总人数-->
     <select id="getNumOfPeople" resultType="Integer">
         SELECT count(distinct lr.user_id)
-        from course c,catalog ca,learn_record lr
-        where c.id=ca.course_id
-        and ca.id=lr.catalog_id
-        and c.id = #{id}
+        from course c,catalog ca1,catalog ca2,learn_record lr
+        where c.id=ca1.course_id
+              AND ca1.id=ca2.parent_id
+              AND ca2.id=lr.catalog_id
+              AND c.id = #{id}
     </select>
 </mapper>
