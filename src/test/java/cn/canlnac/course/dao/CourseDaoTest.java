@@ -92,6 +92,8 @@ public class CourseDaoTest {
         map.put("status",status);
         map.put("userId",userId);
         map.put("department",department);
+        map.put("search","系");
+
         int count = courseDao.count(map);
         System.out.println(count);
     }
@@ -114,6 +116,7 @@ public class CourseDaoTest {
         map.put("status",status);
         map.put("userId",userId);
         map.put("department",department);
+        map.put("search","系");
 
         List<Course> courses = courseDao.getList(0,20,"rank",map);
         assertEquals(12,courses.size());

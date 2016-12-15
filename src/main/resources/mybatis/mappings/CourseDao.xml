@@ -88,6 +88,13 @@
                     #{department}
                 </foreach>
             </if>
+            <if test="index=='search' and condition!=null">
+                (
+                `name` LIKE CONCAT(CONCAT('%', #{condition}), '%')
+                OR `introduction` LIKE CONCAT(CONCAT('%', #{condition}), '%')
+                OR `department` LIKE CONCAT(CONCAT('%', #{condition}), '%')
+                )
+            </if>
         </foreach>
     </select>
 
@@ -111,6 +118,13 @@
                 <foreach collection="condition" item="department" index="departmentIndex" open="(" close=")" separator=",">
                     #{department}
                 </foreach>
+            </if>
+            <if test="index=='search' and condition!=null">
+                (
+                `name` LIKE CONCAT(CONCAT('%', #{condition}), '%')
+                OR `introduction` LIKE CONCAT(CONCAT('%', #{condition}), '%')
+                OR `department` LIKE CONCAT(CONCAT('%', #{condition}), '%')
+                )
             </if>
         </foreach>
         <if test="sort == 'date' or sort == null">
