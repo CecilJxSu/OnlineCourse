@@ -95,7 +95,7 @@ public class FileController {
 
             sendData.put("fileType", file.getContentType());
             sendData.put("fileSize", file.getSize());
-            sendData.put("url", fileName);
+            sendData.put("fileName", fileName);
 
             sendDataList.add(sendData);
         }
