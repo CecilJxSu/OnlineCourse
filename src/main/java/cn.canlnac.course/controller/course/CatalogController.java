@@ -66,7 +66,7 @@ public class CatalogController {
         }
 
         //检查参数
-        if(body.get("index") == null || body.get("name") == null || body.get("introduction") == null) {
+        if(body.get("index") == null || body.get("parent_id") == null || body.get("name") == null || body.get("introduction") == null) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         if(body.get("url") != null && (body.get("duration") == null || body.get("previewImage") == null)) {
@@ -81,9 +81,9 @@ public class CatalogController {
         }
 
         //检查index是否冲突
-        if(indexes.contains(Integer.parseInt(body.get("index").toString()))){
+        /*if(indexes.contains(Integer.parseInt(body.get("index").toString()))){
             return new ResponseEntity(HttpStatus.CONFLICT);
-        }
+        }*/
 
         //创建章节
         Catalog catalog = new Catalog();
@@ -91,6 +91,7 @@ public class CatalogController {
         catalog.setIntroduction(body.get("introduction").toString());
         catalog.setName(body.get("name").toString());
         catalog.setCourseId(courseId);
+        catalog.setParentId(Integer.parseInt(body.get("parent_id").toString()));
         catalog.setIndex(Integer.parseInt(body.get("index").toString()));
         //设置视频源
         if(body.get("url") != null){

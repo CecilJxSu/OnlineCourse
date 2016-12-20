@@ -107,7 +107,7 @@ public class RootController {
                     }
 
                     //修改其它的index
-                    if (!value.equals(catalog.getIndex())) {
+                    /*if (!value.equals(catalog.getIndex())) {
                         //获取所有章节
                         Catalog[] catalogs = catalogService.getList(catalog.getCourseId()).toArray(new Catalog[0]);
                         List<Integer> indexes = new ArrayList<>();
@@ -119,9 +119,15 @@ public class RootController {
                         if(indexes.contains(Integer.parseInt(value.toString()))){
                             return new ResponseEntity(HttpStatus.CONFLICT);
                         }
-                    }
+                    }*/
 
                     catalog.setIndex(Integer.parseInt(value.toString()));
+                    break;
+                case "parent_id":
+                    if (value == null) {
+                        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+                    }
+                    catalog.setParentId(Integer.parseInt(value.toString()));
                     break;
                 case "name":
                     if (value == null || value.toString().isEmpty()){
