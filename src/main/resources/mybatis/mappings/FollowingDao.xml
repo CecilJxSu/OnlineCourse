@@ -6,7 +6,7 @@
 <mapper namespace="cn.canlnac.course.dao.FollowingDao">
     <resultMap id="following" type="cn.canlnac.course.entity.Following">
         <id column="id" property="id" jdbcType="INTEGER"/>
-        <result column="date" property="date" jdbcType="DATE"/>
+        <result column="date" property="date" jdbcType="TIMESTAMP"/>
         <result column="target_id" property="targetId" jdbcType="INTEGER"/>
         <result column="user_id" property="userId" jdbcType="INTEGER"/>
     </resultMap>

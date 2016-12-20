@@ -6,7 +6,7 @@
 <mapper namespace="cn.canlnac.course.dao.UserDao">
     <resultMap id="user" type="cn.canlnac.course.entity.User">
         <id column="id" property="id" jdbcType="INTEGER"/>
-        <result column="date" property="date" jdbcType="DATE"/>
+        <result column="date" property="date" jdbcType="TIMESTAMP"/>
         <result column="status" property="status" jdbcType="VARCHAR"/>
         <result column="user_status" property="userStatus" jdbcType="VARCHAR"/>
         <result column="lock_date" property="lockDate" jdbcType="DATE"/>
