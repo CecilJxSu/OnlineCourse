@@ -6,7 +6,7 @@
 <mapper namespace="cn.canlnac.course.dao.QuestionDao">
     <resultMap id="question" type="cn.canlnac.course.entity.Question">
         <id column="id" property="id" jdbcType="INTEGER"/>
-        <result column="date" property="date" jdbcType="DATE"/>
+        <result column="date" property="date" jdbcType="TIMESTAMP"/>
         <result column="catalog_id" property="catalogId" jdbcType="INTEGER"/>
         <result column="questions" property="questions" jdbcType="VARCHAR"/>
         <result column="total" property="total" jdbcType="REAL"/>

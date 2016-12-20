@@ -6,7 +6,7 @@
 <mapper namespace="cn.canlnac.course.dao.LearnRecordDao">
     <resultMap id="learnRecord" type="cn.canlnac.course.entity.LearnRecord">
         <id column="id" property="id" jdbcType="INTEGER"/>
-        <result column="date" property="date" jdbcType="DATE"/>
+        <result column="date" property="date" jdbcType="TIMESTAMP"/>
         <result column="catalog_id" property="catalogId" jdbcType="INTEGER"/>
         <result column="user_id" property="userId" jdbcType="INTEGER"/>
         <result column="progress" property="progress" jdbcType="DOUBLE"/>
