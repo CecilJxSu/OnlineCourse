@@ -113,13 +113,13 @@ public class FileController {
     @GetMapping("/file/{name}")
     @ResponseBody
     public ResponseEntity<Resource> getFile(
-            @RequestHeader(value="Authentication", required = false) String Authentication,
+            /*@RequestHeader(value="Authentication", required = false) String Authentication,*/
             @PathVariable String name
     ) {
-        //未登录
+        /*//未登录
         if (Authentication == null || jwt.decode(Authentication) == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        }*/
 
         //参数错误
         if (name == null || name.isEmpty()) {
