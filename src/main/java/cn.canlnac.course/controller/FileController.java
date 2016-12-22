@@ -3,6 +3,7 @@ package cn.canlnac.course.controller;
 import cn.canlnac.course.util.JWT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
+//import org.springframework.core.io.Resource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,9 +11,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.activation.FileDataSource;
+import javax.activation.MimetypesFileTypeMap;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
@@ -66,10 +70,10 @@ public class FileController {
             @RequestHeader(value="Authentication", required = false) String Authentication,
             @RequestParam(value = "file") MultipartFile[] files
     ) {
-        //未登录
+        /*//未登录
         if (Authentication == null || jwt.decode(Authentication) == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
+        }*/
 
         //参数错误
         if (files == null || files.length == 0 || files[0].getSize() == 0) {
@@ -106,7 +110,7 @@ public class FileController {
 
     /**
      * 获取文件
-     * @param Authentication    登录信息
+     /* @param Authentication    登录信息
      * @param name              文件名
      * @return
      */
@@ -136,7 +140,16 @@ public class FileController {
 
         Resource resource = new FileSystemResource(file);
 
+        String contentType;
+        try {
+            FileDataSource fds = new FileDataSource(file);
+            contentType = fds.getContentType();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
         //返回成功
-        return ResponseEntity.ok().body(resource);
+        return ResponseEntity.ok().header("Content-Type",contentType).body(resource);
     }
 }

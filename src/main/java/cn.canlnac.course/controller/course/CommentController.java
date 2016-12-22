@@ -107,6 +107,7 @@ public class CommentController {
             commentObj.put("likeCount",comment.getLikeCount());
             commentObj.put("replyCount",comment.getReplyCount()/2); //回复时，每次+2，所以要除2
 
+            boolean isReply = false;
             //获取回复
             if (comment.getReplyCount() > 0){
                 List<Reply> replyList = replyService.getReplies(comment.getId());
@@ -138,6 +139,11 @@ public class CommentController {
                         author.put("iconUrl",userProfile.getIconUrl());
 
                         replyObj.put("author",author);
+
+                        //设置是否回复
+                        if (auth != null && auth.get("id").equals(userProfile.getUserId())) {
+                            isReply = true;
+                        }
                     }
 
                     replyObj.put("content",reply.getContent());
@@ -148,6 +154,8 @@ public class CommentController {
                 //添加回复到评论中
                 commentObj.put("replies",replies);
             }
+
+            commentObj.put("isReply", isReply);
 
             //设置点赞标记
             if(auth != null){   //登录状态
