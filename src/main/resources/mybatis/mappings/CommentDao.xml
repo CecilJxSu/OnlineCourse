@@ -60,7 +60,7 @@
         SET
             <trim prefix="" suffixOverrides=",">
                 <if test="targetType != null">
-                    target_type = #{target_type},
+                    target_type = #{targetType},
                 </if>
                 <if test="targetId != 0">
                     target_id = #{targetId},
