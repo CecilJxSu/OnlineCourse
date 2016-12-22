@@ -96,7 +96,7 @@ public class CommentController {
 
             //评论图片
             List<String> pictureUrls = new ArrayList();
-            if (comment.getPictureUrls() != null){
+            if (comment.getPictureUrls() != null && !comment.getPictureUrls().isEmpty()){
                 JSONArray array = new JSONArray(comment.getPictureUrls());
                 for (int i = 0; i < array.length(); i++){
                     pictureUrls.add(array.get(i).toString());
@@ -131,7 +131,7 @@ public class CommentController {
                     }
 
                     //处理回复的作者
-                    Profile userProfile = profileService.findByUserID(reply.getToUserId());
+                    Profile userProfile = profileService.findByUserID(reply.getUserId());
                     if(userProfile != null){
                         Map<String,Object> author = new HashMap();
                         author.put("id",userProfile.getUserId());
