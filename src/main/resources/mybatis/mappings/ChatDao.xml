@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.canlnac.course.dao.ChatDao">
+    <resultMap id="chat" type="cn.canlnac.course.entity.Chat">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="date" property="date" jdbcType="TIMESTAMP" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="content" property="content" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="picture_urls" property="pictureUrls" jdbcType="VARCHAR" />
+        <result column="watch_count" property="watchCount" jdbcType="INTEGER" />
+        <result column="like_count" property="likeCount" jdbcType="INTEGER" />
+        <result column="comment_count" property="commentCount" jdbcType="INTEGER" />
+        <result column="favorite_count" property="favoriteCount" jdbcType="INTEGER" />
+    </resultMap>
+
+    <!--创建话题-->
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="cn.canlnac.course.entity.Chat">
+        INSERT INTO chat(date,title,content,user_id,picture_urls,watch_count,like_count,comment_count,favorite_count)
+        VALUES(now(),#{title},#{content},#{userId},#{pictureUrls},#{watchCount},#{likeCount},#{commentCount},#{favoriteCount})
+    </insert>
+
+    <!--获取指定话题-->
+    <select id="findByID" resultMap="chat">
+        SELECT *
+        FROM chat
+        WHERE id = #{id}
+    </select>
+
+    <!--统计话题-->
+    <select id="count" resultType="Integer">
+        SELECT count(*)
+        FROM chat
+        <where>
+            <if test="conditions == null">
+                user_id = 0
+            </if>
+            <if test="conditions != null">
+                <foreach collection="conditions" index="key" item="condition" open="" close="" separator="">
+                    <if test="key == 'userId'">
+                        AND user_id = #{condition}
+                    </if>
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <!--获取话题列表-->
+    <select id="getList" resultMap="chat">
+        SELECT *
+        FROM chat
+        <where>
+            <if test="conditions == null">
+                user_id = 0
+            </if>
+            <if test="conditions != null">
+                <foreach collection="conditions" index="key" item="condition" open="" close="" separator="">
+                    <if test="key == 'userId'">
+                        AND user_id = #{condition}
+                    </if>
+                </foreach>
+            </if>
+        </where>
+        <if test="sort == 'date' or sort == null">
+            ORDER BY `date` DESC
+        </if>
+        <if test="sort == 'rank'">
+            ORDER BY watch_count+like_count+comment_count+favorite_count DESC
+        </if>
+        LIMIT #{start},#{count}
+    </select>
+
+    <!--删除话题-->
+    <delete id="delete">
+        DELETE FROM chat WHERE id = #{id}
+    </delete>
+
+    <!--更新话题-->
+    <update id="update" parameterType="cn.canlnac.course.entity.Chat">
+        UPDATE chat
+        SET
+            <trim prefix="" suffixOverrides=",">
+                <if test="title != null">
+                    title = #{title},
+                </if>
+                <if test="content != null">
+                    content = #{content},
+                </if>
+                <if test="userId != 0">
+                    user_id = #{userId},
+                </if>
+                <if test="pictureUrls != null">
+                    picture_urls = #{pictureUrls},
+                </if>
+                <if test="watchCount != 0">
+                    watch_count = watch_count+#{watchCount},
+                </if>
+                <if test="likeCount != 0">
+                    like_count = like_count+#{likeCount},
+                </if>
+                <if test="commentCount != 0">
+                    comment_count = comment_count+#{commentCount},
+                </if>
+                <if test="favoriteCount != 0">
+                    favorite_count = favorite_count+#{favoriteCount},
+                </if>
+            </trim>
+        WHERE id = #{id}
+    </update>
+</mapper>

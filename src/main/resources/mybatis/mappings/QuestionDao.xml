@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.canlnac.course.dao.QuestionDao">
+    <resultMap id="question" type="cn.canlnac.course.entity.Question">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="date" property="date" jdbcType="TIMESTAMP"/>
+        <result column="catalog_id" property="catalogId" jdbcType="INTEGER"/>
+        <result column="questions" property="questions" jdbcType="VARCHAR"/>
+        <result column="total" property="total" jdbcType="REAL"/>
+    </resultMap>
+
+    <!--创建问题-->
+    <insert id="create" useGeneratedKeys="true" parameterType="java.util.List">
+        INSERT INTO question (date,catalog_id,questions,total)
+        VALUES (now(),#{catalogId},#{questions},#{total})
+    </insert>
+
+    <!--更新问题-->
+    <update id="update" parameterType="cn.canlnac.course.entity.Question">
+        UPDATE question
+        SET
+        <trim prefix="" suffixOverrides=",">
+            <if test="catalogId != 0">
+                catalog_id = #{catalogId},
+            </if>
+            <if test="questions != null">
+                questions = #{questions},
+            </if>
+            <if test="total != 0">
+                total = #{total},
+            </if>
+        </trim>
+        WHERE id = #{id}
+    </update>
+
+    <!--删除小测-->
+    <delete id="delete">
+        DELETE FROM question WHERE id = #{id}
+    </delete>
+
+    <!--根据ID获取问题-->
+    <select id="findById" resultMap="question">
+        SELECT * FROM question WHERE id = #{id}
+    </select>
+
+    <select id="findByCatalogId" resultMap="question">
+        SELECT *
+        FROM question
+        WHERE catalog_id = #{catalogId}
+    </select>
+</mapper>

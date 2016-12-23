@@ -1,0 +1,62 @@
+package cn.canlnac.course.dao;
+
+import cn.canlnac.course.entity.Catalog;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+/**
+ * 课程章节接口
+ */
+@Component
+public interface CatalogDao {
+    /**
+     * 创建章节
+     * @param catalog   章节
+     * @return          创建成功数目
+     */
+    int create(@Param("catalog") Catalog catalog);
+
+    /**
+     * 获取指定的章节
+     * @param id    章节ID
+     * @return
+     */
+    Catalog findByID(int id);
+
+    /**
+     * 更新章节
+     * @param catalog   章节
+     * @return          成功更新数目
+     */
+    int update(Catalog catalog);
+
+    /**
+     * 获取课程下的所有章节
+     * @param courseId  课程ID
+     * @return          章节列表
+     */
+    List<Catalog> getList(int courseId);
+
+    /**
+     * 获取课程下的所有章
+     * @param courseId  课程ID
+     * @return          节列表
+     */
+    List<Catalog> getChapterList(int courseId);
+
+    /**
+     * 获取章下的所有节
+     * @param id    章id
+     * @return      节列表
+     */
+    List<Catalog> getSectionList(int id);
+
+    /**
+     * 删除章节
+     * @param id    章节ID
+     * @return      成功删除数目
+     */
+    int delete(int id);
+}

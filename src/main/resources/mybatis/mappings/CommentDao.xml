@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.canlnac.course.dao.CommentDao">
+    <resultMap id="comment" type="cn.canlnac.course.entity.Comment">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="date" property="date" jdbcType="TIMESTAMP"/>
+        <result column="target_type" property="targetType" jdbcType="VARCHAR"/>
+        <result column="target_id" property="targetId" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="picture_urls" property="pictureUrls" jdbcType="VARCHAR"/>
+        <result column="like_count" property="likeCount" jdbcType="INTEGER"/>
+        <result column="reply_count" property="replyCount" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--创建评论-->
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="cn.canlnac.course.entity.Comment">
+        INSERT INTO comment(date,target_type,target_id,user_id,content,picture_urls,like_count,reply_count)
+        VALUES(now(),#{targetType},#{targetId},#{userId},#{content},#{pictureUrls},#{likeCount},#{replyCount})
+    </insert>
+
+    <!--获取指定评论-->
+    <select id="findByID" resultMap="comment">
+        SELECT * FROM comment WHERE id = #{id}
+    </select>
+
+    <!--统计评论-->
+    <select id="count" resultType="Integer">
+        SELECT count(*)
+        FROM comment
+        WHERE target_type = #{targetType}
+              AND target_id = #{targetId}
+    </select>
+
+    <!--获取评论列表-->
+    <select id="getList" resultMap="comment">
+        SELECT *
+        FROM comment
+        WHERE target_type = #{targetType}
+              AND target_id = #{targetId}
+        <if test="sort == 'date' or sort == null">
+            ORDER BY `date` DESC
+        </if>
+        <if test="sort == 'rank'">
+            ORDER BY like_count+reply_count DESC
+        </if>
+        Limit #{start},#{count}
+    </select>
+
+    <delete id="delete">
+        DELETE FROM comment WHERE id = #{id}
+    </delete>
+
+    <!--更新评论-->
+    <update id="update" parameterType="cn.canlnac.course.entity.Comment">
+        UPDATE comment
+        SET
+            <trim prefix="" suffixOverrides=",">
+                <if test="targetType != null">
+                    target_type = #{targetType},
+                </if>
+                <if test="targetId != 0">
+                    target_id = #{targetId},
+                </if>
+                <if test="userId != 0">
+                    user_id = #{userId},
+                </if>
+                <if test="content != null">
+                    content = #{content},
+                </if>
+                <if test="pictureUrls != null">
+                    picture_urls = #{pictureUrls},
+                </if>
+                <if test="likeCount != 0">
+                    like_count = like_count+#{likeCount},
+                </if>
+                <if test="replyCount != 0">
+                    reply_count = reply_count+#{replyCount},
+                </if>
+            </trim>
+        WHERE id = #{id}
+    </update>
+</mapper>

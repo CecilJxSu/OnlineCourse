@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.canlnac.course.dao.CourseDao">
+    <resultMap id="course" type="cn.canlnac.course.entity.Course">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="date" property="date" jdbcType="TIMESTAMP"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="introduction" property="introduction" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="department" property="department" jdbcType="VARCHAR"/>
+        <result column="watch_count" property="watchCount" jdbcType="INTEGER"/>
+        <result column="like_count" property="likeCount" jdbcType="INTEGER"/>
+        <result column="comment_count" property="commentCount" jdbcType="INTEGER"/>
+        <result column="favorite_count" property="favoriteCount" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--创建课程-->
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="cn.canlnac.course.entity.Course">
+        INSERT INTO course(date,status,name,introduction,user_id,department,watch_count,like_count,comment_count,favorite_count)
+        VALUES (now(),#{status},#{name},#{introduction},#{userId},#{department},#{watchCount},#{likeCount},#{commentCount},#{favoriteCount})
+    </insert>
+
+    <!--更新课程-->
+    <update id="update" parameterType="cn.canlnac.course.entity.Course">
+        UPDATE course
+        SET
+            <trim suffixOverrides=",">
+                <if test="status != null">
+                    status = #{status},
+                </if>
+                <if test="name != null">
+                    name = #{name},
+                </if>
+                <if test="introduction != null">
+                    introduction = #{introduction},
+                </if>
+                <if test="userId != 0">
+                    user_id = #{userId},
+                </if>
+                <if test="department != null">
+                    department = #{department},
+                </if>
+                <if test="watchCount != 0">
+                    watch_count = watch_count + #{watchCount},
+                </if>
+                <if test="likeCount != 0">
+                    like_count = like_count + #{likeCount},
+                </if>
+                <if test="commentCount != 0">
+                    comment_count = comment_count + #{commentCount},
+                </if>
+                <if test="favoriteCount != 0">
+                    favorite_count = favorite_count + #{favoriteCount},
+                </if>
+            </trim>
+        WHERE id = #{id}
+    </update>
+
+    <!--获取指定课程-->
+    <select id="findByID" resultMap="course">
+        SELECT *
+        FROM course
+        WHERE id = #{id}
+    </select>
+
+    <!--统计课程-->
+    <select id="count" resultType="Integer">
+        SELECT COUNT(*)
+        FROM course
+        WHERE
+        <foreach collection="conditions" item="condition" index="index" separator="and">
+            <if test="index=='status' and condition!=null">
+                status IN
+                <foreach collection="condition" item="status" index="statusIndex" open="(" close=")" separator=",">
+                    #{status}
+                </foreach>
+            </if>
+            <if test="index=='userId' and condition!=0">
+                user_id = #{condition}
+            </if>
+            <if test="index=='department' and condition!=null">
+                department IN
+                <foreach collection="condition" item="department" index="departmentIndex" open="(" close=")" separator=",">
+                    #{department}
+                </foreach>
+            </if>
+            <if test="index=='search' and condition!=null">
+                (
+                `name` LIKE CONCAT(CONCAT('%', #{condition}), '%')
+                OR `introduction` LIKE CONCAT(CONCAT('%', #{condition}), '%')
+                OR `department` LIKE CONCAT(CONCAT('%', #{condition}), '%')
+                )
+            </if>
+        </foreach>
+    </select>
+
+    <!--获取课程列表-->
+    <select id="getList" resultMap="course">
+        SELECT *
+        FROM course
+        WHERE
+        <foreach collection="conditions" item="condition" index="index" separator="and">
+            <if test="index=='status' and condition!=null">
+                status IN
+                <foreach collection="condition" item="status" index="statusIndex" open="(" close=")" separator=",">
+                    #{status}
+                </foreach>
+            </if>
+            <if test="index=='userId' and condition!=0">
+                user_id = #{condition}
+            </if>
+            <if test="index=='department' and condition!=null">
+                department IN
+                <foreach collection="condition" item="department" index="departmentIndex" open="(" close=")" separator=",">
+                    #{department}
+                </foreach>
+            </if>
+            <if test="index=='search' and condition!=null">
+                (
+                `name` LIKE CONCAT(CONCAT('%', #{condition}), '%')
+                OR `introduction` LIKE CONCAT(CONCAT('%', #{condition}), '%')
+                OR `department` LIKE CONCAT(CONCAT('%', #{condition}), '%')
+                )
+            </if>
+        </foreach>
+        <if test="sort == 'date' or sort == null">
+            ORDER BY `date` DESC
+        </if>
+        <if test="sort == 'rank'">
+            ORDER BY watch_count+like_count+comment_count+favorite_count DESC
+        </if>
+        LIMIT #{start},#{count}
+    </select>
+
+    <!--删除课程-->
+    <delete id="delete">
+        DELETE FROM course WHERE id = #{id}
+    </delete>
+
+    <!--获取作者的课程列表-->
+    <select id="findByUserId" resultMap="course">
+        SELECT *
+        FROM course
+        WHERE user_id = #{userId}
+    </select>
+
+    <!--获取某一门课程的学习总人数-->
+    <select id="getNumOfPeople" resultType="Integer">
+        SELECT count(distinct lr.user_id)
+        from course c,catalog ca1,catalog ca2,learn_record lr
+        where c.id=ca1.course_id
+              AND ca1.id=ca2.parent_id
+              AND ca2.id=lr.catalog_id
+              AND c.id = #{id}
+    </select>
+</mapper>

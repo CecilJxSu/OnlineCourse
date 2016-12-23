@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.canlnac.course.dao.FollowingDao">
+    <resultMap id="following" type="cn.canlnac.course.entity.Following">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="date" property="date" jdbcType="TIMESTAMP"/>
+        <result column="target_id" property="targetId" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="profile" type="cn.canlnac.course.entity.Profile">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="university_id" property="universityId" jdbcType="VARCHAR"/>
+        <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
+        <result column="realname" property="realname" jdbcType="VARCHAR"/>
+        <result column="gender" property="gender" jdbcType="VARCHAR"/>
+        <result column="icon_url" property="iconUrl" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="CHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="department" property="department" jdbcType="VARCHAR"/>
+        <result column="major" property="major" jdbcType="VARCHAR"/>
+        <result column="dormitory_address" property="dormitoryAddress" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--创建关注记录-->
+    <insert id="create">
+        INSERT INTO following(date,target_id,user_id)
+        VALUES (now(),#{targetId},#{userId})
+    </insert>
+
+    <!--取消关注记录-->
+    <delete id="delete">
+        DELETE FROM following
+        WHERE target_id = #{targetId}
+              AND user_id = #{userId}
+    </delete>
+
+    <!--统计自己的粉丝数-->
+    <select id="countFollower" resultType="Integer">
+        SELECT COUNT(*)
+        FROM following f,profile p
+        WHERE target_id = #{targetId}
+              AND f.user_id = p.user_id
+    </select>
+
+    <!--获取自己的粉丝用户-->
+    <select id="getFollowerUsers" resultMap="profile">
+        SELECT p.id id,p.user_id user_id,p.university_id university_id,p.nickname nickname,p.realname realname,p.gender gender,p.icon_url icon_url,p.phone phone,p.email email,p.department department,p.major major,p.dormitory_address dormitory_address
+        FROM following f,profile p
+        WHERE f.target_id = #{targetId}
+              AND f.user_id = p.user_id
+        ORDER BY f.date DESC
+        LIMIT #{start},#{count}
+    </select>
+
+    <!--统计自己的关注数-->
+    <select id="countFollowing" resultType="Integer">
+        SELECT COUNT(*)
+        FROM following f,profile p
+        WHERE f.user_id = #{userId}
+              AND f.target_id = p.user_id
+    </select>
+
+    <!--获取自己的关注用户-->
+    <select id="getFollowingUsers" resultMap="profile">
+        SELECT p.id id,p.user_id user_id,p.university_id university_id,p.nickname nickname,p.realname realname,p.gender gender,p.icon_url icon_url,p.phone phone,p.email email,p.department department,p.major major,p.dormitory_address dormitory_address
+        FROM following f,profile p
+        WHERE f.user_id = #{userId}
+              AND f.target_id = p.user_id
+        ORDER BY f.date DESC
+        LIMIT #{start},#{count}
+    </select>
+
+    <!--用户是否关注了目标用户-->
+    <select id="isFollowing" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM following
+        WHERE user_id = #{userId}
+              AND target_id = #{targetId}
+    </select>
+</mapper>

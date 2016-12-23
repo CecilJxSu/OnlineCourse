@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 加载 映射文件 -->
+    <mappers>
+        <mapper resource="mybatis/mappings/AnswerDao.xml"/>
+        <mapper resource="mybatis/mappings/CatalogDao.xml"/>
+        <mapper resource="mybatis/mappings/ChatDao.xml"/>
+        <mapper resource="mybatis/mappings/CommentDao.xml"/>
+        <mapper resource="mybatis/mappings/CourseDao.xml"/>
+        <mapper resource="mybatis/mappings/DocumentDao.xml"/>
+        <mapper resource="mybatis/mappings/ExampleDao.xml"/>
+        <mapper resource="mybatis/mappings/FavoriteDao.xml"/>
+        <mapper resource="mybatis/mappings/FollowingDao.xml"/>
+        <mapper resource="mybatis/mappings/LearnRecordDao.xml"/>
+        <mapper resource="mybatis/mappings/LikeDao.xml"/>
+        <mapper resource="mybatis/mappings/MessageDao.xml"/>
+        <mapper resource="mybatis/mappings/ProfileDao.xml"/>
+        <mapper resource="mybatis/mappings/QuestionDao.xml"/>
+        <mapper resource="mybatis/mappings/ReplyDao.xml"/>
+        <mapper resource="mybatis/mappings/UserDao.xml"/>
+        <mapper resource="mybatis/mappings/WatchDao.xml"/>
+
+        <!-- 批量加载mapper
+        指定mapper接口的包名，mybatis自动扫描包下边所有mapper接口进行加载
+        遵循一些规范：需要将mapper接口类名和mapper.xml映射文件名称保持一致，且在一个目录 中
+        上边规范的前提是：使用的是mapper代理方法和spring整合后，使用mapper扫描器，这里不需要配置了
+         -->
+        <!--<package name="cn.canlnac.course.dao"/>-->
+    </mappers>
+
+</configuration>
