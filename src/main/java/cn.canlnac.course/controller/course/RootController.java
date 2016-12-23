@@ -269,6 +269,7 @@ public class RootController {
         if(isWatch<1){
             course.setWatchCount(course.getWatchCount()+1); //增加浏览人数
             courseService.update(course);
+            watchService.create("course",course.getId(),(int)auth.get("id"));
         }
         sendData.put("watchCount",course.getWatchCount());
 

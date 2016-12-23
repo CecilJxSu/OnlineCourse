@@ -203,6 +203,7 @@ public class RootController {
         if(isWatch<1){
             chat.setWatchCount(chat.getWatchCount()+1); //增加浏览人数
             chatService.update(chat);
+            watchService.create("chat",chat.getId(),(int)auth.get("id"));
         }
         sendData.put("watchCount",chat.getWatchCount());
 
