@@ -74,11 +74,11 @@
                 <if test="pictureUrls != null">
                     picture_urls = #{pictureUrls},
                 </if>
-                <if test="likeCount >= 0">
-                    like_count = #{likeCount},
+                <if test="likeCount == 1 or likeCount == -1">
+                    like_count = like_count + #{likeCount},
                 </if>
-                <if test="replyCount >= 0">
-                    reply_count = #{replyCount},
+                <if test="replyCount == 2 or replyCount == -2">
+                    reply_count = reply_count + #{replyCount},
                 </if>
             </trim>
         WHERE id = #{id}

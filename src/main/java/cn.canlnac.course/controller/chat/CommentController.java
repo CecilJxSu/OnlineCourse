@@ -228,8 +228,12 @@ public class CommentController {
         }
 
         //更新话题评论数
-        chat.setCommentCount(chat.getCommentCount() + 3);
-        chatService.update(chat);
+        Chat updateChat = new Chat();
+
+        updateChat.setId(chat.getId());
+        updateChat.setCommentCount(3);
+
+        chatService.update(updateChat);
 
         //创建返回数据
         HashMap<String,Object> sendData = new HashMap();
@@ -300,8 +304,12 @@ public class CommentController {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        comment.setReplyCount(comment.getReplyCount() + 2); //回复数 + 2
-        commentService.update(comment); //更新评论的回复数
+        Comment updateComment = new Comment();
+
+        updateComment.setId(comment.getId());
+        updateComment.setReplyCount(2);
+
+        commentService.update(updateComment); //更新评论的回复数
 
         //创建返回数据
         HashMap<String,Object> sendData = new HashMap();

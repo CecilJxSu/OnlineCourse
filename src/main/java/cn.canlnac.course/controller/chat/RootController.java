@@ -201,8 +201,11 @@ public class RootController {
         sendData.put("isLike",(isLike>0));
         sendData.put("isFavorite",(isFavorite>0));
         if(isWatch<1){
-            chat.setWatchCount(chat.getWatchCount()+1); //增加浏览人数
-            chatService.update(chat);
+            Chat updateChat = new Chat();
+            
+            updateChat.setId(chat.getId());
+            updateChat.setWatchCount(1);
+            chatService.update(updateChat);
             watchService.create("chat",chat.getId(),(int)auth.get("id"));
         }
         sendData.put("watchCount",chat.getWatchCount());

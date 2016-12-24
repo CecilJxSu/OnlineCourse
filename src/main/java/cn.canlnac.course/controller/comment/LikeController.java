@@ -65,8 +65,11 @@ public class LikeController {
         }
 
         //增加评论点赞数
-        comment.setLikeCount(comment.getLikeCount() + 1);
-        commentService.update(comment);   //更新评论
+        Comment updateComment = new Comment();
+
+        updateComment.setId(comment.getId());
+        updateComment.setLikeCount(1);
+        commentService.update(updateComment);   //更新评论
 
         //返回空对象
         return new ResponseEntity(new HashMap(), HttpStatus.OK);
@@ -105,8 +108,11 @@ public class LikeController {
         //减少评论点赞数
         Comment comment = commentService.findByID(commentId);
         if(comment != null){
-            comment.setLikeCount(comment.getLikeCount() - 1);
-            commentService.update(comment);
+            Comment updateComment = new Comment();
+
+            updateComment.setId(comment.getId());
+            updateComment.setLikeCount(-1);
+            commentService.update(updateComment);   //更新评论
         }
 
         //返回空对象

@@ -65,8 +65,11 @@ public class LikeController {
         }
 
         //增加课程点赞数
-        course.setLikeCount(course.getLikeCount() + 2);
-        courseService.update(course);   //更新课程
+        Course updateCourse = new Course();
+        updateCourse.setId(course.getId());
+        updateCourse.setLikeCount(2);
+
+        courseService.update(updateCourse);   //更新课程
 
         //返回空对象
         return new ResponseEntity(new HashMap(), HttpStatus.OK);
@@ -105,8 +108,11 @@ public class LikeController {
         //减少课程点赞数
         Course course = courseService.findByID(courseId);
         if(course != null){
-            course.setLikeCount(course.getLikeCount() - 2);
-            courseService.update(course);
+            Course updateCourse = new COurse();
+
+            updateCourse.setId(course.getId());
+            updateCourse.setLikeCount(-2);
+            courseService.update(updateCourse);
         }
 
         //返回空对象

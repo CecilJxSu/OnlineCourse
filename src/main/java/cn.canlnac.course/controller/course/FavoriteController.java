@@ -65,8 +65,11 @@ public class FavoriteController {
         }
 
         //增加课程收藏数
-        course.setFavoriteCount(course.getFavoriteCount() + 4);
-        courseService.update(course);   //更新课程
+        Course updateCourse = new Course();
+
+        updateCourse.setId(course.getId());
+        updateCourse.setFavoriteCount(4);
+        courseService.update(updateCourse);   //更新课程
 
         //返回空对象
         return new ResponseEntity(new HashMap(), HttpStatus.OK);
@@ -105,8 +108,11 @@ public class FavoriteController {
         //减少课程收藏数
         Course course = courseService.findByID(courseId);
         if(course != null){
-            course.setFavoriteCount(course.getFavoriteCount() - 4);
-            courseService.update(course);
+            Course updateCourse = new Course();
+        
+            updateCourse.setId(course.getId());
+            updateCourse.setFavoriteCount(-4);
+            courseService.update(updateCourse);   //更新课程
         }
 
         //返回空对象

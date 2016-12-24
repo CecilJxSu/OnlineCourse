@@ -65,8 +65,12 @@ public class FavoriteController {
         }
 
         //增加话题收藏数
-        chat.setFavoriteCount(chat.getFavoriteCount() + 4);
-        chatService.update(chat);   //更新话题
+        Chat updateChat = new Chat();
+
+        updateChat.setId(chat.getId());
+        updateChat.setFavoriteCount(4);
+
+        chatService.update(updateChat);   //更新话题
 
         //返回空对象
         return new ResponseEntity(new HashMap(), HttpStatus.OK);
@@ -105,8 +109,12 @@ public class FavoriteController {
         //减少话题收藏数
         Chat chat = chatService.findByID(chatId);
         if(chat != null){
-            chat.setFavoriteCount(chat.getFavoriteCount() - 4);
-            chatService.update(chat);
+            Chat updateChat = new Chat();
+
+            updateChat.setId(chat.getId());
+            updateChat.setFavoriteCount(-4);
+            
+            chatService.update(updateChat);   //更新话题
         }
 
         //返回空对象
