@@ -44,17 +44,17 @@
                 <if test="department != null">
                     department = #{department},
                 </if>
-                <if test="watchCount != 0">
-                    watch_count = watch_count + #{watchCount},
+                <if test="watchCount >= 0">
+                    watch_count = #{watchCount},
                 </if>
-                <if test="likeCount != 0">
-                    like_count = like_count + #{likeCount},
+                <if test="likeCount >= 0">
+                    like_count = #{likeCount},
                 </if>
-                <if test="commentCount != 0">
-                    comment_count = comment_count + #{commentCount},
+                <if test="commentCount >= 0">
+                    comment_count = #{commentCount},
                 </if>
-                <if test="favoriteCount != 0">
-                    favorite_count = favorite_count + #{favoriteCount},
+                <if test="favoriteCount >= 0">
+                    favorite_count = #{favoriteCount},
                 </if>
             </trim>
         WHERE id = #{id}
