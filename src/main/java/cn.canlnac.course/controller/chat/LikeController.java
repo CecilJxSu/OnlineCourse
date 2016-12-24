@@ -65,8 +65,11 @@ public class LikeController {
         }
 
         //增加话题点赞数
-        chat.setLikeCount(chat.getLikeCount() + 2);
-        chatService.update(chat);   //更新话题
+        Chat updateChat = new Chat();
+
+        updateChat.setId(chat.getId());
+        updateChat.setLikeCount(2);
+        chatService.update(updateChat);   //更新话题
 
         //返回空对象
         return new ResponseEntity(new HashMap(), HttpStatus.OK);
@@ -105,8 +108,11 @@ public class LikeController {
         //减少话题点赞数
         Chat chat = chatService.findByID(chatId);
         if(chat != null){
-            chat.setLikeCount(chat.getLikeCount() - 2);
-            chatService.update(chat);
+            Chat updateChat = new Chat();
+        
+            updateChat.setId(chat.getId());
+            updateChat.setLikeCount(-2);
+            chatService.update(updateChat);   //更新话题
         }
 
         //返回空对象

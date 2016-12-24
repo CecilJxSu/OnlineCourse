@@ -267,9 +267,13 @@ public class RootController {
         sendData.put("isLike",(isLike>0));
         sendData.put("isFavorite",(isFavorite>0));
         if(isWatch<1){
-            course.setWatchCount(course.getWatchCount()+1); //增加浏览人数
-            courseService.update(course);
-            watchService.create("course",course.getId(),(int)auth.get("id"));
+            course.setWatchCount(course.getWatchCount() + 1);   //返回新的观看人数
+
+            Course updateCourse = new Course(); //重新new一个
+            updateCourse.setId(course.getId()); //设置id
+            updateCourse.setWatchCount(1);      //增加浏览人数
+            courseService.update(updateCourse); //更新课程观看人数，+1
+            watchService.create("course",course.getId(),(int)auth.get("id"));   //创建观看记录
         }
         sendData.put("watchCount",course.getWatchCount());
 

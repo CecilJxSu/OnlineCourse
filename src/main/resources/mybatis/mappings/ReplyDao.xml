@@ -19,6 +19,11 @@
         VALUES (now(),#{commentId},#{toUserId},#{userId},#{content})
     </insert>
 
+    <!--获取指定回复-->
+    <select id="findByID" resultMap="reply">
+        SELECT * FROM reply WHERE id = #{id}
+    </select>
+
     <!--获取评论下的所有回复内容-->
     <select id="getReplies" resultMap="reply">
         SELECT *

@@ -236,8 +236,11 @@ public class CommentController {
         }
 
         //更新课程评论数
-        course.setCommentCount(course.getCommentCount() + 3);
-        courseService.update(course);
+        Course updateCourse = new Course();
+
+        updateCourse.setId(course.getId());
+        updateCourse.setCommentCount(3);
+        courseService.update(updateCourse);
 
         //创建返回数据
         HashMap<String,Object> sendData = new HashMap();
@@ -308,8 +311,11 @@ public class CommentController {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        comment.setReplyCount(comment.getReplyCount() + 2); //回复数 + 2
-        commentService.update(comment); //更新评论的回复数
+        Comment updateComment = new Comment();
+
+        updateComment.setId(comment.getId());
+        updateComment.setReplyCount(2);
+        commentService.update(updateComment); //更新评论的回复数
 
         //创建返回数据
         HashMap<String,Object> sendData = new HashMap();
