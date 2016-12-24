@@ -29,6 +29,16 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     /**
+     * 获取指定评论
+     * @param id    评论ID
+     * @return      评论
+     */
+    @Override
+    public Reply findByID(int id) {
+        return replyDao.findByID(id);
+    }
+
+    /**
      * 获取评论下的所有回复内容
      * @param commentId 评论ID
      * @return          回复列表
