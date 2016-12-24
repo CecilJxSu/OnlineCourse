@@ -108,7 +108,7 @@ public class LikeController {
         //减少课程点赞数
         Course course = courseService.findByID(courseId);
         if(course != null){
-            Course updateCourse = new COurse();
+            Course updateCourse = new Course();
 
             updateCourse.setId(course.getId());
             updateCourse.setLikeCount(-2);
