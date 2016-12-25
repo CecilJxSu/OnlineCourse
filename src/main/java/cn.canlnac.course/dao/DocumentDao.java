@@ -26,14 +26,23 @@ public interface DocumentDao {
     Document findByID(int id);
 
     /**
+     * 根据文件url获取文档
+     * @param url       文件url
+     * @return
+     */
+    List<Document> findByUrl(@Param("url") String url);
+
+    /**
      * 统计文档数目
      * @param targetType    目标类型，课程：course；章节：catalog
      * @param targetId      目标ID
+     * @param type          文件类型,全部：null;视频：video；图片：img；其他：other
      * @return              文档数目
      */
     int count(
             @Param("targetType") String targetType,
-            @Param("targetId") int targetId
+            @Param("targetId") int targetId,
+            @Param("type") String type
     );
 
     /**
@@ -43,6 +52,7 @@ public interface DocumentDao {
      * @param sort          排序：按日期排序：date，按名称：name，按大小：size
      * @param targetType    目标类型，课程：course；章节：catalog
      * @param targetId      目标ID
+     * @param type          文件类型,全部：null;视频：video；图片：img；其他：other
      * @return              文档列表
      */
     List<Document> getDocuments(
@@ -50,7 +60,8 @@ public interface DocumentDao {
             @Param("count") int count,
             @Param("sort") String sort,
             @Param("targetType") String targetType,
-            @Param("targetId") int targetId
+            @Param("targetId") int targetId,
+            @Param("type") String type
     );
 
     /**

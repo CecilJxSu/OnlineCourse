@@ -28,12 +28,29 @@
         WHERE id = #{id}
     </select>
 
+    <!--根据文件url获取文档-->
+    <select id="findByUrl" resultMap="document">
+        SELECT *
+        FROM document
+        WHERE url = #{url}
+    </select>
+
     <!--统计文档数目-->
     <select id="count" resultType="Integer">
         SELECT COUNT(*)
         FROM document
         WHERE target_type = #{targetType}
               AND target_id = #{targetId}
+            <if test="type == 'video'">
+                AND `type` LIKE 'video/mp4'
+            </if>
+            <if test="type == 'img'">
+                AND `type` LIKE '%image%'
+            </if>
+            <if test="type == 'other'">
+                AND `type` NOT LIKE 'video/mp4'
+                AND `type` NOT LIKE '%image%'
+            </if>
     </select>
 
     <!--获取指定类型和目标下的文档-->
@@ -42,6 +59,16 @@
         FROM document
         WHERE target_type = #{targetType}
               AND target_id = #{targetId}
+            <if test="type == 'video'">
+                AND `type` LIKE 'video/mp4'
+            </if>
+            <if test="type == 'img'">
+                AND `type` LIKE '%image%'
+            </if>
+            <if test="type == 'other'">
+                AND `type` NOT LIKE 'video/mp4'
+                AND `type` NOT LIKE '%image%'
+            </if>
         ORDER BY ${sort} DESC
         LIMIT #{start},#{count}
     </select>

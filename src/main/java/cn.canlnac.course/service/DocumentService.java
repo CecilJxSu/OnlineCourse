@@ -23,12 +23,20 @@ public interface DocumentService {
     Document findByID(int id);
 
     /**
+     * 根据文件url获取文档
+     * @param url       文件url
+     * @return
+     */
+    List<Document> findByUrl(String url);
+
+    /**
      * 统计文档数目
      * @param targetType    目标类型，课程：course；章节：catalog
      * @param targetId      目标ID
+     * @param type          文件类型,全部：null;视频：video；图片：img；其他：other
      * @return              文档数目
      */
-    int count(String targetType, int targetId);
+    int count(String targetType, int targetId,String type);
 
     /**
      * 获取指定类型和目标下的文档
@@ -37,9 +45,10 @@ public interface DocumentService {
      * @param sort          排序：按日期排序：date，按名称：name，按大小：size
      * @param targetType    目标类型，课程：course；章节：catalog
      * @param targetId      目标ID
+     * @param type          文件类型,全部：null;视频：video；图片：img；其他：other
      * @return              文档列表
      */
-    List<Document> getDocuments(int start, int count, String sort, String targetType, int targetId);
+    List<Document> getDocuments(int start, int count, String sort, String targetType, int targetId,String type);
 
     /**
      * 删除文档
