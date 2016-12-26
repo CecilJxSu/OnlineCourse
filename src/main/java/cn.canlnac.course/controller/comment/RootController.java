@@ -58,8 +58,11 @@ public class RootController {
             @RequestHeader(value="Authentication", required = false) String Authentication,
             @PathVariable int commentId
     ) {
-        //处理登录信息
-        Map<String, Object> auth = jwt.decode(Authentication);
+        //未登录
+        Map<String, Object> auth;
+        if (Authentication == null || (auth = jwt.decode(Authentication)) == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
 
         //获取评论
         Comment comment = commentService.findByID(commentId);
