@@ -229,9 +229,12 @@ public class RootController {
             @RequestParam(defaultValue = "10") int count,
             @RequestParam(defaultValue = "date") String sort
     ) {
-        //处理登录信息
-        Map<String, Object> auth = jwt.decode(Authentication);
-
+        //未登录
+        Map<String, Object> auth;
+        if (Authentication == null || (auth = jwt.decode(Authentication)) == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+        
         //参数验证
         if(start < 0 || count < 1 || !Arrays.asList("date","rank").contains(sort)){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);

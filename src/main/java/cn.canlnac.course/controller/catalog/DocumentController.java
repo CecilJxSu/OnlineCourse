@@ -124,13 +124,13 @@ public class DocumentController {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
-        int total = documentService.count("catalog", catalogId);  //统计文档数目
+        int total = documentService.count("catalog", catalogId, null);  //统计文档数目
         if(total < 1){  //没有文档
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
 
         //获取文档列表
-        List<Document> documents = documentService.getDocuments(start, count, sort, "catalog",catalogId);
+        List<Document> documents = documentService.getDocuments(start, count, sort, "catalog",catalogId, null);
 
         //创建返回数据
         HashMap sendData = new HashMap();
