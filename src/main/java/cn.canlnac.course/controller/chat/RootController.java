@@ -69,13 +69,14 @@ public class RootController {
 
         //参数验证
         if(body.get("title") == null || body.get("title").toString().isEmpty() ||
-                body.get("content") == null || body.get("content").toString().isEmpty()
+                body.get("content") == null || body.get("html") == null || body.get("content").toString().isEmpty()
         ) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
         Chat chat = new Chat();   //话题
         chat.setContent(body.get("content").toString());
+        chat.setHtml(body.get("html").toString());
         chat.setTitle(body.get("title").toString());
         chat.setUserId(Integer.parseInt(auth.get("id").toString()));
         chat.setPictureUrls(pictureUrls.toString());
@@ -171,6 +172,7 @@ public class RootController {
         sendData.put("date",chat.getDate());
         sendData.put("title",chat.getTitle());
         sendData.put("content",chat.getContent());
+        sendData.put("html",chat.getHtml());
 
         //设置作者
         Profile profile = profileService.findByUserID(chat.getUserId());
@@ -266,6 +268,7 @@ public class RootController {
             chatObj.put("date",chat.getDate());
             chatObj.put("title",chat.getTitle());
             chatObj.put("content",chat.getContent());
+            chatObj.put("html",chat.getHtml());
 
             //设置作者
             Profile profile = profileService.findByUserID(chat.getUserId());
