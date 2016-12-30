@@ -45,4 +45,23 @@ public interface LearnRecordService {
      * @return          学习记录列表
      */
     List<LearnRecord> getLearnRecords(int start, int count, int userId);
+
+    /**
+     * 统计某节学生的学习记录数目
+     * @param catalogId    节ID
+     * @return          学习记录数目
+     */
+    int countByCatalogId(int catalogId);
+
+    /**
+     * 获取某节学生的学习记录
+     * @param start         分页开始位置
+     * @param count         分页返回数目
+     * @param catalogId    节ID
+     * @return              学习记录列表
+     */
+    List<LearnRecord> getLearnRecordsByCatalogId(int start,
+                                                 int count,
+                                                 int catalogId
+    );
 }

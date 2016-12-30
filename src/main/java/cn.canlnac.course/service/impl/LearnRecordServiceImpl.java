@@ -70,4 +70,24 @@ public class LearnRecordServiceImpl implements LearnRecordService{
     public List<LearnRecord> getLearnRecords(int start, int count, int userId) {
         return learnRecordDao.getLearnRecords(start, count, userId);
     }
+
+    /**
+     * 统计某节学生的学习记录数目
+     * @param catalogId    节ID
+     * @return          学习记录数目
+     */
+    public int countByCatalogId(int catalogId) {
+        return learnRecordDao.countByCatalogId(catalogId);
+    }
+
+    /**
+     * 获取某节学生的学习记录
+     * @param start         分页开始位置
+     * @param count         分页返回数目
+     * @param catalogId    节ID
+     * @return              学习记录列表
+     */
+    public List<LearnRecord> getLearnRecordsByCatalogId(int start, int count, int catalogId) {
+        return learnRecordDao.getLearnRecordsByCatalogId(start,count,catalogId);
+    }
 }
