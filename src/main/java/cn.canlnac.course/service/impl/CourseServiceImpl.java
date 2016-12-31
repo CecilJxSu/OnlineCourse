@@ -110,7 +110,30 @@ public class CourseServiceImpl implements CourseService {
      * @param id    课程ID
      * @return      某一门课程的学习总人数
      */
+    @Override
     public int getNumOfPeople(int id) {
         return courseDao.getNumOfPeople(id);
+    }
+
+    /**
+     * 获取用户已选课程总数
+     * @param userId    用户id
+     * @return
+     */
+    @Override
+    public int countChooseCourse(int userId) {
+        return courseDao.countChooseCourse(userId);
+    }
+
+    /**
+     * 获取用户已选课程
+     * @param start     分页开始位置
+     * @param count     分页返回数目
+     * @param userId    用户id
+     * @return
+     */
+    @Override
+    public List<Course> getChooseCourse(int start, int count, int userId) {
+        return courseDao.getChooseCourse(start,count,userId);
     }
 }

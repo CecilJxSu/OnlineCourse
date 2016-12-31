@@ -83,4 +83,23 @@ public interface CourseDao {
      * @return      某一门课程的学习总人数
      */
     int getNumOfPeople(int id);
+
+    /**
+     * 获取用户已选课程总数
+     * @param userId    用户id
+     * @return
+     */
+    int countChooseCourse(int userId);
+
+    /**
+     * 获取用户已选课程
+     * @param start     分页开始位置
+     * @param count     分页返回数目
+     * @param userId    用户id
+     * @return
+     */
+    List<Course> getChooseCourse(@Param("start") int start,
+                                 @Param("count") int count,
+                                 @Param("userId") int userId
+    );
 }
