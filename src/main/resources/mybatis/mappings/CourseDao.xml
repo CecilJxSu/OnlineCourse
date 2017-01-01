@@ -157,4 +157,28 @@
               AND ca2.id=lr.catalog_id
               AND c.id = #{id}
     </select>
+
+    <!--获取用户已选课程总数-->
+    <select id="countChooseCourse" resultType="Integer">
+        SELECT COUNT(*)
+        FROM course c
+        WHERE c.id IN(
+        SELECT DISTINCT ca.course_id
+        FROM catalog ca,learn_record lr
+        WHERE ca.id = lr.catalog_id
+        AND lr.user_id = #{userId}
+        )
+    </select>
+
+    <!--获取用户已选课程-->
+    <select id="getChooseCourse" resultMap="course">
+        SELECT c.id id,c.`status` `status`,c.date `date`,c.`name` `name`,c.introduction introduction,c.user_id user_id,c.department department,c.watch_count watch_count,c.like_count like_count,c.comment_count comment_count,c.favorite_count favorite_count
+        FROM course c,catalog ca,learn_record lr
+        WHERE ca.id = lr.catalog_id
+        AND lr.user_id = #{userId}
+        AND c.id = ca.course_id
+        GROUP BY c.id
+        ORDER BY lr.date
+        LIMIT #{start},#{count}
+    </select>
 </mapper>

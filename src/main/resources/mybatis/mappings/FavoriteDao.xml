@@ -66,4 +66,21 @@
               AND target_type = #{targetType}
               AND target_id = #{targetId}
     </select>
+
+    <!--获取用户收藏数-->
+    <select id="countFavorite" resultType="Integer">
+        SELECT count(*)
+        FROM favorite
+        WHERE user_id = #{userId}
+        AND target_type = #{targetType}
+    </select>
+
+    <!--获取用户收藏-->
+    <select id="getFavorite" resultMap="favorite">
+        SELECT *
+        FROM favorite
+        WHERE user_id = #{userId}
+        AND target_type = #{targetType}
+        Limit #{start},#{count}
+    </select>
 </mapper>
