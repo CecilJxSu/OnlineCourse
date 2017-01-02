@@ -113,7 +113,7 @@ public class DocumentController {
         }
 
         //检查参数
-        if (start < 0 || count < 10 || !Arrays.asList("date","name","size").contains(sort)){
+        if (start < 0 || count < 1 || !Arrays.asList("date","name","size").contains(sort)){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
