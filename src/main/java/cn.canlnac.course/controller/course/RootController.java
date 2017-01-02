@@ -1,5 +1,6 @@
 package cn.canlnac.course.controller.course;
 
+import cn.canlnac.course.entity.Catalog;
 import cn.canlnac.course.entity.Course;
 import cn.canlnac.course.entity.Profile;
 import cn.canlnac.course.service.*;
@@ -32,6 +33,9 @@ public class RootController {
 
     @Autowired
     ProfileService profileService;
+
+    @Autowired
+    CatalogService catalogService;
 
     @Autowired
     JWT jwt;
@@ -258,6 +262,17 @@ public class RootController {
             sendData.put("author", author);
         }
 
+        //获取第一个图片
+        List<Catalog> catalogs = catalogService.getList(course.getId());
+        if (catalogs!=null && catalogs.size()>0) {
+            for (Catalog catalog:catalogs) {
+                if (catalog.getPreviewImage() != null && !catalog.getPreviewImage().isEmpty()) {
+                    sendData.put("previewUrl",catalog.getPreviewImage());
+                    break;
+                }
+            }
+        }
+
         sendData.put("department",course.getDepartment());
 
         sendData.put("likeCount",course.getLikeCount()/2);
@@ -358,6 +373,17 @@ public class RootController {
             courseObj.put("likeCount",course.getLikeCount()/2);
             courseObj.put("commentCount",course.getCommentCount()/3);
             courseObj.put("favoriteCount",course.getFavoriteCount()/4);
+
+            //获取第一个图片
+            List<Catalog> catalogs = catalogService.getList(course.getId());
+            if (catalogs!=null && catalogs.size()>0) {
+                for (Catalog catalog:catalogs) {
+                    if (catalog.getPreviewImage() != null && !catalog.getPreviewImage().isEmpty()) {
+                        courseObj.put("previewUrl",catalog.getPreviewImage());
+                        break;
+                    }
+                }
+            }
 
             int isLike = 0;
             int isFavorite = 0;

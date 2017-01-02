@@ -50,7 +50,7 @@ public class FileController {
      * @return
      */
     public static String getSourcesDirectory(){
-        String SourcesDirectory = System.getProperty("user.dir")+"/uploadFiles/";
+        String SourcesDirectory = "/usr/local/tomcat/webapps/files/";//System.getProperty("user.dir")+"/uploadFiles/";
         File file = new File(SourcesDirectory);
         if  (!file .exists()  && !file.isDirectory()) {
             //目录不存在，创建
