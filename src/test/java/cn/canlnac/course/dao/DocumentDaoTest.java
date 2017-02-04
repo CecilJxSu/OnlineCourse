@@ -44,7 +44,7 @@ public class DocumentDaoTest {
     public void testFinById(){
         testCreate();
 
-        int id = documentDao.getDocuments(0,20,"date","course",1).get(0).getId();
+        int id = documentDao.getDocuments(0,20,"date","course",1,null).get(0).getId();
         Document document = documentDao.findByID(id);
         System.out.println(document.toString());
     }
@@ -53,7 +53,7 @@ public class DocumentDaoTest {
     public void testCount(){
         testCreate();
 
-        int count = documentDao.count("course",1);
+        int count = documentDao.count("course",1,null);
         assertEquals(1,count);
     }
 
@@ -61,7 +61,7 @@ public class DocumentDaoTest {
     public void testGetDocuments(){
         testCreate();
 
-        List<Document> list = documentDao.getDocuments(0,20,"size","course",1);
+        List<Document> list = documentDao.getDocuments(0,20,"size","course",1,null);
         assertEquals(1,list.size());
         System.out.println(list.toString());
     }
@@ -70,7 +70,7 @@ public class DocumentDaoTest {
     public void testDelete(){
         testCreate();
 
-        int id = documentDao.getDocuments(0,20,"date","course",1).get(0).getId();
+        int id = documentDao.getDocuments(0,20,"date","course",1,null).get(0).getId();
         int i = documentDao.delete(id);
         assertEquals(1,i);
     }

@@ -6,13 +6,14 @@ import cn.canlnac.course.service.AnswerService;
 import cn.canlnac.course.service.CatalogService;
 import cn.canlnac.course.service.QuestionService;
 import cn.canlnac.course.util.JWT;
-import org.json.JSONObject;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,7 +68,7 @@ public class AnswerController {
         user.put("name",auth.get("nickname"));
         user.put("iconUrl",auth.get("iconUrl"));
         sendData.put("user",user);
-        sendData.put("answer", new JSONObject(answer.getAnswer()).toMap());
+        sendData.put("answer", new JSONArray(answer.getAnswer()).toList());
         sendData.put("total", answer.getTotal());
 
         return new ResponseEntity(sendData,HttpStatus.OK);
@@ -112,7 +113,7 @@ public class AnswerController {
         answer.setUserId(Integer.parseInt(auth.get("id").toString()));
         answer.setQuestionId(Integer.parseInt(body.get("questionId").toString()));
         answer.setTotal(Float.parseFloat(body.get("total").toString()));
-        answer.setAnswer(new JSONObject((Map)body.get("answer")).toString());
+        answer.setAnswer(new JSONArray(((ArrayList)body.get("answer")).toArray()).toString());
 
         int createdCount = answerService.create(answer);    //创建回答
         if(createdCount != 1) { //创建失败
