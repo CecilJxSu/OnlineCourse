@@ -146,7 +146,7 @@ public class AnswerControllerTest {
         when(jwt.decode(any())).thenReturn(auth);
 
         Answer answer = new Answer();
-        answer.setAnswer("{\"1\":[\"A\"]}");
+        answer.setAnswer("[\"A\"]");
         when(answerService.getAnswer(1,1)).thenReturn(answer);    //获取回答
 
         //发起请求
@@ -159,7 +159,7 @@ public class AnswerControllerTest {
         JSONObject responseBody = new JSONObject(response.getBody().toString());
 
         //答案
-        assertEquals("{\"1\":[\"A\"]}",responseBody.get("answer").toString());
+        assertEquals("[\"A\"]",responseBody.get("answer").toString());
     }
 
     /**
@@ -271,11 +271,9 @@ public class AnswerControllerTest {
         Map body = new HashMap();
         body.put("questionId",1);
 
-        Map answer = new HashMap();
-        List answerSheet = new ArrayList();
-        answerSheet.add("A");
+        List<String> answer = new ArrayList<>();
+        answer.add("A");
 
-        answer.put("1",answerSheet);
         body.put("answer",answer);
         body.put("total",98.5);
 
@@ -319,11 +317,9 @@ public class AnswerControllerTest {
         Map body = new HashMap();
         body.put("questionId",1);
 
-        Map answer = new HashMap();
-        List answerSheet = new ArrayList();
-        answerSheet.add("A");
+        List<String> answer = new ArrayList<>();
+        answer.add("A");
 
-        answer.put("1",answerSheet);
         body.put("answer",answer);
         body.put("total",98.5);
 

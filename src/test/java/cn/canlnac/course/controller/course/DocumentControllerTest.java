@@ -319,7 +319,7 @@ public class DocumentControllerTest {
         //Mock jwt，解码json web token
         when(jwt.decode(any())).thenReturn(auth);
 
-        when(documentService.count("course",1)).thenReturn(0);  //统计文档数目
+        when(documentService.count("course",1,null)).thenReturn(0);  //统计文档数目
 
         //发起请求
         ResponseEntity response = this.restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class );
@@ -352,12 +352,12 @@ public class DocumentControllerTest {
         //Mock jwt，解码json web token
         when(jwt.decode(any())).thenReturn(auth);
 
-        when(documentService.count("course",1)).thenReturn(1);  //统计文档数目
+        when(documentService.count("course",1,null)).thenReturn(1);  //统计文档数目
         //获取文档
         Document document = new Document();
         List<Document> documents = new ArrayList();
         documents.add(document);
-        when(documentService.getDocuments(0,10,"size","course",1)).thenReturn(documents);
+        when(documentService.getDocuments(0,10,"size","course",1,null)).thenReturn(documents);
 
         //发起请求
         ResponseEntity response = this.restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class );
