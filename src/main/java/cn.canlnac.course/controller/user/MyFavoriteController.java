@@ -1,12 +1,9 @@
 package cn.canlnac.course.controller.user;
 
-import cn.canlnac.course.entity.Chat;
-import cn.canlnac.course.entity.Course;
-import cn.canlnac.course.entity.Favorite;
-import cn.canlnac.course.service.ChatService;
-import cn.canlnac.course.service.CourseService;
-import cn.canlnac.course.service.FavoriteService;
+import cn.canlnac.course.entity.*;
+import cn.canlnac.course.service.*;
 import cn.canlnac.course.util.JWT;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +27,13 @@ public class MyFavoriteController {
     @Autowired
     private ChatService chatService;
     @Autowired
+    private ProfileService profileService;
+    @Autowired
+    private LikeService likeService;
+    @Autowired
     private CourseService courseService;
+    @Autowired
+    private CatalogService catalogService;
 
     @Autowired
     private JWT jwt;
@@ -74,43 +77,115 @@ public class MyFavoriteController {
             Integer.parseInt(auth.get("id").toString())
         );
 
-        List<Map<String,Object>> favorites = new ArrayList<>();
-        if (type.equals("course")) {
-            for (Favorite favorite: favoriteList) {
-                Map<String,Object> favoriteObj = new HashMap<>();
-
-                favoriteObj.put("type", favorite.getTargetType());
-                favoriteObj.put("date", favorite.getDate());
-
-                Course course = courseService.findByID(favorite.getTargetId());
-
-                favoriteObj.put("id", course.getId());
-                favoriteObj.put("name", course.getName());
-                favoriteObj.put("content", course.getIntroduction());
-
-                favorites.add(favoriteObj);
-            }
-        } else {
-            for (Favorite favorite: favoriteList) {
-                Map<String,Object> favoriteObj = new HashMap<>();
-
-                favoriteObj.put("type", favorite.getTargetType());
-                favoriteObj.put("date", favorite.getDate());
-
-                Chat chat = chatService.findByID(favorite.getTargetId());
-
-                favoriteObj.put("id", chat.getId());
-                favoriteObj.put("name", chat.getTitle());
-                favoriteObj.put("content", chat.getContent());
-
-                favorites.add(favoriteObj);
-            }
-        }
-
         //创建返回数据
         HashMap<String,Object> sendData = new HashMap<>();
         sendData.put("total", total);
-        sendData.put("favorites", favorites);
+
+        if (type.equals("course")) {
+            List<Map<String,Object>> courses = new ArrayList<>();
+            for (Favorite favorite: favoriteList) {
+                Map<String,Object> courseObj = new HashMap<>();
+
+                Course course = courseService.findByID(favorite.getTargetId());
+
+                //设置返回信息
+                courseObj.put("id",course.getId());
+                courseObj.put("date",course.getDate());
+                courseObj.put("name",course.getName());
+                courseObj.put("introduction",course.getIntroduction());
+
+                //设置作者
+                Profile profile = profileService.findByUserID(course.getUserId());
+                if(profile != null){
+                    Map<String,Object> author = new HashMap<>();
+
+                    author.put("id",profile.getUserId());
+                    author.put("name",profile.getNickname());
+                    author.put("iconUrl",profile.getIconUrl());
+
+                    courseObj.put("author", author);
+                }
+
+                courseObj.put("department",course.getDepartment());
+
+                courseObj.put("watchCount",course.getWatchCount());
+                courseObj.put("likeCount",course.getLikeCount()/2);
+                courseObj.put("commentCount",course.getCommentCount()/3);
+                courseObj.put("favoriteCount",course.getFavoriteCount()/4);
+
+                //获取第一个图片
+                List<Catalog> catalogs = catalogService.getList(course.getId());
+                if (catalogs!=null && catalogs.size()>0) {
+                    for (Catalog catalog:catalogs) {
+                        if (catalog.getPreviewImage() != null && !catalog.getPreviewImage().isEmpty()) {
+                            courseObj.put("previewUrl",catalog.getPreviewImage());
+                            break;
+                        }
+                    }
+                }
+
+                int isLike = likeService.isLike((int)auth.get("id"),"course",course.getId());
+
+                courseObj.put("isLike",(isLike>0));
+                courseObj.put("isFavorite",true);
+
+                courses.add(courseObj);
+            }
+
+            sendData.put("courses",courses);
+        } else {
+            //返回的话题
+            List<Map<String,Object>> chats = new ArrayList<>();
+
+            for (Favorite favorite: favoriteList) {
+                Map<String,Object> chatObj = new HashMap<>();
+
+                Chat chat = chatService.findByID(favorite.getTargetId());
+
+                //设置返回信息
+                chatObj.put("id",chat.getId());
+                chatObj.put("date",chat.getDate());
+                chatObj.put("title",chat.getTitle());
+                chatObj.put("content",chat.getContent());
+                chatObj.put("html",chat.getHtml());
+
+                //设置作者
+                Profile profile = profileService.findByUserID(chat.getUserId());
+                if(profile != null){
+                    Map<String,Object> author = new HashMap<>();
+
+                    author.put("id",profile.getUserId());
+                    author.put("name",profile.getNickname());
+                    author.put("iconUrl",profile.getIconUrl());
+
+                    chatObj.put("author", author);
+                }
+
+                //话题图片
+                List<String> pictureUrls = new ArrayList<>();
+                if (chat.getPictureUrls() != null){
+                    JSONArray array = new JSONArray(chat.getPictureUrls());
+                    for (int i = 0; i < array.length(); i++){
+                        pictureUrls.add(array.get(i).toString());
+                    }
+                }
+                chatObj.put("pictureUrls", pictureUrls);
+
+                chatObj.put("watchCount",chat.getWatchCount());
+                chatObj.put("likeCount",chat.getLikeCount()/2);
+                chatObj.put("commentCount",chat.getCommentCount()/3);
+                chatObj.put("favoriteCount",chat.getFavoriteCount()/4);
+
+                int isLike = likeService.isLike((int)auth.get("id"),"chat",chat.getId());
+
+                chatObj.put("isLike",(isLike>0));
+                chatObj.put("isFavorite",true);
+
+                chats.add(chatObj);
+            }
+
+            sendData.put("chats", chats);
+        }
 
         //返回我的收藏数据
         return new ResponseEntity<>(sendData, HttpStatus.OK);

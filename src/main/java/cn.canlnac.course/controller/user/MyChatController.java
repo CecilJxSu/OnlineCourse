@@ -121,14 +121,9 @@ public class MyChatController {
             chatObj.put("commentCount",chat.getCommentCount()/3);
             chatObj.put("favoriteCount",chat.getFavoriteCount()/4);
 
-            int isLike = 0;
-            int isFavorite = 0;
-            //用户登录
-            if (auth != null){
-                //获取标记
-                isLike = likeService.isLike((int)auth.get("id"),"chat",chat.getId());
-                isFavorite = favoriteService.isFavorite((int)auth.get("id"),"chat",chat.getId());
-            }
+            //获取标记
+            int isLike = likeService.isLike((int)auth.get("id"),"chat",chat.getId());
+            int isFavorite = favoriteService.isFavorite((int)auth.get("id"),"chat",chat.getId());
 
             chatObj.put("isLike",(isLike>0));
             chatObj.put("isFavorite",(isFavorite>0));
