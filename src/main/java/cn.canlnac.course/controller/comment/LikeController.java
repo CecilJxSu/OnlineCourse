@@ -1,8 +1,10 @@
 package cn.canlnac.course.controller.comment;
 
 import cn.canlnac.course.entity.Comment;
+import cn.canlnac.course.entity.Message;
 import cn.canlnac.course.service.CommentService;
 import cn.canlnac.course.service.LikeService;
+import cn.canlnac.course.service.MessageService;
 import cn.canlnac.course.util.JWT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +27,9 @@ public class LikeController {
 
     @Autowired
     CommentService commentService;
+
+    @Autowired
+    MessageService messageService;
 
     @Autowired
     JWT jwt;
@@ -70,6 +76,23 @@ public class LikeController {
         updateComment.setId(comment.getId());
         updateComment.setLikeCount(1);
         commentService.update(updateComment);   //更新评论
+
+        try {
+            Message message = new Message();
+
+            message.setDate(new Date());
+            message.setIsRead('N');
+            message.setContent("");
+            message.setToUserId(comment.getUserId());
+            message.setFromUserId(Integer.parseInt(auth.get("id").toString()));
+            message.setType("comment");
+            message.setActionType("like");
+            message.setPositionId(comment.getId());
+
+            messageService.create(message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //返回空对象
         return new ResponseEntity(new HashMap(), HttpStatus.OK);

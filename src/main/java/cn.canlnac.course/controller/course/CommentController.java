@@ -37,6 +37,9 @@ public class CommentController {
     UserService userService;
 
     @Autowired
+    MessageService messageService;
+
+    @Autowired
     JWT jwt;
 
     /**
@@ -245,6 +248,23 @@ public class CommentController {
         updateCourse.setCommentCount(3);
         courseService.update(updateCourse);
 
+        try {
+            Message message = new Message();
+
+            message.setDate(new Date());
+            message.setIsRead('N');
+            message.setContent("");
+            message.setToUserId(course.getUserId());
+            message.setFromUserId(Integer.parseInt(auth.get("id").toString()));
+            message.setType("course");
+            message.setActionType("comment");
+            message.setPositionId(course.getId());
+
+            messageService.create(message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         //创建返回数据
         HashMap<String,Object> sendData = new HashMap();
         sendData.put("commentId",comment.getId());
@@ -319,6 +339,23 @@ public class CommentController {
         updateComment.setId(comment.getId());
         updateComment.setReplyCount(2);
         commentService.update(updateComment); //更新评论的回复数
+
+        try {
+            Message message = new Message();
+
+            message.setDate(new Date());
+            message.setIsRead('N');
+            message.setContent("");
+            message.setToUserId(comment.getUserId());
+            message.setFromUserId(Integer.parseInt(auth.get("id").toString()));
+            message.setType("comment");
+            message.setActionType("reply");
+            message.setPositionId(reply.getId());
+
+            messageService.create(message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //创建返回数据
         HashMap<String,Object> sendData = new HashMap();
