@@ -350,7 +350,7 @@ public class CommentController {
             message.setFromUserId(Integer.parseInt(auth.get("id").toString()));
             message.setType("comment");
             message.setActionType("reply");
-            message.setPositionId(reply.getId());
+            message.setPositionId(comment.getId());
 
             messageService.create(message);
         } catch (Exception e) {
