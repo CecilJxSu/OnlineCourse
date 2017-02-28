@@ -130,22 +130,12 @@ public class MessageController {
                         }
                         break;
                     case "comment":
-                        if (message.getActionType().equals("reply")) {
-                            Reply reply = replyService.findByID(message.getPositionId());
-                            if(reply != null){
-                                Map<String,Object> position = new HashedMap();
-                                position.put("id",message.getPositionId());
-                                position.put("name",reply.getContent());
-                                msg.put("position",position);
-                            }
-                        } else {
-                            Comment comment = commentService.findByID(message.getPositionId());
-                            if(comment != null){
-                                Map<String,Object> position = new HashedMap();
-                                position.put("id",message.getPositionId());
-                                position.put("name",comment.getContent());
-                                msg.put("position",position);
-                            }
+                        Comment comment = commentService.findByID(message.getPositionId());
+                        if(comment != null){
+                            Map<String,Object> position = new HashedMap();
+                            position.put("id",message.getPositionId());
+                            position.put("name",comment.getContent());
+                            msg.put("position",position);
                         }
                         break;
                 }
@@ -245,22 +235,12 @@ public class MessageController {
                     }
                     break;
                 case "comment":
-                    if (message.getActionType().equals("reply")) {
-                        Reply reply = replyService.findByID(message.getPositionId());
-                        if(reply != null){
-                            Map<String,Object> position = new HashedMap();
-                            position.put("id",message.getPositionId());
-                            position.put("name",reply.getContent());
-                            sendData.put("position",position);
-                        }
-                    } else {
-                        Comment comment = commentService.findByID(message.getPositionId());
-                        if(comment != null){
-                            Map<String,Object> position = new HashedMap();
-                            position.put("id",message.getPositionId());
-                            position.put("name",comment.getContent());
-                            sendData.put("position",position);
-                        }
+                    Comment comment = commentService.findByID(message.getPositionId());
+                    if(comment != null){
+                        Map<String,Object> position = new HashedMap();
+                        position.put("id",message.getPositionId());
+                        position.put("name",comment.getContent());
+                        sendData.put("position",position);
                     }
                     break;
             }
