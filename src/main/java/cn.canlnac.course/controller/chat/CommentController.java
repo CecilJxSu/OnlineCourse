@@ -37,6 +37,9 @@ public class CommentController {
     UserService userService;
 
     @Autowired
+    MessageService messageService;
+
+    @Autowired
     JWT jwt;
 
     /**
@@ -56,8 +59,11 @@ public class CommentController {
             @RequestParam(defaultValue = "date") String sort,
             @PathVariable int chatId
     ) {
-        //处理登录信息
-        Map<String, Object> auth = jwt.decode(Authentication);
+        //未登录
+        Map<String, Object> auth;
+        if (Authentication == null || (auth = jwt.decode(Authentication)) == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
 
         //参数验证
         if(start<0 || count<1 || !Arrays.asList("date","rank").contains(sort)){
@@ -228,8 +234,29 @@ public class CommentController {
         }
 
         //更新话题评论数
-        chat.setCommentCount(chat.getCommentCount() + 3);
-        chatService.update(chat);
+        Chat updateChat = new Chat();
+
+        updateChat.setId(chat.getId());
+        updateChat.setCommentCount(3);
+
+        chatService.update(updateChat);
+
+        try {
+            Message message = new Message();
+
+            message.setDate(new Date());
+            message.setIsRead('N');
+            message.setContent("");
+            message.setToUserId(chat.getUserId());
+            message.setFromUserId(Integer.parseInt(auth.get("id").toString()));
+            message.setType("chat");
+            message.setActionType("comment");
+            message.setPositionId(chat.getId());
+
+            messageService.create(message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //创建返回数据
         HashMap<String,Object> sendData = new HashMap();
@@ -300,8 +327,29 @@ public class CommentController {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        comment.setReplyCount(comment.getReplyCount() + 2); //回复数 + 2
-        commentService.update(comment); //更新评论的回复数
+        Comment updateComment = new Comment();
+
+        updateComment.setId(comment.getId());
+        updateComment.setReplyCount(2);
+
+        commentService.update(updateComment); //更新评论的回复数
+
+        try {
+            Message message = new Message();
+
+            message.setDate(new Date());
+            message.setIsRead('N');
+            message.setContent("");
+            message.setToUserId(comment.getUserId());
+            message.setFromUserId(Integer.parseInt(auth.get("id").toString()));
+            message.setType("comment");
+            message.setActionType("reply");
+            message.setPositionId(comment.getId());
+
+            messageService.create(message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //创建返回数据
         HashMap<String,Object> sendData = new HashMap();

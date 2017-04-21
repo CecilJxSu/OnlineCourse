@@ -16,6 +16,13 @@ public interface ReplyService {
     int create (Reply reply);
 
     /**
+     * 获取指定回复
+     * @param id    回复ID
+     * @return      回复
+     */
+    Reply findByID(int id);
+
+    /**
      * 获取评论下的所有回复内容
      * @param commentId 评论ID
      * @return          回复列表

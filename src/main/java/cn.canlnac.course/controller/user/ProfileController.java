@@ -196,6 +196,7 @@ public class ProfileController {
         if(profile.getId() > 0){
             count = profileService.update(profile);
         } else {
+            profile.setUserId(Integer.parseInt(auth.get("id").toString()));
             count = profileService.create(profile);
         }
 

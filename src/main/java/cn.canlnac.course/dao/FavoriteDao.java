@@ -1,5 +1,6 @@
 package cn.canlnac.course.dao;
 
+import cn.canlnac.course.entity.Favorite;
 import cn.canlnac.course.entity.Profile;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -75,4 +76,26 @@ public interface FavoriteDao {
             @Param("targetType") String targetType,
             @Param("targetId") int targetId
     );
+
+    /**
+     * 获取用户收藏数
+     * @param userId        用户id
+     * @param targetType    收藏类型，课程：course；话题：chat
+     * @return
+     */
+    int countFavorite(@Param("userId") int userId,
+                      @Param("targetType") String targetType);
+
+    /**
+     * 获取用户收藏
+     * @param start         分页位置开始
+     * @param count         分页返回数目
+     * @param targetType    收藏类型，课程：course；话题：chat
+     * @param userId        用户id
+     * @return
+     */
+    List<Favorite> getFavorite(@Param("start") int start,
+                               @Param("count") int count,
+                               @Param("targetType") String targetType,
+                               @Param("userId") int userId);
 }

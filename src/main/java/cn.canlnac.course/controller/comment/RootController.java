@@ -51,15 +51,18 @@ public class RootController {
      * 获取指定评论
      * @param Authentication    登录信息
      * @param commentId         评论ID
-     * @return                  评论列表
+     * @return                  评论
      */
     @GetMapping("/comment/{commentId}")
     public ResponseEntity<Map<String,Object>> getComment(
             @RequestHeader(value="Authentication", required = false) String Authentication,
             @PathVariable int commentId
     ) {
-        //处理登录信息
-        Map<String, Object> auth = jwt.decode(Authentication);
+        //未登录
+        Map<String, Object> auth;
+        if (Authentication == null || (auth = jwt.decode(Authentication)) == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
 
         //获取评论
         Comment comment = commentService.findByID(commentId);
@@ -156,7 +159,7 @@ public class RootController {
             commentObj.put("isLike",false);
         }
 
-        //返回评论列表
+        //返回评论
         return new ResponseEntity<>(commentObj, HttpStatus.OK);
     }
 }

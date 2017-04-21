@@ -100,6 +100,7 @@ public class RootControllerTest {
         Map<String,Object> body = new HashMap();
         body.put("title","Java话题");
         body.put("content","Java话题");
+        body.put("html","<p>Java话题</p>");
         body.put("pictureUrls","Java话题");   //参数错误
 
         //创建headers
@@ -134,6 +135,7 @@ public class RootControllerTest {
         Map<String,Object> body = new HashMap();
         body.put("title","Java话题");
         body.put("content","Java话题");
+        body.put("html","<p>Java话题</p>");
 
         List<String> pictureUrls = new ArrayList();
         pictureUrls.add("http://url.com");

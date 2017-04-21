@@ -69,13 +69,14 @@ public class RootController {
 
         //参数验证
         if(body.get("title") == null || body.get("title").toString().isEmpty() ||
-                body.get("content") == null || body.get("content").toString().isEmpty()
+                body.get("content") == null || body.get("html") == null || body.get("content").toString().isEmpty()
         ) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
         Chat chat = new Chat();   //话题
         chat.setContent(body.get("content").toString());
+        chat.setHtml(body.get("html").toString());
         chat.setTitle(body.get("title").toString());
         chat.setUserId(Integer.parseInt(auth.get("id").toString()));
         chat.setPictureUrls(pictureUrls.toString());
@@ -171,6 +172,7 @@ public class RootController {
         sendData.put("date",chat.getDate());
         sendData.put("title",chat.getTitle());
         sendData.put("content",chat.getContent());
+        sendData.put("html",chat.getHtml());
 
         //设置作者
         Profile profile = profileService.findByUserID(chat.getUserId());
@@ -201,8 +203,11 @@ public class RootController {
         sendData.put("isLike",(isLike>0));
         sendData.put("isFavorite",(isFavorite>0));
         if(isWatch<1){
-            chat.setWatchCount(chat.getWatchCount()+1); //增加浏览人数
-            chatService.update(chat);
+            Chat updateChat = new Chat();
+            
+            updateChat.setId(chat.getId());
+            updateChat.setWatchCount(1);
+            chatService.update(updateChat);
             watchService.create("chat",chat.getId(),(int)auth.get("id"));
         }
         sendData.put("watchCount",chat.getWatchCount());
@@ -226,9 +231,12 @@ public class RootController {
             @RequestParam(defaultValue = "10") int count,
             @RequestParam(defaultValue = "date") String sort
     ) {
-        //处理登录信息
-        Map<String, Object> auth = jwt.decode(Authentication);
-
+        //未登录
+        Map<String, Object> auth;
+        if (Authentication == null || (auth = jwt.decode(Authentication)) == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+        
         //参数验证
         if(start < 0 || count < 1 || !Arrays.asList("date","rank").contains(sort)){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -260,6 +268,7 @@ public class RootController {
             chatObj.put("date",chat.getDate());
             chatObj.put("title",chat.getTitle());
             chatObj.put("content",chat.getContent());
+            chatObj.put("html",chat.getHtml());
 
             //设置作者
             Profile profile = profileService.findByUserID(chat.getUserId());

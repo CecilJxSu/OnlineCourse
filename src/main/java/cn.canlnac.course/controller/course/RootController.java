@@ -1,5 +1,6 @@
 package cn.canlnac.course.controller.course;
 
+import cn.canlnac.course.entity.Catalog;
 import cn.canlnac.course.entity.Course;
 import cn.canlnac.course.entity.Profile;
 import cn.canlnac.course.service.*;
@@ -32,6 +33,9 @@ public class RootController {
 
     @Autowired
     ProfileService profileService;
+
+    @Autowired
+    CatalogService catalogService;
 
     @Autowired
     JWT jwt;
@@ -258,6 +262,17 @@ public class RootController {
             sendData.put("author", author);
         }
 
+        //获取第一个图片
+        List<Catalog> catalogs = catalogService.getList(course.getId());
+        if (catalogs!=null && catalogs.size()>0) {
+            for (Catalog catalog:catalogs) {
+                if (catalog.getPreviewImage() != null && !catalog.getPreviewImage().isEmpty()) {
+                    sendData.put("previewUrl",catalog.getPreviewImage());
+                    break;
+                }
+            }
+        }
+
         sendData.put("department",course.getDepartment());
 
         sendData.put("likeCount",course.getLikeCount()/2);
@@ -267,9 +282,13 @@ public class RootController {
         sendData.put("isLike",(isLike>0));
         sendData.put("isFavorite",(isFavorite>0));
         if(isWatch<1){
-            course.setWatchCount(course.getWatchCount()+1); //增加浏览人数
-            courseService.update(course);
-            watchService.create("course",course.getId(),(int)auth.get("id"));
+            course.setWatchCount(course.getWatchCount() + 1);   //返回新的观看人数
+
+            Course updateCourse = new Course(); //重新new一个
+            updateCourse.setId(course.getId()); //设置id
+            updateCourse.setWatchCount(1);      //增加浏览人数
+            courseService.update(updateCourse); //更新课程观看人数，+1
+            watchService.create("course",course.getId(),(int)auth.get("id"));   //创建观看记录
         }
         sendData.put("watchCount",course.getWatchCount());
 
@@ -294,8 +313,11 @@ public class RootController {
             @RequestParam(defaultValue = "date") String sort,
             @RequestParam(required = false) List<String> departments
     ) {
-        //处理登录信息
-        Map<String, Object> auth = jwt.decode(Authentication);
+        //未登录
+        Map<String, Object> auth;
+        if (Authentication == null || (auth = jwt.decode(Authentication)) == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
 
         //参数验证
         if(start < 0 || count < 1 || !Arrays.asList("date","rank").contains(sort)){
@@ -351,6 +373,17 @@ public class RootController {
             courseObj.put("likeCount",course.getLikeCount()/2);
             courseObj.put("commentCount",course.getCommentCount()/3);
             courseObj.put("favoriteCount",course.getFavoriteCount()/4);
+
+            //获取第一个图片
+            List<Catalog> catalogs = catalogService.getList(course.getId());
+            if (catalogs!=null && catalogs.size()>0) {
+                for (Catalog catalog:catalogs) {
+                    if (catalog.getPreviewImage() != null && !catalog.getPreviewImage().isEmpty()) {
+                        courseObj.put("previewUrl",catalog.getPreviewImage());
+                        break;
+                    }
+                }
+            }
 
             int isLike = 0;
             int isFavorite = 0;

@@ -1,8 +1,10 @@
 package cn.canlnac.course.controller.chat;
 
 import cn.canlnac.course.entity.Chat;
+import cn.canlnac.course.entity.Message;
 import cn.canlnac.course.service.ChatService;
 import cn.canlnac.course.service.FavoriteService;
+import cn.canlnac.course.service.MessageService;
 import cn.canlnac.course.util.JWT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +27,9 @@ public class FavoriteController {
 
     @Autowired
     ChatService chatService;
+
+    @Autowired
+    MessageService messageService;
 
     @Autowired
     JWT jwt;
@@ -65,8 +71,29 @@ public class FavoriteController {
         }
 
         //增加话题收藏数
-        chat.setFavoriteCount(chat.getFavoriteCount() + 4);
-        chatService.update(chat);   //更新话题
+        Chat updateChat = new Chat();
+
+        updateChat.setId(chat.getId());
+        updateChat.setFavoriteCount(4);
+
+        chatService.update(updateChat);   //更新话题
+
+        try {
+            Message message = new Message();
+
+            message.setDate(new Date());
+            message.setIsRead('N');
+            message.setContent("");
+            message.setToUserId(chat.getUserId());
+            message.setFromUserId(Integer.parseInt(auth.get("id").toString()));
+            message.setType("chat");
+            message.setActionType("favorite");
+            message.setPositionId(chat.getId());
+
+            messageService.create(message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //返回空对象
         return new ResponseEntity(new HashMap(), HttpStatus.OK);
@@ -105,8 +132,12 @@ public class FavoriteController {
         //减少话题收藏数
         Chat chat = chatService.findByID(chatId);
         if(chat != null){
-            chat.setFavoriteCount(chat.getFavoriteCount() - 4);
-            chatService.update(chat);
+            Chat updateChat = new Chat();
+
+            updateChat.setId(chat.getId());
+            updateChat.setFavoriteCount(-4);
+            
+            chatService.update(updateChat);   //更新话题
         }
 
         //返回空对象

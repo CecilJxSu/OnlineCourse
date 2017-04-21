@@ -1,6 +1,8 @@
 package cn.canlnac.course.controller.user;
 
+import cn.canlnac.course.entity.Message;
 import cn.canlnac.course.entity.User;
+import cn.canlnac.course.service.MessageService;
 import cn.canlnac.course.service.UserService;
 import cn.canlnac.course.util.JWT;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ import java.util.Map;
 public class RootController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private MessageService messageService;
 
     @Autowired
     private JWT jwt;
@@ -56,6 +61,20 @@ public class RootController {
                 return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
+        }
+
+        try {
+            Message message = new Message();
+
+            message.setDate(new Date());
+            message.setIsRead('N');
+            message.setContent("欢迎你注册！");
+            message.setToUserId(user.getId());
+            message.setType("system");
+
+            messageService.create(message);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         //创建返回数据

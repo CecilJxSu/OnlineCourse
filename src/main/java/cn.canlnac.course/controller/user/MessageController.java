@@ -29,6 +29,8 @@ public class MessageController {
     ChatService chatService;
     @Autowired
     CommentService commentService;
+    @Autowired
+    ReplyService replyService;
 
     @Autowired
     JWT jwt;
@@ -123,7 +125,7 @@ public class MessageController {
                         if(chat != null){
                             Map<String,Object> position = new HashedMap();
                             position.put("id",message.getPositionId());
-                            position.put("title",chat.getTitle());
+                            position.put("name",chat.getTitle());
                             msg.put("position",position);
                         }
                         break;
@@ -132,7 +134,7 @@ public class MessageController {
                         if(comment != null){
                             Map<String,Object> position = new HashedMap();
                             position.put("id",message.getPositionId());
-                            position.put("content",comment.getContent());
+                            position.put("name",comment.getContent());
                             msg.put("position",position);
                         }
                         break;
@@ -228,7 +230,7 @@ public class MessageController {
                     if(chat != null){
                         Map<String,Object> position = new HashedMap();
                         position.put("id",message.getPositionId());
-                        position.put("title",chat.getTitle());
+                        position.put("name",chat.getTitle());
                         sendData.put("position",position);
                     }
                     break;
@@ -237,7 +239,7 @@ public class MessageController {
                     if(comment != null){
                         Map<String,Object> position = new HashedMap();
                         position.put("id",message.getPositionId());
-                        position.put("content",comment.getContent());
+                        position.put("name",comment.getContent());
                         sendData.put("position",position);
                     }
                     break;

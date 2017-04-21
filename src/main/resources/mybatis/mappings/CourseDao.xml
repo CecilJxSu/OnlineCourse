@@ -44,16 +44,16 @@
                 <if test="department != null">
                     department = #{department},
                 </if>
-                <if test="watchCount != 0">
+                <if test="watchCount == 1 or watchCount == -1">
                     watch_count = watch_count + #{watchCount},
                 </if>
-                <if test="likeCount != 0">
+                <if test="likeCount == 2 or likeCount == -2">
                     like_count = like_count + #{likeCount},
                 </if>
-                <if test="commentCount != 0">
+                <if test="commentCount == 3 or commentCount == -3">
                     comment_count = comment_count + #{commentCount},
                 </if>
-                <if test="favoriteCount != 0">
+                <if test="favoriteCount == 4 or favoriteCount == -4">
                     favorite_count = favorite_count + #{favoriteCount},
                 </if>
             </trim>
@@ -156,5 +156,29 @@
               AND ca1.id=ca2.parent_id
               AND ca2.id=lr.catalog_id
               AND c.id = #{id}
+    </select>
+
+    <!--获取用户已选课程总数-->
+    <select id="countChooseCourse" resultType="Integer">
+        SELECT COUNT(*)
+        FROM course c
+        WHERE c.id IN(
+        SELECT DISTINCT ca.course_id
+        FROM catalog ca,learn_record lr
+        WHERE ca.id = lr.catalog_id
+        AND lr.user_id = #{userId}
+        )
+    </select>
+
+    <!--获取用户已选课程-->
+    <select id="getChooseCourse" resultMap="course">
+        SELECT c.id id,c.`status` `status`,c.date `date`,c.`name` `name`,c.introduction introduction,c.user_id user_id,c.department department,c.watch_count watch_count,c.like_count like_count,c.comment_count comment_count,c.favorite_count favorite_count
+        FROM course c,catalog ca,learn_record lr
+        WHERE ca.id = lr.catalog_id
+        AND lr.user_id = #{userId}
+        AND c.id = ca.course_id
+        GROUP BY c.id
+        ORDER BY lr.date
+        LIMIT #{start},#{count}
     </select>
 </mapper>

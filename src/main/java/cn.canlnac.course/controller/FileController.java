@@ -1,9 +1,7 @@
 package cn.canlnac.course.controller;
 
-import cn.canlnac.course.util.JWT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
-//import org.springframework.core.io.Resource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,15 +9,22 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.activation.FileDataSource;
-import javax.activation.MimetypesFileTypeMap;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
-import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.activation.FileDataSource;
+
+import cn.canlnac.course.util.JWT;
+
+//import org.springframework.core.io.Resource;
 
 /**
  * 文件操作.
@@ -50,7 +55,7 @@ public class FileController {
      * @return
      */
     public static String getSourcesDirectory(){
-        String SourcesDirectory = System.getProperty("user.dir")+"/uploadFiles/";
+        String SourcesDirectory = "/usr/local/tomcat/webapps/files/";//System.getProperty("user.dir")+"/uploadFiles/";
         File file = new File(SourcesDirectory);
         if  (!file .exists()  && !file.isDirectory()) {
             //目录不存在，创建

@@ -65,4 +65,20 @@
         ORDER BY last_date DESC
         LIMIT #{start},#{count}
     </select>
+
+    <!--统计某节学生的学习记录数目-->
+    <select id="countByCatalogId" resultType="Integer">
+        SELECT COUNT(*)
+        FROM learn_record
+        WHERE catalog_id = #{catalogId}
+    </select>
+
+    <!--获取某节学生的学习记录-->
+    <select id="getLearnRecordsByCatalogId" resultMap="learnRecord">
+        SELECT *
+        FROM learn_record
+        WHERE catalog_id = #{catalogId}
+        ORDER BY last_date DESC
+        LIMIT #{start},#{count}
+    </select>
 </mapper>
